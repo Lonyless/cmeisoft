@@ -66,11 +66,11 @@ export class FormAlunoComponent implements OnInit {
 
     } else {
 
-      const aluno = new Aluno(null, this.form.value.nomeAluno, this.form.value.nomePai,
+      const aluno = new Crianca(null, this.form.value.nomeAluno, this.form.value.nomePai,
         this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
 
       console.log(aluno)
-      this.alunoService.adicionar(aluno)
+      this.criancaService.adicionar(aluno)
     }
   }
 

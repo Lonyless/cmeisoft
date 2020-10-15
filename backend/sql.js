@@ -37,11 +37,17 @@ const cmei = require('./routes/cmei')
 const crianca = require ('./routes/crianca')
 const bairro = require('./routes/bairro')
 const cidade = require('./routes/cidade')
+const endereco = require('./routes/endereco')
+const contemplado = require('./routes/contemplado')
+const criterioSocial = require('./routes/criterioSocial')
 
 rotasCmei = new cmei(router)
 rotasCrianca = new crianca(router)
 rotasBairro = new bairro(router)
 rotasCidade = new cidade(router)
+rotasEndereco = new endereco(router)
+rotasContemplado = new contemplado(router)
+rotasCriterioSocial = new criterioSocial(router)
 
 //tabela CMEI
 rotasCmei.getAll()
@@ -66,3 +72,21 @@ rotasCidade.getAll()
 rotasCidade.post()
 rotasCidade.put()
 rotasCidade.delete()
+
+//tabela endereco
+rotasEndereco.getAll()
+rotasEndereco.post()
+rotasEndereco.put()
+rotasEndereco.delete()
+
+//tabela contemplado
+rotasContemplado.getAll()
+rotasContemplado.post()
+rotasContemplado.put()
+rotasContemplado.delete()
+
+//tabela criterio
+rotasCriterioSocial.getAll()
+rotasCriterioSocial.post()
+rotasCriterioSocial.put()
+rotasCriterioSocial.delete()
