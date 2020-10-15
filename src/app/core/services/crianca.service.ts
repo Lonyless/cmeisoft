@@ -4,8 +4,9 @@ import { HttpClient } from '@angular/common/http'
 
 import { Crianca } from '../model/crianca.model';
 
-@Injectable(
-)
+@Injectable({
+  providedIn: 'root'
+})
 export class CriancaService {
 
   constructor(private http: HttpClient) {
@@ -15,7 +16,6 @@ export class CriancaService {
   readonly apiURL: string;
 
   listar() {
-
     return this.http.get<Crianca[]>(`${this.apiURL}/crianca`)   //coloquei um array pra ele retornar um array de objetos
 
   }

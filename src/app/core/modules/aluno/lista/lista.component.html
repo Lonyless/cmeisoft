@@ -19,7 +19,6 @@
     <tr *ngFor="let crianca of filteredCriancas">
       <td>{{crianca.nome}}</td>
       <td>{{crianca.cpf}}</td>
-      <td>{{aluno.mae}}</td>
       <td>{{crianca.bairro}}</td>
       <td>
         <button class="btn btn-primary" [routerLink]="['update', crianca.id]" >Editar</button>

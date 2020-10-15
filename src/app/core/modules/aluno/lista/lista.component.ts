@@ -11,7 +11,6 @@ import { Crianca } from '../../../model/crianca.model'
 })
 export class ListaComponent implements OnInit {
 
-
   id: number
 
   criancas: Crianca[]
@@ -20,6 +19,7 @@ export class ListaComponent implements OnInit {
 
   constructor(public criancaService: CriancaService) {
     this.criancaService = criancaService
+    
   }
 
   criancas$: Observable<Crianca[]>
