@@ -1,0 +1,67 @@
+<!-- Cria as abas no modelo-->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a  class="nav-link active" id="home-tab" data-toggle='tab' href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+  </li>
+  <li class="nav-item">
+    <a  class="nav-link" id="profile-tab" data-toggle='tab' href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a  class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+  </li>
+</ul>
+
+<!-- Cria o formulario com os campos dentro das abas-->
+<form class="needs-validation" [formGroup]="form">
+
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div class="form-group" >
+        <label>Nome do Aluno*</label>
+        <input required [ngClass]="cssErro('nomeAluno')" formControlName="nomeAluno" type="text" id="nomeAluno" class="form-control form-control-lg"  placeholder="">
+        <div *ngIf="validarCampo('nomeAluno')" class="alert alert-danger">
+          O nome do aluno é obrigatorio
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="form-group">
+        <label>Nome do Pai*</label>
+        <input required [ngClass]="cssErro('nomePai')" formControlName="nomePai" type="text" id="nomePai" class="form-control form-control-lg" placeholder="">
+        <div *ngIf="validarCampo('nomePai')" class="alert alert-danger">
+          O nome do pai é obrigatorio
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Nome do mae*</label>
+        <input required [ngClass]="cssErro('nomeMae')" formControlName="nomeMae" id="nomeMae" class="form-control form-control-lg"  placeholder="">
+        <div *ngIf="validarCampo('nomeMae')" class="alert alert-danger">
+          O nome da mãe é obrigatorio
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      <div class="form-group">
+        <label>Telefone Celular</label>
+        <input required formControlName="contatoCell" id="contatoCell" class="form-control form-control-lg"  placeholder="">
+      </div>
+      <div class="form-group">
+        <label>Telefone Fixo</label>
+        <input required formControlName="contatoFixo" id="contatoFixo" class="form-control form-control-lg"  placeholder="">
+      </div>
+
+    <button [disabled]="!this.form.valid" (click)="onSubmit()" class="btn btn-primary" routerLink="/">Confirmar</button>
+    <button class="btn btn-secondary ml-3" routerLink="/escola">Cancelar</button>
+
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+
