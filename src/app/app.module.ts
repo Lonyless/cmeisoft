@@ -18,6 +18,8 @@ import { CriteriosComponent } from './core/modules/admin/criterios/criterios.com
 import { CmeiFormComponent } from './core/modules/admin/cmei-form/cmei-form.component';
 import { CmeiListaComponent } from './core/modules/admin/cmei-lista/cmei-lista.component';
 import { EnderecoFormComponent } from './core/modules/localizacao/endereco-form/endereco-form.component';
+import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cidade-form.component';
+import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { EnderecoFormComponent } from './core/modules/localizacao/endereco-form/
     CmeiFormComponent,
     CmeiListaComponent,
     EnderecoFormComponent,
+    CidadeFormComponent,
+    MenuComponent,
 
   ],
   imports: [
