@@ -51,42 +51,49 @@ rotasCriterioSocial = new criterioSocial(router)
 
 //tabela CMEI
 rotasCmei.getAll()
+rotasCmei.getId()
 rotasCmei.post()
 rotasCmei.put()
 rotasCmei.delete()
 
 //tabela Crianca
 rotasCrianca.getAll()
+rotasCrianca.getId()
 rotasCrianca.post()
 rotasCrianca.put()
 rotasCrianca.delete()
 
 //tabela bairro
 rotasBairro.getAll()
+rotasBairro.getId()
 rotasBairro.post()
 rotasBairro.put()
 rotasBairro.delete()
 
 //tabela cidade
 rotasCidade.getAll()
+rotasCidade.getId()
 rotasCidade.post()
 rotasCidade.put()
 rotasCidade.delete()
 
 //tabela endereco
 rotasEndereco.getAll()
+rotasEndereco.getId()
 rotasEndereco.post()
 rotasEndereco.put()
 rotasEndereco.delete()
 
 //tabela contemplado
 rotasContemplado.getAll()
+rotasContemplado.getId()
 rotasContemplado.post()
 rotasContemplado.put()
 rotasContemplado.delete()
 
 //tabela criterio
 rotasCriterioSocial.getAll()
+rotasCriterioSocial.getId()
 rotasCriterioSocial.post()
 rotasCriterioSocial.put()
 rotasCriterioSocial.delete()

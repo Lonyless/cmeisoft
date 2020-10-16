@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { CriteriosComponent } from './core/modules/admin/criterios/criterios.component';
 import { CmeiFormComponent } from './core/modules/admin/cmei-form/cmei-form.component';
 import { CmeiListaComponent } from './core/modules/admin/cmei-lista/cmei-lista.component';
+import { EnderecoFormComponent } from './core/modules/localizacao/endereco-form/endereco-form.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CmeiListaComponent } from './core/modules/admin/cmei-lista/cmei-lista.c
     CriteriosComponent,
     CmeiFormComponent,
     CmeiListaComponent,
+    EnderecoFormComponent,
 
   ],
   imports: [
