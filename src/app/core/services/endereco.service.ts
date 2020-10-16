@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http'
 
-import { Cmei } from '../model/cmei.model';
+import { Endereco } from '../model/endereco.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CmeiService {
+export class EnderecoService {
 
   constructor(private http: HttpClient) {
     this.apiURL = 'http://localhost:3000';
@@ -16,19 +16,19 @@ export class CmeiService {
   readonly apiURL: string;
 
   listar() {
-    return this.http.get<Cmei[]>(`${this.apiURL}/cmei`)   //coloquei um array pra ele retornar um array de objetos
+    return this.http.get<Endereco[]>(`${this.apiURL}/endereco`)   //coloquei um array pra ele retornar um array de objetos
 
   }
 
   listarPorId(id: number) {
 
-    return this.http.get<Cmei>(`${this.apiURL}/cmei/` + id);
+    return this.http.get<Endereco>(`${this.apiURL}/endereco/` + id);
 
   }
 
-  adicionar(cmei: Cmei) {
+  adicionar(endereco: Endereco) {
 
-    this.http.post(`${this.apiURL}/cmei`, cmei)
+    this.http.post(`${this.apiURL}/endereco`, endereco)
       .subscribe(
         resultado => {
           console.log(resultado)
@@ -41,9 +41,9 @@ export class CmeiService {
       );
   }
 
-  alterar(cmei: Cmei) {
+  alterar(endereco: Endereco) {
 
-    this.http.put(`${this.apiURL}/cmei/` + cmei.id, cmei)
+    this.http.put(`${this.apiURL}/endereco/` + endereco.id, endereco)
       .subscribe(
         resultado => {
           console.log('alterado com sucesso.')
@@ -62,7 +62,7 @@ export class CmeiService {
   }
 
   excluir(id: number) {
-    this.http.delete(`${this.apiURL}/cmei/` + id)
+    this.http.delete(`${this.apiURL}/endereco/` + id)
       .subscribe(
         resultado => {
           console.log('excluído com sucesso.');
