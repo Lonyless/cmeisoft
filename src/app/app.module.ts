@@ -20,6 +20,7 @@ import { CmeiListaComponent } from './core/modules/admin/cmei-lista/cmei-lista.c
 import { EnderecoFormComponent } from './core/modules/localizacao/endereco-form/endereco-form.component';
 import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cidade-form.component';
 import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
+import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/cidade-lista.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
     EnderecoFormComponent,
     CidadeFormComponent,
     MenuComponent,
+    CidadeListaComponent,
 
   ],
   imports: [
