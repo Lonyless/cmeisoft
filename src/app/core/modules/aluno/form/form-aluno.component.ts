@@ -37,8 +37,6 @@ export class FormAlunoComponent implements OnInit {
       contatoFixo: [aluno[0].contato_fixo]
     })
 
-
-
     /*
     this.route.params.subscribe((params: any) => {
       const id = parseInt(params['id'])

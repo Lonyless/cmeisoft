@@ -12,12 +12,18 @@ import { NavbarComponent } from './core/navbar/navbar.component'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CmeiComponent } from './core/modules/admin/cmei/cmei.component';
+import { CriteriosComponent } from './core/modules/admin/criterios/criterios.component';
+import { CmeiFormComponent } from './core/modules/admin/cmei-form/cmei-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     ListaComponent,
+    CmeiComponent,
+    CriteriosComponent,
+    CmeiFormComponent,
 
   ],
   imports: [
