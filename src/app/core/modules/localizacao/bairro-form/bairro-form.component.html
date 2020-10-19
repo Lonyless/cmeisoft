@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-group" >
-        <select required formControlName="nomeCidade" name="nomeCidade" id="nomeCidade" class="form-control form-control-lg" placeholder="">
+        <select required formControlName="nomeCidade" name="nomeCidade" id="nomeCidade" class="form-control form-control-lg" searchable="Search here.." placeholder="">
             <option *ngFor="let cidade of cidades" value={{cidade.id}} >{{cidade.nome}}</option>
         </select>
         <div *ngIf="validarCampo('nomeCidade')" class="alert alert-danger">

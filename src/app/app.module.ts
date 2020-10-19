@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 
 import { CriancaService } from './core/services/crianca.service'
 import { CmeiService } from './core/services/cmei.service'
-import { ListaComponent } from './core/modules/aluno/lista/lista.component'
+import { ListaComponent } from './core/modules/crianca/lista-crianca/lista-crianca.component'
 
 import { NavbarComponent } from './core/navbar/navbar.component'
 

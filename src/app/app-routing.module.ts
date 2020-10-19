@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ListaComponent } from '../app/core/modules/aluno/lista/lista.component';
+import { ListaComponent } from '../app/core/modules/crianca/lista-crianca/lista-crianca.component';
+import { FormCriancaComponent } from './core/modules/crianca/form-crianca/form-crianca.component';
 import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bairro-form.component';
 import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cidade-form.component';
 import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/cidade-lista.component';
@@ -13,6 +14,9 @@ const routes: Routes = [
   },
   {
     path: 'main', component: ListaComponent
+  },
+  {
+    path: 'crianca/novo', component: FormCriancaComponent
   },
   {
     path: 'localizacao', component: MenuComponent
