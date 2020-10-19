@@ -24,9 +24,9 @@ class rotasCrianca {
 
     post() {
         this.router.post('/bairro', (req, res) => {
-            const bairro = req.body.bairro
-            const cidadeId = req.body.cidade_id
-            query(`insert into bairro(nome,cidade_id) values('${bairro},${cidadeId}')`, res)
+            const bairro = req.body.nome
+            const cidadeId = req.body.cidadeId
+            query(`insert into bairro(nome,cidade_id) values("${bairro}",${cidadeId})`, res)
         })
     }
 

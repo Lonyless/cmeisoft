@@ -21,6 +21,7 @@ import { EnderecoFormComponent } from './core/modules/localizacao/endereco-form/
 import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cidade-form.component';
 import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
 import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/cidade-lista.component';
+import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bairro-form.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/ci
     CidadeFormComponent,
     MenuComponent,
     CidadeListaComponent,
+    BairroFormComponent,
 
   ],
   imports: [

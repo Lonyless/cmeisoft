@@ -11,12 +11,12 @@ export class CidadeListaComponent implements OnInit {
 
   cidades: Cidade[]
 
-  constructor(public criancaService: CidadeService) {
-    this.criancaService = criancaService
+  constructor(public cidadeService: CidadeService) {
+    this.cidadeService = cidadeService
   }
 
   ngOnInit(): void {
-    this.criancaService.listar().subscribe(res => {
+    this.cidadeService.listar().subscribe(res => {
       this.cidades = res
     })
   }
