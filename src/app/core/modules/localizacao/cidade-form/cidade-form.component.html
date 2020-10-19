@@ -2,7 +2,7 @@
 
     <div class="form-group" >
         <label>Nome da Cidade</label>
-        <input required [ngClass]="cssErro('nomeAluno')" formControlName="nomeCidade" type="text" id="nomeCidade" class="form-control form-control-lg"  placeholder="">
+        <input required [ngClass]="cssErro('nomeCidade')" formControlName="nomeCidade" type="text" id="nomeCidade" class="form-control form-control-lg"  placeholder="">
         <div *ngIf="validarCampo('nomeCidade')" class="alert alert-danger">
             O nome da cidade é obrigatorio
         </div>

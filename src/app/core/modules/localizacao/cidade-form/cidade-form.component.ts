@@ -22,7 +22,7 @@ export class CidadeFormComponent implements OnInit {
   ngOnInit(): void {
 
     let cidade = this.route.snapshot.data['cidade']
-
+    cidade = [{ id: null, nome: '' }]
     //POG
     if (cidade[0] == null)
       cidade = [{ id: null, nome: '' }]
@@ -59,7 +59,7 @@ export class CidadeFormComponent implements OnInit {
 
     } else {
 
-      const cidade = new Cidade(null, this.form.value.nome)
+      const cidade = new Cidade(this.form.value.nomeCidade)
 
       console.log(cidade)
       this.cidadeService.adicionar(cidade)

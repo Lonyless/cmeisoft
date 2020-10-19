@@ -25,6 +25,9 @@ class rotasCmei {
     post() {
         this.router.post('/cidade', (req, res) => {
             const nome = req.body.nome
+
+            console.log(nome)
+
             query(`insert into cidade(nome)
             values('${nome}')`, res)
         })

@@ -1,1 +1,4 @@
-<p>cidade-lista works!</p>
+
+<select name="cars" id="cidades">
+  <option *ngFor="let cidade of cidades" value={{cidade.id}} >{{cidade.nome}}</option>
+</select>

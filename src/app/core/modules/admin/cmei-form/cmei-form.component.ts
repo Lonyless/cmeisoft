@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
+import { Cidade } from 'src/app/core/model/cidade.model';
+import { CidadeService } from 'src/app/core/services/cidade.service';
 
 import { CmeiService } from 'src/app/core/services/cmei.service';
 
@@ -14,26 +16,22 @@ export class CmeiFormComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(public fb: FormBuilder, private route: ActivatedRoute, public criancaService: CmeiService) {
-    this.criancaService = criancaService
+  constructor(public fb: FormBuilder, private route: ActivatedRoute, public cidadeService: CidadeService) {
+    this.cidadeService = cidadeService
   }
 
   ngOnInit(): void {
 
-    let cmei = this.route.snapshot.data['cmei']
+    let cidade = this.route.snapshot.data['cidade']
 
     //POG
-    if (cmei[0] == null)
-      cmei = [{ id: null, nome: '', telefone: '', idEndereco: '', status: null}]
+    if (cidade[0] == null)
+      cidade = [{ id: null, nome: '' }]
 
     //cria o formulario de criar ou editar, com base no obj(se for nulo: criar)
     this.form = this.fb.group({
-      id: [cmei[0].id],
-      nomeAluno: [cmei[0].nome, [Validators.required]],
-      nomePai: [cmei[0].pai, [Validators.required]],
-      nomeMae: [cmei[0].mae, [Validators.required]],
-      contatoCell: [cmei[0].contato_cell, [Validators.required]],
-      contatoFixo: [cmei[0].contato_fixo]
+      id: [cidade[0].id],
+      nomeCidade: [cidade[0].nome, [Validators.required]],
     })
 
     /*
@@ -54,20 +52,18 @@ export class CmeiFormComponent implements OnInit {
     if (this.form.value.id != null) {
 
       //criando um objeto com os valores do form, usei dois por causa do ID
-      const crianca = new Crianca(this.form.value.id, this.form.value.nomeAluno, this.form.value.nomePai,
-        this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
+      const cidade = new Cidade(this.form.value.id, this.form.value.nomeCidade)
 
       //update
       console.log(this.form.value)
-      this.criancaService.alterar(crianca)
+      this.cidadeService.alterar(cidade)
 
     } else {
 
-      const aluno = new Crianca(null, this.form.value.nomeAluno, this.form.value.nomePai,
-        this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
+      const cidade = new Cidade(null, this.form.value.nomeCidade)
 
-      console.log(aluno)
-      this.criancaService.adicionar(aluno)
+      console.log(cidade)
+      this.cidadeService.adicionar(cidade)
     }
   }
 
