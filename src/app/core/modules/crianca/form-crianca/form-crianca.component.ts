@@ -19,22 +19,34 @@ export class FormCriancaComponent implements OnInit {
     this.criancaService = criancaService
   }
 
-  ngOnInit(): void  {
+  ngOnInit(): void {
 
-    let aluno = this.route.snapshot.data['aluno']
+    //let aluno = this.route.snapshot.data['aluno']
+    let crianca = [{
+      id: null, sexo: 1, nascimento: null, registro: null, livro: "", folha: null, cpf: null,
+      enderecoId: 1, bairroId: 1, cmeiOpcao1: 1, cmeiOpcao2: 1, cidadeId: 1, status: 1, nome: ""
+    }]
 
     //POG
-    if (aluno[0] == null)
-       aluno = [{id: null, nome: '', pai: '', contato_cell: '', contato_fixo: ''}]
+    //if (aluno[0] == null)
+    //aluno = [{id: null, nome: '', pai: '', contato_cell: '', contato_fixo: ''}]
 
     //cria o formulario de criar ou editar, com base no obj(se for nulo: criar)
     this.form = this.fb.group({
-      id: [aluno[0].id],
-      nomeAluno: [aluno[0].nome, [Validators.required]],
-      nomePai: [aluno[0].pai, [Validators.required]],
-      nomeMae: [aluno[0].mae, [Validators.required]],
-      contatoCell: [aluno[0].contato_cell, [Validators.required]],
-      contatoFixo: [aluno[0].contato_fixo]
+      id: [crianca[0].id],
+      nomeCrianca: [crianca[0].nome, [Validators.required]],
+      sexoCrianca: [crianca[0].sexo, [Validators.required]],
+      nascimentoCrianca: [crianca[0].nascimento, [Validators.required]],
+      registroCrianca: [crianca[0].registro, [Validators.required]],
+      livroCrianca: [crianca[0].livro, [Validators.required]],
+      folhaCrianca: [crianca[0].folha, [Validators.required]],
+      cpfCrianca: [crianca[0].cpf, [Validators.required]],
+      enderecoIdCrianca: [crianca[0].enderecoId, [Validators.required]],
+      bairroIdCrianca: [crianca[0].bairroId, [Validators.required]],
+      cmeiOpcao1Crianca: [crianca[0].cmeiOpcao1, [Validators.required]],
+      cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
+      cidadeIdCrianca: [crianca[0].cidadeId, [Validators.required]],
+      statusCrianca: [crianca[0].status, [Validators.required]],
     })
 
     /*
@@ -55,8 +67,11 @@ export class FormCriancaComponent implements OnInit {
     if (this.form.value.id != null) {
 
       //criando um objeto com os valores do form, usei dois por causa do ID
-      const crianca = new Crianca(this.form.value.id, this.form.value.nomeAluno, this.form.value.nomePai,
-        this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
+      const crianca = new Crianca(this.form.value.id, this.form.value.sexoCrianca,
+        this.form.value.nascimentoCrianca, this.form.value.registroCrianca, this.form.value.livroCrianca,
+        this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.form.value.enderecoIdCrianca,
+        this.form.value.bairroIdCrianca, this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
+        this.form.value.cidadeIdCrianca, this.form.value.statusCrianca, this.form.value.nomeCrianca)
 
       //update
       console.log(this.form.value)
@@ -64,11 +79,14 @@ export class FormCriancaComponent implements OnInit {
 
     } else {
 
-      const aluno = new Crianca(null, this.form.value.nomeAluno, this.form.value.nomePai,
-        this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
+      const crianca = new Crianca(this.form.value.sexoCrianca,
+        this.form.value.nascimentoCrianca, this.form.value.registroCrianca, this.form.value.livroCrianca,
+        this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.form.value.enderecoIdCrianca,
+        this.form.value.bairroIdCrianca, this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
+        this.form.value.cidadeIdCrianca, this.form.value.statusCrianca, this.form.value.nomeCrianca)
 
-      console.log(aluno)
-      this.criancaService.adicionar(aluno)
+      console.log(crianca)
+      this.criancaService.adicionar(crianca)
     }
   }
 

@@ -1,5 +1,4 @@
 
-
 <form class="needs-validation" [formGroup]="form">
 
     <div class="form-group" >
@@ -11,7 +10,8 @@
     </div>
 
     <div class="form-group" >
-        <select required formControlName="nomeCidade" name="nomeCidade" id="nomeCidade" class="form-control form-control-lg" searchable="Search here.." placeholder="">
+        <label>Nome da Cidade</label>
+        <select required formControlName="nomeCidade" name="nomeCidade" id="nomeCidade" class="form-control form-control-lg" placeholder="">
             <option *ngFor="let cidade of cidades" value={{cidade.id}} >{{cidade.nome}}</option>
         </select>
         <div *ngIf="validarCampo('nomeCidade')" class="alert alert-danger">
@@ -23,12 +23,3 @@
       <button class="btn btn-secondary ml-3" routerLink="/escola">Cancelar</button>
       
 </form>
-
-  
-  
-  
-  
-  
-  
-  
-  

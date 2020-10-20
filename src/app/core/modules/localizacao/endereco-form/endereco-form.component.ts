@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Crianca } from 'src/app/core/model/crianca.model';
 import { BairroService } from 'src/app/core/services/bairro.service';
 import { CidadeService } from 'src/app/core/services/cidade.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
@@ -65,7 +66,7 @@ export class EnderecoFormComponent implements OnInit {
 
       //update
       console.log(this.form.value)
-      this.criancaService.alterar(crianca)
+      this.enderecoService.alterar(crianca)
 
     } else {
 
@@ -73,7 +74,7 @@ export class EnderecoFormComponent implements OnInit {
         this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
 
       console.log(aluno)
-      this.criancaService.adicionar(aluno)
+      this.enderecoService.adicionar(aluno)
     }
   }
 

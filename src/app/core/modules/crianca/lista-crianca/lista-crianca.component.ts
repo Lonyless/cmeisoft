@@ -6,8 +6,8 @@ import { Crianca } from '../../../model/crianca.model'
 
 @Component({
   selector: 'app-lista',
-  templateUrl: './lista.component.html',
-  styleUrls: ['./lista.component.css']
+  templateUrl: './lista-crianca.component.html',
+  styleUrls: ['./lista-crianca.component.css']
 })
 export class ListaComponent implements OnInit {
 
