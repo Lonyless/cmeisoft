@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'
-
 
 import { CriancaService } from './core/services/crianca.service'
 import { CmeiService } from './core/services/cmei.service'
@@ -22,6 +22,7 @@ import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cida
 import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
 import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/cidade-lista.component';
 import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bairro-form.component';
+import { FormCriancaComponent } from './core/modules/crianca/form-crianca/form-crianca.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bair
     MenuComponent,
     CidadeListaComponent,
     BairroFormComponent,
+    FormCriancaComponent,
 
   ],
   imports: [
@@ -43,7 +45,8 @@ import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bair
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   providers: [CriancaService, CmeiService],
   bootstrap: [AppComponent]
