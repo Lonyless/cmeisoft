@@ -23,6 +23,7 @@ import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
 import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/cidade-lista.component';
 import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bairro-form.component';
 import { FormCriancaComponent } from './core/modules/crianca/form-crianca/form-crianca.component';
+import { BairroListaComponent } from './core/modules/localizacao/bairro-lista/bairro-lista.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { FormCriancaComponent } from './core/modules/crianca/form-crianca/form-c
     CidadeListaComponent,
     BairroFormComponent,
     FormCriancaComponent,
+    BairroListaComponent,
 
   ],
   imports: [

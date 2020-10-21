@@ -31,8 +31,6 @@ console.log('API funcionando!');
 //é o diretorio dos arquivos da aplicação
 app.use(express.static(__dirname + '/src'));
 
-//rota tabela CMEI
-
 const cmei = require('./routes/cmei')
 const crianca = require ('./routes/crianca')
 const bairro = require('./routes/bairro')

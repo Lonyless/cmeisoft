@@ -1,100 +1,109 @@
 <!-- Cria as abas no modelo-->
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-toggle='tab' href="#home" role="tab" aria-controls="home"
-        aria-selected="true">Dados da Crianca</a>
+        <a class="nav-link active" id="crianca-tab" data-toggle='tab' href="#crianca" role="tab" aria-controls="crianca"
+            aria-selected="true">Dados da Crianca</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-toggle='tab' href="#profile" role="tab" aria-controls="profile"
-        aria-selected="false">Profile</a>
+        <a class="nav-link" id="profile-tab" data-toggle='tab' href="#profile" role="tab" aria-controls="profile"
+            aria-selected="false">Dados de Localização</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-        aria-selected="false">Contact</a>
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+            aria-selected="false">Dados do Responsavel</a>
     </li>
-  </ul>
-  
-  <!-- Cria o formulario com os campos dentro das abas-->
-  <form class="needs-validation" [formGroup]="form">
-  
+</ul>
+
+<!-- Cria o formulario com os campos dentro das abas-->
+<form class="needs-validation" [formGroup]="form">
+
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-  
-        <div class="form-group">
-          <label class="mt-3">Nome da Crianca</label>
-          <input required [ngClass]="cssErro('nomeCrianca')" formControlName="nomeCrianca" type="text" id="nomeCrianca"
-            class="form-control form-control-lg" placeholder="">
-          <div *ngIf="validarCampo('nomeCrianca')" class="alert alert-danger">
-            O nome do aluno é obrigatorio
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label class="mt-3">Genero</label>
-          <select required formControlName="sexoCrianca" name="sexoCrianca" id="sexoCrianca"
-            class="form-control form-control-lg" placeholder="">
-            <option value=1>Masculino</option>
-            <option value=0>Feminino</option>
-          </select>
-          <div *ngIf="validarCampo('sexoCrianca')" class="alert alert-danger">
-            O Genero é obrigatorio
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label class="mt-3">Data de Nascimento</label>
-          <input required type="date" formControlName="nascimentoCrianca" name="nascimentoCrianca" id="nascimentoCrianca"
-            class="form-control form-control-lg" />
-          <div *ngIf="validarCampo('sexoCrianca')" class="alert alert-danger">
-            Entre com uma data valida
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="col">
+        <div class="tab-pane fade show active" id="crianca" role="tabpanel" aria-labelledby="crianca-tab">
+
             <div class="form-group">
-              <label class="mt-3">Registro</label>
-              <input required [ngClass]="cssErro('registroCrianca')" formControlName="registroCrianca" type="text"
-                id="registroCrianca" class="form-control form-control-lg" placeholder="">
-              <div *ngIf="validarCampo('registroCrianca')" class="alert alert-danger">
-                O registro é obrigatorio
-              </div>
+                <label class="mt-3">Nome da Crianca</label>
+                <input required [ngClass]="cssErro('nomeCrianca')" formControlName="nomeCrianca" type="text"
+                    id="nomeCrianca" class="form-control form-control-lg" placeholder="">
+                <div *ngIf="validarCampo('nomeCrianca')" class="alert alert-danger">
+                    O nome do aluno é obrigatorio
+                </div>
             </div>
-          </div>
-  
-          <div class="col">
+
             <div class="form-group">
-              <label class="mt-3">Livro</label>
-              <input required [ngClass]="cssErro('livroCrianca')" formControlName="livroCrianca" type="text"
-                id="livroCrianca" class="form-control form-control-lg" placeholder="">
-              <div *ngIf="validarCampo('livroCrianca')" class="alert alert-danger">
-                O livro é obrigatorio
-              </div>
+                <label class="mt-3">Genero</label>
+                <select required formControlName="sexoCrianca" name="sexoCrianca" id="sexoCrianca"
+                    class="form-control form-control-lg" placeholder="">
+                    <option value=1>Masculino</option>
+                    <option value=0>Feminino</option>
+                </select>
+                <div *ngIf="validarCampo('sexoCrianca')" class="alert alert-danger">
+                    O Genero é obrigatorio
+                </div>
             </div>
-          </div>
-  
-          <div class="col">
+
             <div class="form-group">
-              <label class="mt-3">Folha</label>
-              <input required [ngClass]="cssErro('folhaCrianca')" formControlName="folhaCrianca" type="text"
-                id="folhaCrianca" class="form-control form-control-lg" placeholder="">
-              <div *ngIf="validarCampo('folhaCrianca')" class="alert alert-danger">
-                A folha é obrigatoria
-              </div>
+                <label class="mt-3">Data de Nascimento</label>
+                <input required type="date" formControlName="nascimentoCrianca" name="nascimentoCrianca"
+                    id="nascimentoCrianca" class="form-control form-control-lg" />
+                <div *ngIf="validarCampo('sexoCrianca')" class="alert alert-danger">
+                    Entre com uma data valida
+                </div>
             </div>
-          </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="mt-3">Registro</label>
+                        <input required [ngClass]="cssErro('registroCrianca')" formControlName="registroCrianca"
+                            type="text" id="registroCrianca" class="form-control form-control-lg" placeholder="">
+                        <div *ngIf="validarCampo('registroCrianca')" class="alert alert-danger">
+                            O registro é obrigatorio
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label class="mt-3">Livro</label>
+                        <input required [ngClass]="cssErro('livroCrianca')" formControlName="livroCrianca" type="text"
+                            id="livroCrianca" class="form-control form-control-lg" placeholder="">
+                        <div *ngIf="validarCampo('livroCrianca')" class="alert alert-danger">
+                            O livro é obrigatorio
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="mt-3">Folha</label>
+                        <input required [ngClass]="cssErro('folhaCrianca')" formControlName="folhaCrianca" type="text"
+                            id="folhaCrianca" class="form-control form-control-lg" placeholder="">
+                        <div *ngIf="validarCampo('folhaCrianca')" class="alert alert-danger">
+                            A folha é obrigatoria
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label class="mt-3">CPF</label>
+                        <input required [ngClass]="cssErro('cpfCrianca')" formControlName="cpfCrianca" type="text"
+                            id="cpfCrianca" class="form-control form-control-lg" placeholder="">
+                        <div *ngIf="validarCampo('cpfCrianca')" class="alert alert-danger">
+                            O CPF é obrigatorio
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-  
-        <div class="form-group">
-          <label class="mt-3">CPF</label>
-          <input required [ngClass]="cssErro('cpfCrianca')" formControlName="cpfCrianca" type="text" id="cpfCrianca"
-            class="form-control form-control-lg" placeholder="">
-          <div *ngIf="validarCampo('cpfCrianca')" class="alert alert-danger">
-            O CPF é obrigatorio
-          </div>
+
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="home-tab">
+            <app-cidade-lista></app-cidade-lista>
         </div>
-  
-      </div>
-  
+
     </div>
-  </form>
+
+</form>
