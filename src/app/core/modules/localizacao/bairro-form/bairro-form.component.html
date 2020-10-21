@@ -1,25 +1,31 @@
+<button (click)="visibilidade()" class="btn btn-primary">Novo Bairro</button>
 
-<form class="needs-validation" [formGroup]="form">
+<div [hidden]="_visibilidade">
 
-    <div class="form-group" >
-        <label>Nome do Bairro</label>
-        <input required [ngClass]="cssErro('nomeBairro')" formControlName="nomeBairro" type="text" id="nomeBairro" class="form-control form-control-lg"  placeholder="">
-        <div *ngIf="validarCampo('nomeBairro')" class="alert alert-danger">
-            O nome do bairro é obrigatorio
+    <form class="needs-validation" [formGroup]="form">
+
+        <div class="form-group">
+            <label>Nome do Bairro</label>
+            <input required [ngClass]="cssErro('nomeBairro')" formControlName="nomeBairro" type="text" id="nomeBairro"
+                class="form-control form-control-lg" placeholder="">
+            <div *ngIf="validarCampo('nomeBairro')" class="alert alert-danger">
+                O nome do bairro é obrigatorio
+            </div>
         </div>
-    </div>
 
-    <div class="form-group" >
-        <label>Nome da Cidade</label>
-        <select required formControlName="nomeCidade" name="nomeCidade" id="nomeCidade" class="form-control form-control-lg" placeholder="">
-            <option *ngFor="let cidade of cidades" value={{cidade.id}} >{{cidade.nome}}</option>
-        </select>
-        <div *ngIf="validarCampo('nomeCidade')" class="alert alert-danger">
-            Por favor escolha uma cidade
+        <div class="form-group">
+            <label>Nome da Cidade</label>
+            <select required formControlName="nomeCidade" name="nomeCidade" id="nomeCidade"
+                class="form-control form-control-lg" placeholder="">
+                <option *ngFor="let cidade of cidades" value={{cidade.id}}>{{cidade.nome}}</option>
+            </select>
+            <div *ngIf="validarCampo('nomeCidade')" class="alert alert-danger">
+                Por favor escolha uma cidade
+            </div>
         </div>
-    </div>
 
-      <button [disabled]="!this.form.valid" (click)="onSubmit()" class="btn btn-primary" routerLink="/">Confirmar</button>
-      <button class="btn btn-secondary ml-3" routerLink="/escola">Cancelar</button>
-      
-</form>
+        <button [disabled]="!this.form.valid" (click)="onSubmit()" class="btn btn-primary">Confirmar</button>
+
+    </form>
+
+</div>

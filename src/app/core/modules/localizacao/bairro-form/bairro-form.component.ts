@@ -25,27 +25,40 @@ export class BairroFormComponent implements OnInit {
 
   }
 
+  _visibilidade: boolean
+
   ngOnInit(): void {
+
+    this._visibilidade = true
 
     this.cidadeService.listar().subscribe(res => {
       this.cidades = res
     })
 
     //let bairro = this.route.snapshot.data['bairro']
-    let bairro = [{id: null, nome: '', cidadeId: null }]
+    let bairro = [{ id: null, nome: '', cidadeId: null }]
 
     /*
     //POG
     if (bairro[0] == null)
       bairro = [{ id: null, nome: '', cidadeId: null }]
     */
-   
+
     //cria o formulario de criar ou editar, com base no obj(se for nulo: criar)
     this.form = this.fb.group({
       id: [bairro[0].id],
       nomeBairro: [bairro[0].nome, [Validators.required]],
       nomeCidade: [bairro[0].cidadeId, [Validators.required]]
     })
+  }
+
+  visibilidade() {
+    if (this._visibilidade) {
+      this._visibilidade = false
+    } else {
+      this._visibilidade = true
+
+    }
   }
 
   onSubmit() {

@@ -28,8 +28,11 @@ export class EnderecoFormComponent implements OnInit {
   }
 
   bairros: Bairro[];
+  _visibilidade: boolean
 
   ngOnInit(): void {
+
+    this._visibilidade = true
 
     this.bairroService.listar().subscribe(res => {
       this.bairros = res
@@ -62,6 +65,24 @@ export class EnderecoFormComponent implements OnInit {
     })
     */
   }
+
+  Mudarestado(elemento) {
+    var display = elemento.style.display;
+    if (display == "none")
+      elemento.style.display = 'block';
+    else
+      elemento.style.display = 'none';
+  }
+
+  visibilidade() {
+    if (this._visibilidade) {
+      this._visibilidade = false
+    } else {
+      this._visibilidade = true
+
+    }
+  }
+
 
   onSubmit() {
 
