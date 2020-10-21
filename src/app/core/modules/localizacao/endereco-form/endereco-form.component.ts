@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Bairro } from 'src/app/core/model/bairro.model';
 import { Crianca } from 'src/app/core/model/crianca.model';
+import { Endereco } from 'src/app/core/model/endereco.model';
 import { BairroService } from 'src/app/core/services/bairro.service';
 import { CidadeService } from 'src/app/core/services/cidade.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
@@ -16,31 +18,36 @@ export class EnderecoFormComponent implements OnInit {
   form: FormGroup;
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute,
-    public enderecoService: EnderecoService, public bairroService: BairroService, 
+    public enderecoService: EnderecoService, public bairroService: BairroService,
     public cidadeService: CidadeService) {
 
     this.enderecoService = enderecoService
     this.bairroService = bairroService
     this.cidadeService = cidadeService
-    
+
   }
+
+  bairros: Bairro[];
 
   ngOnInit(): void {
 
-    let cmei = this.route.snapshot.data['cmei']
+    this.bairroService.listar().subscribe(res => {
+      this.bairros = res
+    })
+
+    //let cmei = this.route.snapshot.data['cmei']
+    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }]
 
     //POG
-    if (cmei[0] == null)
-      cmei = [{ id: null, nome: '', telefone: '', idEndereco: '', status: null }]
+    //if (cmei[0] == null)
+    //endereco = [{ id: null, nome: '', telefone: '', idEndereco: '', status: null }]
 
     //cria o formulario de criar ou editar, com base no obj(se for nulo: criar)
     this.form = this.fb.group({
-      id: [cmei[0].id],
-      nomeAluno: [cmei[0].nome, [Validators.required]],
-      nomePai: [cmei[0].pai, [Validators.required]],
-      nomeMae: [cmei[0].mae, [Validators.required]],
-      contatoCell: [cmei[0].contato_cell, [Validators.required]],
-      contatoFixo: [cmei[0].contato_fixo]
+      id: [endereco[0].id],
+      ruaEndereco: [endereco[0].rua, [Validators.required]],
+      numeroEndereco: [endereco[0].numero, [Validators.required]],
+      bairroId: [endereco[0].bairroId, [Validators.required]]
     })
 
     /*
@@ -61,20 +68,20 @@ export class EnderecoFormComponent implements OnInit {
     if (this.form.value.id != null) {
 
       //criando um objeto com os valores do form, usei dois por causa do ID
-      const crianca = new Crianca(this.form.value.id, this.form.value.nomeAluno, this.form.value.nomePai,
-        this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
+      const endereco = new Endereco(this.form.value.id, this.form.value.ruaEndereco, this.form.value.numeroEndereco,
+        this.form.value.bairroId)
 
       //update
       console.log(this.form.value)
-      this.enderecoService.alterar(crianca)
+      this.enderecoService.alterar(endereco)
 
     } else {
 
-      const aluno = new Crianca(null, this.form.value.nomeAluno, this.form.value.nomePai,
-        this.form.value.nomeMae, this.form.value.contatoCell, this.form.value.contatoFixo)
+      const endereco = new Endereco(null, this.form.value.ruaEndereco, this.form.value.numeroEndereco,
+        this.form.value.bairroId)
 
-      console.log(aluno)
-      this.enderecoService.adicionar(aluno)
+      console.log(endereco)
+      this.enderecoService.adicionar(endereco)
     }
   }
 
