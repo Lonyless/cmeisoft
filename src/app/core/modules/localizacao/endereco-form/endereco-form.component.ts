@@ -66,14 +66,6 @@ export class EnderecoFormComponent implements OnInit {
     */
   }
 
-  Mudarestado(elemento) {
-    var display = elemento.style.display;
-    if (display == "none")
-      elemento.style.display = 'block';
-    else
-      elemento.style.display = 'none';
-  }
-
   visibilidade() {
     if (this._visibilidade) {
       this._visibilidade = false
@@ -82,7 +74,6 @@ export class EnderecoFormComponent implements OnInit {
 
     }
   }
-
 
   onSubmit() {
 
@@ -103,6 +94,7 @@ export class EnderecoFormComponent implements OnInit {
 
       console.log(endereco)
       this.enderecoService.adicionar(endereco)
+
     }
   }
 
