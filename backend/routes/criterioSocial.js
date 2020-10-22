@@ -12,7 +12,7 @@ class rotasCmei {
 
     getAll() {
         this.router.get('/criteriosocial', (req, res) => {
-            query("select * from criteriosocial", res)
+            query("select * from criteriosocial order by id", res)
         })
     }
 

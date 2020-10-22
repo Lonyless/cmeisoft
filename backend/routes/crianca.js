@@ -12,7 +12,7 @@ class rotasCrianca {
 
     getAll() {
         this.router.get('/crianca', (req, res) => {
-            query("select * from crianca", res)
+            query("select * from crianca order by id", res)
         })
     }
 

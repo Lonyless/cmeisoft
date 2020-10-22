@@ -12,7 +12,7 @@ class rotasCmei {
 
     getAll() {
         this.router.get('/cidade', (req, res) => {
-            query("select * from cidade", res)
+            query("select * from cidade order by id", res)
         })
     }
 

@@ -12,7 +12,7 @@ class rotasCrianca {
 
     getAll() {
         this.router.get('/bairro', (req, res) => {
-            query("select * from bairro", res)
+            query("select * from bairro order by id", res)
         })
     }
 

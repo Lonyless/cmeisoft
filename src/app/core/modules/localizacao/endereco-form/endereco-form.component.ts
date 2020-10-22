@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Bairro } from 'src/app/core/model/bairro.model';
+import { Cidade } from 'src/app/core/model/cidade.model';
 import { Crianca } from 'src/app/core/model/crianca.model';
 import { Endereco } from 'src/app/core/model/endereco.model';
 import { BairroService } from 'src/app/core/services/bairro.service';
@@ -36,7 +37,7 @@ export class EnderecoFormComponent implements OnInit {
 
     this.bairroService.listar().subscribe(res => {
       this.bairros = res
-    })
+    }).unsubscribe
 
     //let cmei = this.route.snapshot.data['cmei']
     let endereco = [{ id: null, rua: null, numero: null, bairroId: null }]
@@ -64,6 +65,16 @@ export class EnderecoFormComponent implements OnInit {
       })
     })
     */
+  }
+
+  refresh() {
+    this.bairroService.listar().subscribe(res => {
+      this.bairros = res
+    }).unsubscribe
+  }
+
+  setar() {
+    this.form.patchValue({ bairroId: this.bairros[this.bairros.length - 1].id })
   }
 
   visibilidade() {
@@ -97,6 +108,8 @@ export class EnderecoFormComponent implements OnInit {
 
     }
   }
+
+
 
   validarCampo(campo) {
 

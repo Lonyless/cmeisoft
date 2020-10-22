@@ -12,7 +12,7 @@ class rotasCmei {
 
     getAll() {
         this.router.get('/responsavel', (req, res) => {
-            query("select * from responsavel", res)
+            query("select * from responsavel order by id", res)
         })
     }
 

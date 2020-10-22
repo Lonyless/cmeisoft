@@ -12,7 +12,7 @@ class rotasCrianca {
 
     getAll() {
         this.router.get('/endereco', (req, res) => {
-            query("select * from endereco", res)
+            query("select * from endereco order by id", res)
         })
     }
 

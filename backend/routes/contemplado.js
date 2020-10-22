@@ -12,7 +12,7 @@ class rotasCmei {
 
     getAll() {
         this.router.get('/contemplado', (req, res) => {
-            query("select * from contemplado", res)
+            query("select * from contemplado order by id", res)
         })
     }
 

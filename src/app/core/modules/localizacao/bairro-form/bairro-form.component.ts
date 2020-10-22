@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Bairro } from 'src/app/core/model/bairro.model';
@@ -15,6 +15,7 @@ export class BairroFormComponent implements OnInit {
 
   form: FormGroup;
 
+  bairros: Bairro[];
   cidades: Cidade[];
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute, public cidadeService: CidadeService,
@@ -33,6 +34,10 @@ export class BairroFormComponent implements OnInit {
 
     this.cidadeService.listar().subscribe(res => {
       this.cidades = res
+    })
+
+    this.bairroService.listar().subscribe(res => {
+      this.bairros = res
     })
 
     //let bairro = this.route.snapshot.data['bairro']
@@ -61,6 +66,9 @@ export class BairroFormComponent implements OnInit {
     }
   }
 
+  //emite um evento quando um bairro é adicionado, o component pai pode usar esse evento
+  @Output() adicionou = new EventEmitter()
+
   onSubmit() {
 
     if (this.form.value.id != null) {
@@ -79,6 +87,10 @@ export class BairroFormComponent implements OnInit {
       console.log(bairro)
       this.bairroService.adicionar(bairro)
     }
+
+    //emissao do evento
+    this.adicionou.emit()
+
   }
 
   validarCampo(campo) {

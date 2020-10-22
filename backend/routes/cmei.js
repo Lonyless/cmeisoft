@@ -12,7 +12,7 @@ class rotasCmei {
 
     getAll() {
         this.router.get('/cmei', (req, res) => {
-            query("select * from cmei", res)
+            query("select * from cmei order by id", res)
         })
     }
 
