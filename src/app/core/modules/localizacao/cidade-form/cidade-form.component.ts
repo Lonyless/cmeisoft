@@ -54,14 +54,13 @@ export class CidadeFormComponent implements OnInit {
       const cidade = new Cidade(this.form.value.id, this.form.value.nome)
 
       //update
-      console.log(this.form.value)
+
       this.cidadeService.alterar(cidade)
 
     } else {
 
       const cidade = new Cidade(this.form.value.nomeCidade)
 
-      console.log(cidade)
       this.cidadeService.adicionar(cidade)
     }
   }

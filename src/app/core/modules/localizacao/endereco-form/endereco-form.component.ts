@@ -67,23 +67,13 @@ export class EnderecoFormComponent implements OnInit {
     */
   }
 
-  refresh() {
-    this.bairroService.listar().subscribe(res => {
-      this.bairros = res
-    }).unsubscribe
-  }
-
   setar() {
-    this.form.patchValue({ bairroId: this.bairros[this.bairros.length - 1].id })
-  }
 
-  visibilidade() {
-    if (this._visibilidade) {
-      this._visibilidade = false
-    } else {
-      this._visibilidade = true
+    this.bairroService.listar().subscribe(res => {
+      this.bairros = res,
+        this.form.patchValue({ bairroId: this.bairros[this.bairros.length - 1].id })
+    }).unsubscribe
 
-    }
   }
 
   onSubmit() {
@@ -108,8 +98,6 @@ export class EnderecoFormComponent implements OnInit {
 
     }
   }
-
-
 
   validarCampo(campo) {
 

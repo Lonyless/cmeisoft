@@ -69,7 +69,7 @@ export class BairroFormComponent implements OnInit {
   //emite um evento quando um bairro é adicionado, o component pai pode usar esse evento
   @Output() adicionou = new EventEmitter()
 
-  onSubmit() {
+  async onSubmit() {
 
     if (this.form.value.id != null) {
 
@@ -78,7 +78,7 @@ export class BairroFormComponent implements OnInit {
 
       //update
       console.log(this.form.value)
-      this.bairroService.alterar(bairro)
+     this.bairroService.alterar(bairro)
 
     } else {
 
@@ -88,9 +88,11 @@ export class BairroFormComponent implements OnInit {
       this.bairroService.adicionar(bairro)
     }
 
-    //emissao do evento
-    this.adicionou.emit()
+    //gambiarra. preciso esperar o adicionar terminar para emitir o evento, senao buga pra frente
+    //to be fixed
+    setTimeout(() => this.adicionou.emit(), 250)
 
+    this._visibilidade = true
   }
 
   validarCampo(campo) {
