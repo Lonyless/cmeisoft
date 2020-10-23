@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 
 import { CriancaService } from '../../../services/crianca.service'
 
 import { Crianca } from '../../../model/crianca.model'
+import { EnderecoService } from 'src/app/core/services/endereco.service';
+import { CidadeService } from 'src/app/core/services/cidade.service';
+import { Cidade } from 'src/app/core/model/cidade.model';
 
 @Component({
   selector: 'app-form-crianca',
@@ -14,9 +17,14 @@ import { Crianca } from '../../../model/crianca.model'
 export class FormCriancaComponent implements OnInit {
 
   form: FormGroup;
+  cidadeIdCrianca: number
 
-  constructor(public fb: FormBuilder, private route: ActivatedRoute, public criancaService: CriancaService) {
+  constructor(public fb: FormBuilder, private route: ActivatedRoute, public criancaService: CriancaService,
+    public enderecoService: EnderecoService) {
+
     this.criancaService = criancaService
+    this.enderecoService = enderecoService
+
   }
 
   ngOnInit(): void {
@@ -24,7 +32,7 @@ export class FormCriancaComponent implements OnInit {
     //let aluno = this.route.snapshot.data['aluno']
     let crianca = [{
       id: null, sexo: 1, nascimento: null, registro: null, livro: "", folha: null, cpf: null,
-      enderecoId: 1, bairroId: 1, cmeiOpcao1: 1, cmeiOpcao2: 1, cidadeId: 1, status: 1, nome: ""
+      enderecoId: 1, cmeiOpcao1: 1, cmeiOpcao2: 1, cidadeId: 1, status: 1, nome: ""
     }]
 
     //POG
@@ -42,10 +50,8 @@ export class FormCriancaComponent implements OnInit {
       folhaCrianca: [crianca[0].folha, [Validators.required]],
       cpfCrianca: [crianca[0].cpf, [Validators.required]],
       enderecoIdCrianca: [crianca[0].enderecoId, [Validators.required]],
-      bairroIdCrianca: [crianca[0].bairroId, [Validators.required]],
       cmeiOpcao1Crianca: [crianca[0].cmeiOpcao1, [Validators.required]],
       cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
-      cidadeIdCrianca: [crianca[0].cidadeId, [Validators.required]],
       statusCrianca: [crianca[0].status, [Validators.required]],
     })
 
@@ -70,8 +76,8 @@ export class FormCriancaComponent implements OnInit {
       const crianca = new Crianca(this.form.value.id, this.form.value.sexoCrianca,
         this.form.value.nascimentoCrianca, this.form.value.registroCrianca, this.form.value.livroCrianca,
         this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.form.value.enderecoIdCrianca,
-        this.form.value.bairroIdCrianca, this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
-        this.form.value.cidadeIdCrianca, this.form.value.statusCrianca, this.form.value.nomeCrianca)
+        this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
+        this.form.value.statusCrianca, this.form.value.nomeCrianca)
 
       //update
       console.log(this.form.value)
@@ -82,8 +88,8 @@ export class FormCriancaComponent implements OnInit {
       const crianca = new Crianca(this.form.value.sexoCrianca,
         this.form.value.nascimentoCrianca, this.form.value.registroCrianca, this.form.value.livroCrianca,
         this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.form.value.enderecoIdCrianca,
-        this.form.value.bairroIdCrianca, this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
-        this.form.value.cidadeIdCrianca, this.form.value.statusCrianca, this.form.value.nomeCrianca)
+        this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
+        this.form.value.statusCrianca, this.form.value.nomeCrianca)
 
       console.log(crianca)
       this.criancaService.adicionar(crianca)

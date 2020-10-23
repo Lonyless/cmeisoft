@@ -5,12 +5,12 @@
             aria-selected="true">Dados da Crianca</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle='tab' href="#profile" role="tab" aria-controls="profile"
-            aria-selected="false">Dados de Localização</a>
+        <a class="nav-link" id="localizacao-tab" data-toggle='tab' href="#localizacao" role="tab"
+            aria-controls="localizacao" aria-selected="false">Dados de Localização</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-            aria-selected="false">Dados do Responsavel</a>
+        <a class="nav-link" id="responsavel-tab" data-toggle="tab" href="#responsavel" role="tab"
+            aria-controls="responsavel" aria-selected="false">Dados do Responsavel</a>
     </li>
 </ul>
 
@@ -100,9 +100,14 @@
 
         </div>
 
-        <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="home-tab">
-            <app-cidade-lista></app-cidade-lista>
+        <div class="tab-pane fade show" id="localizacao" role="tabpanel" aria-labelledby="home-tab">
+
             <app-endereco-form></app-endereco-form>
+
+        </div>
+
+        <div class="tab-pane fade show" id="responsavel" role="tabpanel" aria-labelledby="home-tab">
+
         </div>
 
     </div>
