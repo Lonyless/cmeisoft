@@ -8,6 +8,7 @@ import { Crianca } from '../../../model/crianca.model'
 import { EnderecoService } from 'src/app/core/services/endereco.service';
 import { CidadeService } from 'src/app/core/services/cidade.service';
 import { Cidade } from 'src/app/core/model/cidade.model';
+import { Endereco } from 'src/app/core/model/endereco.model';
 
 @Component({
   selector: 'app-form-crianca',
@@ -18,6 +19,7 @@ export class FormCriancaComponent implements OnInit {
 
   form: FormGroup;
   cidadeIdCrianca: number
+  visibilidade: boolean
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute, public criancaService: CriancaService,
     public enderecoService: EnderecoService) {
@@ -68,6 +70,14 @@ export class FormCriancaComponent implements OnInit {
     */
   }
 
+  enderecos: Endereco[]
+
+  getEnderecoId() {
+    this.enderecoService.listar().subscribe(res => {
+      this.enderecos = res
+    }).unsubscribe
+  }
+
   onSubmit() {
 
     if (this.form.value.id != null) {
@@ -75,7 +85,7 @@ export class FormCriancaComponent implements OnInit {
       //criando um objeto com os valores do form, usei dois por causa do ID
       const crianca = new Crianca(this.form.value.id, this.form.value.sexoCrianca,
         this.form.value.nascimentoCrianca, this.form.value.registroCrianca, this.form.value.livroCrianca,
-        this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.form.value.enderecoIdCrianca,
+        this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.enderecos[this.enderecos.length - 1].id,
         this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
         this.form.value.statusCrianca, this.form.value.nomeCrianca)
 
@@ -87,7 +97,7 @@ export class FormCriancaComponent implements OnInit {
 
       const crianca = new Crianca(this.form.value.sexoCrianca,
         this.form.value.nascimentoCrianca, this.form.value.registroCrianca, this.form.value.livroCrianca,
-        this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.form.value.enderecoIdCrianca,
+        this.form.value.folhaCrianca, this.form.value.cpfCrianca, this.enderecos[this.enderecos.length - 1].id,
         this.form.value.cmeiOpcao1Crianca, this.form.value.cmeiOpcao2Crianca,
         this.form.value.statusCrianca, this.form.value.nomeCrianca)
 

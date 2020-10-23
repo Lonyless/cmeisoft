@@ -24,6 +24,7 @@ import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/ci
 import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bairro-form.component';
 import { FormCriancaComponent } from './core/modules/crianca/form-crianca/form-crianca.component';
 import { BairroListaComponent } from './core/modules/localizacao/bairro-lista/bairro-lista.component';
+import { ResponsavelFormComponent } from './core/modules/responsavel/responsavel-form/responsavel-form.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { BairroListaComponent } from './core/modules/localizacao/bairro-lista/ba
     BairroFormComponent,
     FormCriancaComponent,
     BairroListaComponent,
+    ResponsavelFormComponent,
 
   ],
   imports: [

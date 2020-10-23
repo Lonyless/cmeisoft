@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Bairro } from 'src/app/core/model/bairro.model';
-import { Cidade } from 'src/app/core/model/cidade.model';
-import { Crianca } from 'src/app/core/model/crianca.model';
 import { Endereco } from 'src/app/core/model/endereco.model';
 import { BairroService } from 'src/app/core/services/bairro.service';
 import { CidadeService } from 'src/app/core/services/cidade.service';
@@ -17,6 +15,8 @@ import { EnderecoService } from 'src/app/core/services/endereco.service';
 export class EnderecoFormComponent implements OnInit {
 
   form: FormGroup;
+
+  @Output() adicionou = new EventEmitter()
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute,
     public enderecoService: EnderecoService, public bairroService: BairroService,
@@ -97,6 +97,9 @@ export class EnderecoFormComponent implements OnInit {
       this.enderecoService.adicionar(endereco)
 
     }
+
+    this.adicionou.emit()
+
   }
 
   validarCampo(campo) {
