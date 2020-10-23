@@ -60,7 +60,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button [disabled]="!this.form.valid" (click)="onSubmit()" type="button" class="btn btn-primary">
+        <button [disabled]="!this.form.valid" (click)="onSubmit()" type="button" data-dismiss="modal"
+          class="btn btn-primary">
           Salvar </button>
       </div>
     </div>
