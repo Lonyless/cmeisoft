@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Bairro } from 'src/app/core/model/bairro.model';
@@ -6,6 +6,8 @@ import { Endereco } from 'src/app/core/model/endereco.model';
 import { BairroService } from 'src/app/core/services/bairro.service';
 import { CidadeService } from 'src/app/core/services/cidade.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
+import { EventEmitterService } from 'src/app/core/services/event-emmiter.service';
+import { BairroFormComponent } from '../bairro-form/bairro-form.component';
 
 @Component({
   selector: 'app-endereco-form',
@@ -20,7 +22,7 @@ export class EnderecoFormComponent implements OnInit {
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute,
     public enderecoService: EnderecoService, public bairroService: BairroService,
-    public cidadeService: CidadeService) {
+    public cidadeService: CidadeService, private eventEmitterService: EventEmitterService) {
 
     this.enderecoService = enderecoService
     this.bairroService = bairroService
@@ -32,6 +34,16 @@ export class EnderecoFormComponent implements OnInit {
   _visibilidade: boolean
 
   ngOnInit(): void {
+
+    //nessa parte ele esta transmitindo a funcao onSubmit para o component crianca, preciso disso pois
+    //só no component form-crianca é que vou estar criando tambem o endereco, então nao posso fazer
+    //isso aqui. mas praticas ou nao, funciona
+    if (this.eventEmitterService.subsVar == undefined) {
+      this.eventEmitterService.subsVar = this.eventEmitterService.
+        invokeFirstComponentFunction.subscribe((name: string) => {
+          this.onSubmit();
+        });
+    }
 
     this._visibilidade = true
 

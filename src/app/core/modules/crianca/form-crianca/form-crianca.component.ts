@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 
@@ -6,9 +6,9 @@ import { CriancaService } from '../../../services/crianca.service'
 
 import { Crianca } from '../../../model/crianca.model'
 import { EnderecoService } from 'src/app/core/services/endereco.service';
-import { CidadeService } from 'src/app/core/services/cidade.service';
-import { Cidade } from 'src/app/core/model/cidade.model';
 import { Endereco } from 'src/app/core/model/endereco.model';
+import { EnderecoFormComponent } from '../../localizacao/endereco-form/endereco-form.component';
+import { EventEmitterService } from 'src/app/core/services/event-emmiter.service';
 
 @Component({
   selector: 'app-form-crianca',
@@ -22,11 +22,17 @@ export class FormCriancaComponent implements OnInit {
   visibilidade: boolean
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute, public criancaService: CriancaService,
-    public enderecoService: EnderecoService) {
+    public enderecoService: EnderecoService, private eventEmitterService: EventEmitterService) {
 
     this.criancaService = criancaService
     this.enderecoService = enderecoService
 
+  }
+
+  //aqui eu chamo a funcao onSubmit la do component endereco, adicionando o endereco usando um evento
+  //dessa funcao criar crianca.
+  onEnderecoSubmit() {
+    this.eventEmitterService.onEvent();
   }
 
   ngOnInit(): void {
