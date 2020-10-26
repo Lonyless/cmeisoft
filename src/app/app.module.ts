@@ -25,6 +25,8 @@ import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bair
 import { FormCriancaComponent } from './core/modules/crianca/form-crianca/form-crianca.component';
 import { BairroListaComponent } from './core/modules/localizacao/bairro-lista/bairro-lista.component';
 import { ResponsavelFormComponent } from './core/modules/responsavel/responsavel-form/responsavel-form.component';
+import { ResponsavelListaComponent } from './core/modules/responsavel/responsavel-lista/responsavel-lista.component';
+import { ResponsavelMainComponent } from './core/modules/responsavel/responsavel-main/responsavel-main.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { ResponsavelFormComponent } from './core/modules/responsavel/responsavel
     FormCriancaComponent,
     BairroListaComponent,
     ResponsavelFormComponent,
+    ResponsavelListaComponent,
+    ResponsavelMainComponent,
 
   ],
   imports: [

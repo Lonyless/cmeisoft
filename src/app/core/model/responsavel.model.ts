@@ -1,7 +1,7 @@
 export class Responsavel {
     constructor(nome?: string, cpf?: number, telefone1?: number, telefone2?: number, trabalho?: string,
         renda?: number, pensao?: number, numeroTitulo?: number, zonaTitulo?: number, secaoTitulo?: number,
-        status?: number, id?: number) {
+        status?: number, tipo?: string, id?: number) {
 
         this.id = id
         this.nome = nome
@@ -15,6 +15,7 @@ export class Responsavel {
         this.zonaTitulo = zonaTitulo
         this.secaoTitulo = secaoTitulo
         this.status = status
+        this.tipo = tipo
 
     }
 
@@ -30,5 +31,6 @@ export class Responsavel {
     zonaTitulo: number
     secaoTitulo: number
     status: number
+    tipo: string
 
 }

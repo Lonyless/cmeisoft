@@ -11,16 +11,16 @@ const router = express.Router() //cria o sistema de rotas
 
 app.use((req, res, next) => {
 
-    res.header("Access-Control-Allow-Origin", "*") //requisições padrao
-    res.header("Access-Control-Allow-Headers", "Content-Type") //headers
-    res.header("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE") //metodos
-  
-    app.use(cors())
-    next()
-  })
+  res.header("Access-Control-Allow-Origin", "*") //requisições padrao
+  res.header("Access-Control-Allow-Headers", "Content-Type") //headers
+  res.header("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE") //metodos
+
+  app.use(cors())
+  next()
+})
 
 app.use(bodyParser.json())  //muda o html pra JSON
-app.use(bodyParser.urlencoded( { extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/', router);
 
@@ -32,12 +32,13 @@ console.log('API funcionando!');
 app.use(express.static(__dirname + '/src'));
 
 const cmei = require('./routes/cmei')
-const crianca = require ('./routes/crianca')
+const crianca = require('./routes/crianca')
 const bairro = require('./routes/bairro')
 const cidade = require('./routes/cidade')
 const endereco = require('./routes/endereco')
 const contemplado = require('./routes/contemplado')
 const criterioSocial = require('./routes/criterioSocial')
+const responsavel = require('./routes/responsavel')
 
 rotasCmei = new cmei(router)
 rotasCrianca = new crianca(router)
@@ -46,6 +47,7 @@ rotasCidade = new cidade(router)
 rotasEndereco = new endereco(router)
 rotasContemplado = new contemplado(router)
 rotasCriterioSocial = new criterioSocial(router)
+rotasResponsavel = new responsavel(router)
 
 //tabela CMEI
 rotasCmei.getAll()
@@ -95,3 +97,11 @@ rotasCriterioSocial.getId()
 rotasCriterioSocial.post()
 rotasCriterioSocial.put()
 rotasCriterioSocial.delete()
+
+//tabela responsavel
+rotasResponsavel.getAll()
+rotasResponsavel.getId()
+rotasResponsavel.post()
+rotasResponsavel.put()
+rotasResponsavel.delete()
+rotasResponsavel.getResponsavelCrianca()

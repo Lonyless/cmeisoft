@@ -26,6 +26,10 @@ export class ResponsavelService {
 
   }
 
+  listarCriancas(id: number) {
+    return this.http.get<Responsavel[]>(`${this.apiURL}/responsavel/get/` + id);
+  }
+
   adicionar(responsavel: Responsavel) {
 
     this.http.post(`${this.apiURL}/responsavel`, responsavel)

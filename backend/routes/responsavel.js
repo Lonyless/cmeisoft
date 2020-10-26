@@ -22,6 +22,12 @@ class rotasCmei {
         })
     }
 
+    getResponsavelCrianca() {
+        this.router.get('/responsavel/get/:crianca_id', (req, res) => {
+            query("select * from aux_crianca_responsavel where crianca_id=" + parseInt(req.params.crianca_id), res)
+        })
+    }
+
     post() {
         this.router.post('/responsavel', (req, res) => {
             const nome = req.body.nome
