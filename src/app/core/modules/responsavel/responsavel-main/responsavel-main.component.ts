@@ -19,17 +19,18 @@ export class ResponsavelMainComponent implements OnInit {
 
   newVisibility: boolean
 
-  changeNewVisibility() {
-    if (this.newVisibility) {
-      this.newVisibility = false
+  changeVisibility(div: boolean) {
+    if (div) {
+      div = false
     } else {
-      this.newVisibility = true
-
-    }
+      div = true
+    } 
+    
+    return div
   }
 
   ngOnInit(): void {
-    this.newVisibility = false
+    this.newVisibility = true
     this.listarAll()
   }
 
@@ -42,8 +43,8 @@ export class ResponsavelMainComponent implements OnInit {
     })
   }
 
-  listarCurrent() {
-    this.responsavelService.listar().subscribe(res => {
+  listarCurrent(id) {
+    this.responsavelService.listarCriancas(id).subscribe(res => {
       this.responsaveisCurrent = res
     })
   }
