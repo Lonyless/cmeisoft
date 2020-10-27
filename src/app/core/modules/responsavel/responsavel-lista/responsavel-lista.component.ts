@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Crianca } from 'src/app/core/model/crianca.model';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
@@ -29,8 +29,13 @@ export class ResponsavelListaComponent implements OnInit {
     })
   }
 
+  adicionarResponsavelOnPressed(responsavel) {
+    this.adicionarResponsavel.emit(responsavel)
+  }
+
   id: number
 
+  @Output() adicionarResponsavel = new EventEmitter()
   @Input() responsaveis: Responsavel[]
   filteredResponsavel: Responsavel[]
   _filterBy: string

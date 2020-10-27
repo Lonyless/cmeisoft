@@ -31,7 +31,7 @@
             <td>{{responsavel.telefone1}}</td>
             <td>{{responsavel.trabalho}}</td>
             <td>
-                <button class="btn btn-primary" [routerLink]="['update', responsavel.id]">Editar</button>
+                <button class="btn btn-primary" (click)="adicionarOnPressed(responsavel)">Adicionar</button>
                 <button (click)="getId(responsavel.id)" class="btn btn-danger ml-2 " data-toggle="modal"
                     data-target="#confirmacao">Deletar</button>
             </td>

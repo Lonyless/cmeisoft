@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
@@ -20,6 +20,21 @@ export class ResponsavelFormComponent implements OnInit {
 
   form: FormGroup;
 
+  @Output() adicionar = new EventEmitter
+
+  adicionarOnPressed() {
+    const responsavel = new Responsavel(this.form.value.nomeResponsavel,
+      this.form.value.cpfResponsavel, this.form.value.telefone1Responsavel,
+      this.form.value.telefone2Responsavel, this.form.value.trabalhoResponsavel,
+      this.form.value.rendaResponsavel, this.form.value.pensaoResponsavel,
+      this.form.value.numeroTituloResponsavel, this.form.value.zonaTituloResponsavel,
+      this.form.value.secaoTituloResponsavel, this.form.value.statusResponsavel,
+      this.form.value.tipoResponsavel)
+
+    this.adicionar.emit(responsavel)
+    this.form.reset()
+  }
+
   ngOnInit(): void {
 
     let responsavel = [{
@@ -39,7 +54,6 @@ export class ResponsavelFormComponent implements OnInit {
       numeroTituloResponsavel: [responsavel[0].numeroTitulo, [Validators.required]],
       zonaTituloResponsavel: [responsavel[0].zonaTitulo, [Validators.required]],
       secaoTituloResponsavel: [responsavel[0].secaoTitulo, [Validators.required]],
-      statusResponsavel: [responsavel[0].status, [Validators.required]],
       tipoResponsavel: [responsavel[0].tipo, [Validators.required]],
     })
 
@@ -55,7 +69,7 @@ export class ResponsavelFormComponent implements OnInit {
         this.form.value.telefone2Responsavel, this.form.value.trabalhoResponsavel,
         this.form.value.rendaResponsavel, this.form.value.pensaoResponsavel,
         this.form.value.numeroTituloResponsavel, this.form.value.zonaTituloResponsavel,
-        this.form.value.secaoTituloResponsavel, this.form.value.statusResponsavel,
+        this.form.value.secaoTituloResponsavel,
         this.form.value.tipoResponsavel, this.form.value.id)
 
       //update
@@ -69,7 +83,7 @@ export class ResponsavelFormComponent implements OnInit {
         this.form.value.telefone2Responsavel, this.form.value.trabalhoResponsavel,
         this.form.value.rendaResponsavel, this.form.value.pensaoResponsavel,
         this.form.value.numeroTituloResponsavel, this.form.value.zonaTituloResponsavel,
-        this.form.value.secaoTituloResponsavel, this.form.value.statusResponsavel,
+        this.form.value.secaoTituloResponsavel,
         this.form.value.tipoResponsavel)
 
       console.log(responsavel)

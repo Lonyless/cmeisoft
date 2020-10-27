@@ -1,81 +1,114 @@
 <form class="needs-validation" [formGroup]="form">
 
     <div class="form-group">
-        <label class="mt-3">Nome da Crianca</label>
-        <input required [ngClass]="cssErro('nomeCrianca')" formControlName="nomeCrianca" type="text" id="nomeCrianca"
-            class="form-control form-control-lg" placeholder="">
-        <div *ngIf="validarCampo('nomeCrianca')" class="alert alert-danger">
-            O nome do aluno é obrigatorio
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="mt-3">Genero</label>
-        <select required formControlName="sexoCrianca" name="sexoCrianca" id="sexoCrianca"
-            class="form-control form-control-lg" placeholder="">
-            <option value=1>Masculino</option>
-            <option value=0>Feminino</option>
-        </select>
-        <div *ngIf="validarCampo('sexoCrianca')" class="alert alert-danger">
-            O Genero é obrigatorio
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="mt-3">Data de Nascimento</label>
-        <input required type="date" formControlName="nascimentoCrianca" name="nascimentoCrianca" id="nascimentoCrianca"
-            class="form-control form-control-lg" />
-        <div *ngIf="validarCampo('nascimentoCrianca')" class="alert alert-danger">
-            Entre com uma data valida
+        <label class="mt-3">Nome do Responsavel</label>
+        <input required [ngClass]="cssErro('nomeResponsavel')" formControlName="nomeResponsavel" type="text"
+            id="nomeResponsavel" class="form-control form-control-lg" placeholder="">
+        <div *ngIf="validarCampo('nomeResponsavel')" class="alert alert-danger">
+            O nome do responsavel é obrigatorio
         </div>
     </div>
 
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <label class="mt-3">Registro</label>
-                <input required [ngClass]="cssErro('registroCrianca')" formControlName="registroCrianca" type="text"
-                    id="registroCrianca" class="form-control form-control-lg" placeholder="">
-                <div *ngIf="validarCampo('registroCrianca')" class="alert alert-danger">
-                    O registro é obrigatorio
+                <label class="mt-3">Tipo</label>
+                <select required [ngClass]="cssErro('tipoResponsavel')" formControlName="tipoResponsavel" type="text"
+                    id="tipoResponsavel" class="form-control form-control-lg" placeholder="">
+                    <option value="Pai">Pai</option>
+                    <option value="Mae">Mae</option>
+                    <option value="Avô">Avô</option>
+                    <option value="Avó">Avó</option>
+                </select>
+                <div *ngIf="validarCampo('tipoResponsavel')" class="alert alert-danger">
+                    O tipo do responsavel é obrigatorio
                 </div>
             </div>
         </div>
-
-        <div class="col">
-            <div class="form-group">
-                <label class="mt-3">Livro</label>
-                <input required [ngClass]="cssErro('livroCrianca')" formControlName="livroCrianca" type="text"
-                    id="livroCrianca" class="form-control form-control-lg" placeholder="">
-                <div *ngIf="validarCampo('livroCrianca')" class="alert alert-danger">
-                    O livro é obrigatorio
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-3">
-            <div class="form-group">
-                <label class="mt-3">Folha</label>
-                <input required [ngClass]="cssErro('folhaCrianca')" formControlName="folhaCrianca" type="text"
-                    id="folhaCrianca" class="form-control form-control-lg" placeholder="">
-                <div *ngIf="validarCampo('folhaCrianca')" class="alert alert-danger">
-                    A folha é obrigatoria
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
+        <div class="col-5">
             <div class="form-group">
                 <label class="mt-3">CPF</label>
-                <input required [ngClass]="cssErro('cpfCrianca')" formControlName="cpfCrianca" type="text"
-                    id="cpfCrianca" class="form-control form-control-lg" placeholder="">
-                <div *ngIf="validarCampo('cpfCrianca')" class="alert alert-danger">
-                    O CPF é obrigatorio
+                <input required [ngClass]="cssErro('cpfResponsavel')" formControlName="cpfResponsavel" type="text"
+                    id="cpfResponsavel" class="form-control form-control-lg" placeholder="">
+                <div *ngIf="validarCampo('cpfResponsavel')" class="alert alert-danger">
+                    O CPF do responsavel é obrigatorio
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label class="mt-3">Contato 1</label>
+                <input [ngClass]="cssErro('telefone1Responsavel')" formControlName="telefone1Responsavel" type="text"
+                    id="telefone1Responsavel" class="form-control form-control-lg" placeholder="">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label class="mt-3">Contato 2</label>
+                <input [ngClass]="cssErro('telefone2Responsavel')" formControlName="telefone2Responsavel" type="text"
+                    id="telefone2Responsavel" class="form-control form-control-lg" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="mt-3">Trabalho</label>
+        <input required [ngClass]="cssErro('trabalhoResponsavel')" formControlName="trabalhoResponsavel" type="text"
+            id="trabalhoResponsavel" class="form-control form-control-lg" placeholder="">
+        <div *ngIf="validarCampo('trabalhoResponsavel')" class="alert alert-danger">
+            O trabalho do responsavel é obrigatorio
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label class="mt-3">Renda</label>
+                <input required [ngClass]="cssErro('rendaResponsavel')" formControlName="rendaResponsavel" type="text"
+                    id="rendaResponsavel" class="form-control form-control-lg" placeholder="">
+                <div *ngIf="validarCampo('rendaResponsavel')" class="alert alert-danger">
+                    A renda do responsavel é obrigatoria
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label class="mt-3">Pensao</label>
+                <input [ngClass]="cssErro('pensaoResponsavel')" formControlName="pensaoResponsavel" type="text"
+                    id="pensaoResponsavel" class="form-control form-control-lg" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label class="mt-3">Numero do titulo de Eleitor</label>
+                <input [ngClass]="cssErro('numeroTituloResponsavel')" formControlName="numeroTituloResponsavel"
+                    type="text" id="numeroTituloResponsavel" class="form-control form-control-lg" placeholder="">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="mt-3">Zona</label>
+                <input [ngClass]="cssErro('zonaTituloResponsavel')" formControlName="zonaTituloResponsavel" type="text"
+                    id="zonaTituloResponsavel" class="form-control form-control-lg" placeholder="">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label class="mt-3">Secao</label>
+                <input [ngClass]="cssErro('secaoTituloResponsavel')" formControlName="secaoTituloResponsavel"
+                    type="text" id="secaoTituloResponsavel" class="form-control form-control-lg" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-row-reverse">
+        <button [disabled]="!this.form.valid" class="btn btn-primary mr-5" (click)="adicionarOnPressed()">Adicionar</button>
+        <button class="btn btn-secondary mr-2">Cancelar</button>
+    </div>
+    <hr/>
 </form>
