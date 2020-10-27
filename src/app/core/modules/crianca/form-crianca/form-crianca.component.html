@@ -16,6 +16,10 @@
         <a class="nav-link" id="criterios-tab" data-toggle="tab" href="#criterios" role="tab"
             aria-controls="criterios" aria-selected="false">Dados de Seleção</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" id="cmei-tab" data-toggle="tab" href="#cmei" role="tab"
+            aria-controls="cmei" aria-selected="false">Dados sobre CMEI</a>
+    </li>
 </ul>
 
 <!-- Cria o formulario com os campos dentro das abas-->
@@ -118,7 +122,13 @@
 
         <div class="tab-pane fade show" id="criterios" role="tabpanel" aria-labelledby="home-tab">
 
-            <app-bairro-lista></app-bairro-lista>
+            <app-criterio-list></app-criterio-list>
+
+        </div>
+
+        <div class="tab-pane fade show" id="cmei" role="tabpanel" aria-labelledby="home-tab">
+
+            <app-cmei-form></app-cmei-form>
 
         </div>
 

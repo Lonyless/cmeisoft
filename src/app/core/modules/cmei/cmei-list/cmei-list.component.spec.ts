@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CmeiListaComponent } from './cmei-lista.component';
+import { CmeiListComponent } from './cmei-list.component';
 
-describe('CmeiListaComponent', () => {
-  let component: CmeiListaComponent;
-  let fixture: ComponentFixture<CmeiListaComponent>;
+describe('CmeiListComponent', () => {
+  let component: CmeiListComponent;
+  let fixture: ComponentFixture<CmeiListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CmeiListaComponent ]
+      declarations: [ CmeiListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CmeiListaComponent);
+    fixture = TestBed.createComponent(CmeiListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

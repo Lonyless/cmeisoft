@@ -1,0 +1,32 @@
+<form class="needs-validation" [formGroup]="form">
+
+    <div class="container mt-5">
+
+        <div class="col">
+            <div class="form-group">
+                <label>CMEI Opção 1</label>
+                <select required formControlName="cmeiOpcao1" name="cmeiOpcao1" id="cmeiOpcao1"
+                    class="form-control form-control-lg" placeholder="">
+                    <option *ngFor="let cmei of cmeiList" value={{cmei.id}}>{{cmei.nome}}</option>
+                </select>
+                <div *ngIf="validarCampo('cmeiOpcao1')" class="alert alert-danger">
+                    Por favor escolha um CMEI
+                </div>
+            </div>
+        </div>
+     
+        <div class="col">
+            <div class="form-group">
+                <label>CMEI Opção 2</label>
+                <select required formControlName="cmeiOpcao2" name="cmeiOpcao2" id="cmeiOpcao2"
+                    class="form-control form-control-lg" placeholder="">
+                    <option *ngFor="let cmei of cmeiList" value={{cmei.id}}>{{cmei.nome}}</option>
+                </select>
+                <div *ngIf="validarCampo('cmeiOpcao2')" class="alert alert-danger">
+                    Por favor escolha um CMEI
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

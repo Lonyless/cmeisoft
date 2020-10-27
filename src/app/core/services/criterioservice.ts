@@ -7,7 +7,7 @@ import { Criterio } from '../model/criterio.model';
 @Injectable({
   providedIn: 'root'
 })
-export class BairroService {
+export class CriterioService {
 
   constructor(private http: HttpClient) {
     this.apiURL = 'http://localhost:3000';

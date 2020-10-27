@@ -14,9 +14,6 @@ import { NavbarComponent } from './core/navbar/navbar.component'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CriteriosComponent } from './core/modules/admin/criterios/criterios.component';
-import { CmeiFormComponent } from './core/modules/admin/cmei-form/cmei-form.component';
-import { CmeiListaComponent } from './core/modules/admin/cmei-lista/cmei-lista.component';
 import { EnderecoFormComponent } from './core/modules/localizacao/endereco-form/endereco-form.component';
 import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cidade-form.component';
 import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
@@ -29,15 +26,14 @@ import { ResponsavelListaComponent } from './core/modules/responsavel/responsave
 import { ResponsavelMainComponent } from './core/modules/responsavel/responsavel-main/responsavel-main.component';
 import { CriterioFormComponent } from './core/modules/criterio/criterio-form/criterio-form.component';
 import { CriterioListComponent } from './core/modules/criterio/criterio-list/criterio-list.component';
+import { CmeiListComponent } from './core/modules/cmei/cmei-list/cmei-list.component';
+import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     ListaComponent,
-    CriteriosComponent,
-    CmeiFormComponent,
-    CmeiListaComponent,
     EnderecoFormComponent,
     CidadeFormComponent,
     MenuComponent,
@@ -50,6 +46,8 @@ import { CriterioListComponent } from './core/modules/criterio/criterio-list/cri
     ResponsavelMainComponent,
     CriterioFormComponent,
     CriterioListComponent,
+    CmeiListComponent,
+    CmeiFormComponent,
 
   ],
   imports: [
