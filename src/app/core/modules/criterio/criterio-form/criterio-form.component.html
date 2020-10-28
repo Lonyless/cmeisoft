@@ -1,6 +1,9 @@
-<form class="needs-validation" [formGroup]="form">
-    <div formArrayName="criterioList" *ngFor="let criterio of criterioList">
-       <h1>{{criterio.descricao}}</h1>
-        <input type="checkbox"  value="{{criterio.id}}">
-    </div>
-</form>
+<div *ngFor="let criterio of criterioList; let i = index">
+    <h1>{{criterio.descricao}}</h1>
+    Sim
+    <input [(ngModel)]="criterioSelected[i]" type="radio" value=1 name={{criterio.id}}>
+    Nao
+    <input [(ngModel)]="criterioSelected[i]" type="radio" value=0 name={{criterio.id}}>
+</div>
+
+<button (click)="onSubmitAux()">Test</button>

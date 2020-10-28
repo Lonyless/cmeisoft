@@ -15,17 +15,25 @@ export class CriterioFormComponent implements OnInit {
     public criterioService: CriterioService,
     private criterioEmmiterService: CriterioEmmiterService
   ) {
+    this.criterioSelected = [];
+
     this.criterioService = criterioService;
+
+    this.form = this.formBuilder.group({
+      criterios: new FormArray([]),
+    });
   }
 
   form: FormGroup;
   criterioList: Criterio[];
 
+  criterioSelected: Array<number>;
+
   ngOnInit(): void {
     if (this.criterioEmmiterService.subsVar == undefined) {
       this.criterioEmmiterService.subsVar = this.criterioEmmiterService.invokeFirstComponentFunction.subscribe(
         (name: string) => {
-          this.onSubmit();
+          this.onSubmitAux();
         }
       );
     }
@@ -33,16 +41,17 @@ export class CriterioFormComponent implements OnInit {
     this.criterioService.listar().subscribe((res) => (this.criterioList = res))
       .unsubscribe;
 
-    console.log(this.criterioList);
-
-    this.form = this.formBuilder.group({
-      criterios: new FormArray([]),
-    });
+    //console.log(this.criterioList);
   }
 
-  onSubmit() {
-    if (this.form.value.id != null) {
-    } else {
-    }
+  onSubmit() {}
+
+  onSubmitAux() {
+    this.criterioSelected.forEach((val) => console.log(val));
+
+    //const criterio = new Criterio(this.form.value.id)
+    //this.form.value.criterio.forEach((element) => {
+    //this.criterioService.adicionarAux()
+    //});
   }
 }

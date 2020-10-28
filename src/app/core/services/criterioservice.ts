@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 
 import { Criterio } from '../model/criterio.model';
+import { Crianca } from '../model/crianca.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,21 @@ export class CriterioService {
 
     return this.http.get<Criterio>(`${this.apiURL}/criteriosocial/` + id);
 
+  }
+
+  adicionarAux(criterio: Criterio, crianca: Crianca) {
+    const criterioAuxCrianca = {criterioId: criterio.id, criancaId: crianca.id}
+    this.http.post(`${this.apiURL}/criteriosocial`, criterioAuxCrianca)
+      .subscribe(
+        resultado => {
+          console.log(resultado)
+        },
+        erro => {
+          if (erro.status == 400) {
+            console.log(erro);
+          }
+        }
+      );
   }
 
   adicionar(criterio: Criterio) {
