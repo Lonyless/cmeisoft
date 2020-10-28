@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 @Injectable({
     providedIn: 'root'
 })
-export class EventEmitterService {
+export class CriterioEmmiterService {
 
     invokeFirstComponentFunction = new EventEmitter();
     subsVar: Subscription;

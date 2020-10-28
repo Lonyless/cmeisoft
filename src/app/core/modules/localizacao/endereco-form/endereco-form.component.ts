@@ -6,8 +6,7 @@ import { Endereco } from 'src/app/core/model/endereco.model';
 import { BairroService } from 'src/app/core/services/bairro.service';
 import { CidadeService } from 'src/app/core/services/cidade.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
-import { EventEmitterService } from 'src/app/core/services/event-emmiter.service';
-import { BairroFormComponent } from '../bairro-form/bairro-form.component';
+import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.service';
 
 @Component({
   selector: 'app-endereco-form',
@@ -22,7 +21,7 @@ export class EnderecoFormComponent implements OnInit {
 
   constructor(public fb: FormBuilder, private route: ActivatedRoute,
     public enderecoService: EnderecoService, public bairroService: BairroService,
-    public cidadeService: CidadeService, private eventEmitterService: EventEmitterService) {
+    public cidadeService: CidadeService, private eventEmitterService: EnderecoEmmiterService) {
 
     this.enderecoService = enderecoService
     this.bairroService = bairroService

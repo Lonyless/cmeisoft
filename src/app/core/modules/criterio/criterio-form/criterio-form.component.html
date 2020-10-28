@@ -1,3 +1,6 @@
 <form class="needs-validation" [formGroup]="form">
-    
+    <div formArrayName="criterioList" *ngFor="let criterio of criterioList">
+       <h1>{{criterio.descricao}}</h1>
+        <input type="checkbox"  value="{{criterio.id}}">
+    </div>
 </form>

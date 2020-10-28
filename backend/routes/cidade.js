@@ -1,10 +1,10 @@
-const express = require('express')  //usado na conexao com a API
+import { Router } from 'express';  //usado na conexao com a API
 
-const query = require('../conection')
+import query from '../conection';
 
 class rotasCmei {
 
-    router = express.Router()
+    router = Router()
 
     constructor(router) {
         this.router = router;
@@ -48,4 +48,4 @@ class rotasCmei {
 
 }
 
-module.exports = rotasCmei;
+export default rotasCmei;

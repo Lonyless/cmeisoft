@@ -2,45 +2,74 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
+import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
 import { ResponsavelService } from 'src/app/core/services/responsavel.service.';
 
 @Component({
   selector: 'app-responsavel-form',
   templateUrl: './responsavel-form.component.html',
-  styleUrls: ['./responsavel-form.component.css']
+  styleUrls: ['./responsavel-form.component.css'],
 })
 export class ResponsavelFormComponent implements OnInit {
-
-  constructor(public fb: FormBuilder, private route: ActivatedRoute,
-    public responsavelService: ResponsavelService,) {
-
-    this.responsavelService = responsavelService
-
+  constructor(
+    public fb: FormBuilder,
+    private route: ActivatedRoute,
+    public responsavelService: ResponsavelService,
+    private responsavelEmmiterService: ResponsavelEmmiterService
+  ) {
+    this.responsavelService = responsavelService;
   }
 
   form: FormGroup;
 
-  @Output() adicionar = new EventEmitter
+  @Output() adicionar = new EventEmitter();
 
   adicionarOnPressed() {
-    const responsavel = new Responsavel(this.form.value.nomeResponsavel,
-      this.form.value.cpfResponsavel, this.form.value.telefone1Responsavel,
-      this.form.value.telefone2Responsavel, this.form.value.trabalhoResponsavel,
-      this.form.value.rendaResponsavel, this.form.value.pensaoResponsavel,
-      this.form.value.numeroTituloResponsavel, this.form.value.zonaTituloResponsavel,
-      this.form.value.secaoTituloResponsavel, this.form.value.statusResponsavel,
-      this.form.value.tipoResponsavel)
+    const responsavel = new Responsavel(
+      this.form.value.nomeResponsavel,
+      this.form.value.cpfResponsavel,
+      this.form.value.telefone1Responsavel,
+      this.form.value.telefone2Responsavel,
+      this.form.value.trabalhoResponsavel,
+      this.form.value.rendaResponsavel,
+      this.form.value.pensaoResponsavel,
+      this.form.value.numeroTituloResponsavel,
+      this.form.value.zonaTituloResponsavel,
+      this.form.value.secaoTituloResponsavel,
+      this.form.value.statusResponsavel,
+      this.form.value.tipoResponsavel
+    );
 
-    this.adicionar.emit(responsavel)
-    this.form.reset()
+    this.adicionar.emit(responsavel);
+    this.form.reset();
   }
 
   ngOnInit(): void {
+    if (this.responsavelEmmiterService.subsVar == undefined) {
+      this.responsavelEmmiterService.subsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
+        (name: string) => {
+          this.onSubmit();
+        }
+      );
+    }
 
-    let responsavel = [{
-      id: null, nome: null, cpf: null, telefone1: null, telefone2: null, trabalho: null, renda: null,
-      pensao: null, numeroTitulo: null, zonaTitulo: null, secaoTitulo: null, status: null, tipo: null
-    }]
+    let responsavel = [
+      {
+        id: null,
+        nome: null,
+        cpf: null,
+        telefone1: null,
+        telefone2: null,
+        trabalho: null,
+        renda: null,
+        pensao: null,
+        numeroTitulo: null,
+        zonaTitulo: null,
+        secaoTitulo: null,
+        status: null,
+        tipo: null,
+      },
+    ];
 
     this.form = this.fb.group({
       id: [responsavel[0].id],
@@ -51,68 +80,77 @@ export class ResponsavelFormComponent implements OnInit {
       trabalhoResponsavel: [responsavel[0].trabalho, [Validators.required]],
       rendaResponsavel: [responsavel[0].renda, [Validators.required]],
       pensaoResponsavel: [responsavel[0].pensao, [Validators.required]],
-      numeroTituloResponsavel: [responsavel[0].numeroTitulo, [Validators.required]],
+      numeroTituloResponsavel: [
+        responsavel[0].numeroTitulo,
+        [Validators.required],
+      ],
       zonaTituloResponsavel: [responsavel[0].zonaTitulo, [Validators.required]],
-      secaoTituloResponsavel: [responsavel[0].secaoTitulo, [Validators.required]],
+      secaoTituloResponsavel: [
+        responsavel[0].secaoTitulo,
+        [Validators.required],
+      ],
       tipoResponsavel: [responsavel[0].tipo, [Validators.required]],
-    })
-
+    });
   }
 
   onSubmit() {
-
     if (this.form.value.id != null) {
-
       //criando um objeto com os valores do form, usei dois por causa do ID
-      const responsavel = new Responsavel(this.form.value.nomeResponsavel,
-        this.form.value.cpfResponsavel, this.form.value.telefone1Responsavel,
-        this.form.value.telefone2Responsavel, this.form.value.trabalhoResponsavel,
-        this.form.value.rendaResponsavel, this.form.value.pensaoResponsavel,
-        this.form.value.numeroTituloResponsavel, this.form.value.zonaTituloResponsavel,
+      const responsavel = new Responsavel(
+        this.form.value.nomeResponsavel,
+        this.form.value.cpfResponsavel,
+        this.form.value.telefone1Responsavel,
+        this.form.value.telefone2Responsavel,
+        this.form.value.trabalhoResponsavel,
+        this.form.value.rendaResponsavel,
+        this.form.value.pensaoResponsavel,
+        this.form.value.numeroTituloResponsavel,
+        this.form.value.zonaTituloResponsavel,
         this.form.value.secaoTituloResponsavel,
-        this.form.value.tipoResponsavel, this.form.value.id)
+        this.form.value.tipoResponsavel,
+        this.form.value.id
+      );
 
       //update
-      console.log(this.form.value)
-      this.responsavelService.alterar(responsavel)
-
+      console.log(this.form.value);
+      this.responsavelService.alterar(responsavel);
     } else {
-
-      const responsavel = new Responsavel(this.form.value.nomeResponsavel,
-        this.form.value.cpfResponsavel, this.form.value.telefone1Responsavel,
-        this.form.value.telefone2Responsavel, this.form.value.trabalhoResponsavel,
-        this.form.value.rendaResponsavel, this.form.value.pensaoResponsavel,
-        this.form.value.numeroTituloResponsavel, this.form.value.zonaTituloResponsavel,
+      const responsavel = new Responsavel(
+        this.form.value.nomeResponsavel,
+        this.form.value.cpfResponsavel,
+        this.form.value.telefone1Responsavel,
+        this.form.value.telefone2Responsavel,
+        this.form.value.trabalhoResponsavel,
+        this.form.value.rendaResponsavel,
+        this.form.value.pensaoResponsavel,
+        this.form.value.numeroTituloResponsavel,
+        this.form.value.zonaTituloResponsavel,
         this.form.value.secaoTituloResponsavel,
-        this.form.value.tipoResponsavel)
+        this.form.value.tipoResponsavel
+      );
 
-      console.log(responsavel)
-      this.responsavelService.adicionar(responsavel)
+      console.log(responsavel);
+      this.responsavelService.adicionar(responsavel);
     }
   }
 
   validarCampo(campo) {
-
-    return !this.form.get(campo).valid && this.form.get(campo).touched
-
+    return !this.form.get(campo).valid && this.form.get(campo).touched;
   }
 
   cssErro(campo) {
     return {
-      'has-error': this.validarCampo(campo)
-    }
+      'has-error': this.validarCampo(campo),
+    };
   }
 
   tabErro(campo) {
     return {
-      'dngr': this.validarCampo(campo)
-    }
+      dngr: this.validarCampo(campo),
+    };
   }
 
   log() {
-    console.log(this.form)
+    console.log(this.form);
   }
-
-
-
 }

@@ -16,19 +16,19 @@ export class CriterioService {
   readonly apiURL: string;
 
   listar() {
-    return this.http.get<Criterio[]>(`${this.apiURL}/criterio`)   //coloquei um array pra ele retornar um array de objetos
+    return this.http.get<Criterio[]>(`${this.apiURL}/criteriosocial`)   //coloquei um array pra ele retornar um array de objetos
 
   }
 
   listarPorId(id: number) {
 
-    return this.http.get<Criterio>(`${this.apiURL}/criterio/` + id);
+    return this.http.get<Criterio>(`${this.apiURL}/criteriosocial/` + id);
 
   }
 
   adicionar(criterio: Criterio) {
 
-    this.http.post(`${this.apiURL}/criterio`, criterio)
+    this.http.post(`${this.apiURL}/criteriosocial`, criterio)
       .subscribe(
         resultado => {
           console.log(resultado)
@@ -43,7 +43,7 @@ export class CriterioService {
 
   alterar(criterio: Criterio) {
 
-    this.http.put(`${this.apiURL}/criterio/` + criterio.id, criterio)
+    this.http.put(`${this.apiURL}/criteriosocial/` + criterio.id, criterio)
       .subscribe(
         resultado => {
           console.log('alterado com sucesso.')
@@ -62,7 +62,7 @@ export class CriterioService {
   }
 
   excluir(id: number) {
-    this.http.delete(`${this.apiURL}/criterio/` + id)
+    this.http.delete(`${this.apiURL}/criteriosocial/` + id)
       .subscribe(
         resultado => {
           console.log('excluído com sucesso.');
