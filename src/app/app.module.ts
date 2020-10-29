@@ -2,15 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { CriancaService } from './core/services/crianca.service'
-import { CmeiService } from './core/services/cmei.service'
-import { ListaComponent } from './core/modules/crianca/lista-crianca/lista-crianca.component'
+import { CriancaService } from './core/services/crianca.service';
+import { CmeiService } from './core/services/cmei.service';
+import { ListaComponent } from './core/modules/crianca/lista-crianca/lista-crianca.component';
 
-import { NavbarComponent } from './core/navbar/navbar.component'
+import { NavbarComponent } from './core/navbar/navbar.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +28,7 @@ import { CriterioFormComponent } from './core/modules/criterio/criterio-form/cri
 import { CriterioListComponent } from './core/modules/criterio/criterio-list/criterio-list.component';
 import { CmeiListComponent } from './core/modules/cmei/cmei-list/cmei-list.component';
 import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.component';
+import { CriterioGuard } from './core/guard/criterio-guard.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,6 @@ import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.compo
     CriterioListComponent,
     CmeiListComponent,
     CmeiFormComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -56,9 +56,9 @@ import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.compo
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
   ],
-  providers: [CriancaService, CmeiService],
-  bootstrap: [AppComponent]
+  providers: [CriancaService, CmeiService, CriterioGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

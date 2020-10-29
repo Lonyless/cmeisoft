@@ -2,7 +2,7 @@
 
     <div formArrayName="criterios" class="form-group"
         *ngFor="let item of form.get('criterios')['controls']; let i = index">
-        <input type="checkbox" [formControlName]="i"> {{dynamic[i]}}
+        <input type="checkbox" [formControlName]="i"> {{criterioList[i].descricao}}
     </div>
 
     <button (click)="onSubmitAux()">Test</button>
