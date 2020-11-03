@@ -13,12 +13,12 @@
             aria-controls="responsavel" aria-selected="false">Dados do Responsavel</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="criterios-tab" data-toggle="tab" href="#criterios" role="tab"
-            aria-controls="criterios" aria-selected="false">Dados de Seleção</a>
+        <a class="nav-link" id="criterios-tab" data-toggle="tab" href="#criterios" role="tab" aria-controls="criterios"
+            aria-selected="false">Dados de Seleção</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="cmei-tab" data-toggle="tab" href="#cmei" role="tab"
-            aria-controls="cmei" aria-selected="false">Dados sobre CMEI</a>
+        <a class="nav-link" id="cmei-tab" data-toggle="tab" href="#cmei" role="tab" aria-controls="cmei"
+            aria-selected="false">Dados sobre CMEI</a>
     </li>
 </ul>
 
@@ -128,10 +128,42 @@
 
         <div class="tab-pane fade show" id="cmei" role="tabpanel" aria-labelledby="home-tab">
 
-            <app-cmei-form></app-cmei-form>
+            <div class="container mt-5">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label>CMEI Opção 1</label>
+                        <select required formControlName="cmeiOpcao1Crianca" name="cmeiOpcao1Crianca"
+                            id="cmeiOpcao1Crianca" class="form-control form-control-lg" placeholder="">
+                            <option *ngFor="let cmei of cmeiList" value={{cmei.id}}>{{cmei.nome}}</option>
+                        </select>
+                        <div *ngIf="validarCampo('cmeiOpcao1Crianca')" class="alert alert-danger">
+                            Por favor escolha um CMEI
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label>CMEI Opção 2</label>
+                        <select required formControlName="cmeiOpcao2Crianca" name="cmeiOpcao2Crianca"
+                            id="cmeiOpcao2Crianca" class="form-control form-control-lg" placeholder="">
+                            <option *ngFor="let cmei of cmeiList" value={{cmei.id}}>{{cmei.nome}}</option>
+                        </select>
+                        <div *ngIf="validarCampo('cmeiOpcao2Crianca')" class="alert alert-danger">
+                            Por favor escolha um CMEI
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button [disabled]="!this.form.valid" (click)="onSubmit()" class="btn btn-primary">Cadastrar</button>
 
         </div>
 
     </div>
-    <button (click)="onFormSubmit()">Yeet</button>
+
+    <button (click)="onEnderecoSubmit()">Test</button>
+    <button (click)="log()">Log</button>
+
 </form>

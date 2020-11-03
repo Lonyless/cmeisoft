@@ -3,7 +3,7 @@
     <div formArrayName="criterios" class="form-group"
         *ngFor="let item of form.get('criterios')['controls']; let i = index">
         <h1>{{criterioList[i].descricao}}</h1>
-        <input type="checkbox" [formControlName]="i">
+        <input type="checkbox" [formControlName]="i"> Sim
         
     </div>
 

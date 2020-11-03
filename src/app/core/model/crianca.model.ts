@@ -1,8 +1,8 @@
 export class Crianca {
 
-    constructor(id?: number, sexo?: number, nascimento?: string, registro?: number, livro?: number,
+    constructor(sexo?: number, nascimento?: string, registro?: number, livro?: number,
         folha?: number, cpf?: number, enderecoId?: number, cmeiOpcao1?: number,
-        cmeiOpcao2?: number, status?: number, nome?: string) {
+        cmeiOpcao2?: number, status?: number, nome?: string, id?: number) {
 
         this.id = id;
         this.sexo = sexo;

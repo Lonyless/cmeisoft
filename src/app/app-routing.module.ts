@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ListaComponent } from '../app/core/modules/crianca/lista-crianca/lista-crianca.component';
 import { CriterioGuard } from './core/guard/criterio-guard.service';
+import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.component';
 import { FormCriancaComponent } from './core/modules/crianca/form-crianca/form-crianca.component';
 import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bairro-form.component';
 import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cidade-form.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'localizacao',
     component: MenuComponent,
+  },
+  {
+    path: 'cmei',
+    component: CmeiFormComponent,
   },
   {
     path: 'localizacao/cidade',

@@ -11,6 +11,8 @@ import { EnderecoFormComponent } from '../../localizacao/endereco-form/endereco-
 import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.service';
 import { CriterioEmmiterService } from 'src/app/core/services/criterio-emmiter.service';
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
+import { Cmei } from 'src/app/core/model/cmei.model';
+import { CmeiService } from 'src/app/core/services/cmei.service';
 
 @Component({
   selector: 'app-form-crianca',
@@ -27,10 +29,14 @@ export class FormCriancaComponent implements OnInit {
     private route: ActivatedRoute,
     public criancaService: CriancaService,
     public enderecoService: EnderecoService,
+    public cmeiService: CmeiService,
     private enderecoEmitterService: EnderecoEmmiterService,
     private criterioEmmiterService: CriterioEmmiterService,
     private responsavelEmmiterService: ResponsavelEmmiterService
   ) {
+    this.enderecos = [];
+    this.cmeiList = [];
+    this.cmeiService = cmeiService;
     this.criancaService = criancaService;
     this.enderecoService = enderecoService;
   }
@@ -53,32 +59,37 @@ export class FormCriancaComponent implements OnInit {
 
   onEnderecoSubmit() {
     this.enderecoEmitterService.onEvent();
-    this.onSubmit();
+    this.enderecoService.listar().subscribe((res) => {
+      this.enderecos = res;
+      this.onSubmit();
+    }).unsubscribe;
   }
 
+  cmeiList: Cmei[];
+
   ngOnInit(): void {
+    this.cmeiService.listar().subscribe((res) => {
+      this.cmeiList = res;
+    }).unsubscribe;
+
     //let aluno = this.route.snapshot.data['aluno']
     let crianca = [
       {
         id: null,
-        sexo: 1,
+        sexo: null,
         nascimento: null,
         registro: null,
-        livro: '',
+        livro: null,
         folha: null,
         cpf: null,
-        enderecoId: 1,
-        cmeiOpcao1: 1,
-        cmeiOpcao2: 1,
-        cidadeId: 1,
-        status: 1,
-        nome: '',
+        enderecoId: null,
+        cmeiOpcao1: null,
+        cmeiOpcao2: null,
+        cidadeId: null,
+        status: null,
+        nome: null,
       },
     ];
-
-    //POG
-    //if (aluno[0] == null)
-    //aluno = [{id: null, nome: '', pai: '', contato_cell: '', contato_fixo: ''}]
 
     //cria o formulario de criar ou editar, com base no obj(se for nulo: criar)
     this.form = this.fb.group({
@@ -90,10 +101,8 @@ export class FormCriancaComponent implements OnInit {
       livroCrianca: [crianca[0].livro, [Validators.required]],
       folhaCrianca: [crianca[0].folha, [Validators.required]],
       cpfCrianca: [crianca[0].cpf, [Validators.required]],
-      enderecoIdCrianca: [crianca[0].enderecoId, [Validators.required]],
       cmeiOpcao1Crianca: [crianca[0].cmeiOpcao1, [Validators.required]],
       cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
-      statusCrianca: [crianca[0].status, [Validators.required]],
     });
 
     /*
@@ -121,17 +130,16 @@ export class FormCriancaComponent implements OnInit {
     if (this.form.value.id != null) {
       //criando um objeto com os valores do form, usei dois por causa do ID
       const crianca = new Crianca(
-        this.form.value.id,
         this.form.value.sexoCrianca,
         this.form.value.nascimentoCrianca,
         this.form.value.registroCrianca,
         this.form.value.livroCrianca,
         this.form.value.folhaCrianca,
         this.form.value.cpfCrianca,
-        this.enderecos[this.enderecos.length - 1].id,
+        this.enderecos[this.enderecos.length-1].id,
         this.form.value.cmeiOpcao1Crianca,
         this.form.value.cmeiOpcao2Crianca,
-        this.form.value.statusCrianca,
+        1,
         this.form.value.nomeCrianca
       );
 
@@ -139,6 +147,8 @@ export class FormCriancaComponent implements OnInit {
       console.log(this.form.value);
       this.criancaService.alterar(crianca);
     } else {
+
+
       const crianca = new Crianca(
         this.form.value.sexoCrianca,
         this.form.value.nascimentoCrianca,
@@ -149,7 +159,7 @@ export class FormCriancaComponent implements OnInit {
         this.enderecos[this.enderecos.length - 1].id,
         this.form.value.cmeiOpcao1Crianca,
         this.form.value.cmeiOpcao2Crianca,
-        this.form.value.statusCrianca,
+        1,
         this.form.value.nomeCrianca
       );
 
@@ -177,6 +187,6 @@ export class FormCriancaComponent implements OnInit {
   }
 
   log() {
-    console.log(this.form);
+    console.log(this.form.value);
   }
 }

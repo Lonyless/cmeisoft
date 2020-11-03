@@ -23,10 +23,11 @@ export class CmeiFormComponent implements OnInit {
     this.cmeiService.listar().subscribe(res => {
       this.cmeiList = res
     }).unsubscribe
-    
+
     this.form = this.fb.group({
       cmeiOpcao1: [[Validators.required]],
-      cmeiOpcao2: [[Validators.required]]
+      cmeiOpcao2: [[Validators.required]],
+      data: [[Validators.required]]
     })
   }
 
@@ -49,7 +50,7 @@ export class CmeiFormComponent implements OnInit {
   }
 
   log() {
-    console.log(this.form)
+    console.log( this.form.value.data.replace(/-/g, "/"))
   }
 
 }
