@@ -17,6 +17,7 @@ export class CriterioFormComponent implements OnInit {
     private criterioEmmiterService: CriterioEmmiterService,
     private route: ActivatedRoute
   ) {
+    this.criterioList = [];
     this.route = route;
     this.criterioService = criterioService;
   }
@@ -31,12 +32,8 @@ export class CriterioFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
-
     this.criterioList = this.route.snapshot.data.criterios;
 
-    console.log(this.criterioList);
-    
     if (this.criterioEmmiterService.subsVar == undefined) {
       this.criterioEmmiterService.subsVar = this.criterioEmmiterService.invokeFirstComponentFunction.subscribe(
         (name: string) => {

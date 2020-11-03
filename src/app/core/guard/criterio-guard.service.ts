@@ -16,18 +16,18 @@ import { CriterioService } from '../services/criterioservice';
 export class CriterioGuard implements Resolve<Criterio[]> {
   criterios: Criterio[];
 
-  constructor(public service: CriterioService) {}
+  constructor(public service: CriterioService) {
+    //this.service.listar().subscribe((criterio) => (this.criterios = criterio));
+  }
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Criterio[] | Observable<Criterio[]> | Promise<Criterio[]> {
-    if (route.params && route.params['id']) {
-      //return this.service.listarPorId(route.params['id']);
-    }
+    //  if (route.params && route.params['id']) {
+    //return this.service.listarPorId(route.params['id'])
+    //  }
 
-    this.service.listar().subscribe((criterio) => (this.criterios = criterio));
-   
-    return this.criterios;
+    return this.service.listar();
   }
 }
