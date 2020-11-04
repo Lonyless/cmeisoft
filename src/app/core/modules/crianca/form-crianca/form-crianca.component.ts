@@ -141,9 +141,8 @@ export class FormCriancaComponent implements OnInit {
       this.form.value.nomeCrianca
     );
     console.log(crianca);
-    console.log("enderecoID: " + enderecoId)
+    console.log('enderecoID: ' + enderecoId);
     this.criancaService.adicionar(crianca);
-
   }
 
   async insertEndereco() {
@@ -151,20 +150,28 @@ export class FormCriancaComponent implements OnInit {
   }
 
   async insertAuxCriterio() {
-    this.criterioEmmiterService.onEvent()
+    this.criterioEmmiterService.onEvent();
   }
 
-  onSubmit() {
+  async insertResponsavel() {
+    this.responsavelEmmiterService.onEvent();
+  }
 
+  async insertAuxCriancaResponsavel() {}
+
+  onSubmit() {
     this.insertEndereco().then(() => {
       this.enderecoService.listar().subscribe((enderecos) => {
-        let enderecoId = enderecos[enderecos.length - 1].id;
-        this.insertCrianca(enderecoId).then(() => {
-          this.insertAuxCriterio()
-        })
-      })
-    })
-
+        this.insertCrianca(enderecos[enderecos.length - 1].id).then(() => {
+          this.criancaService.listar().subscribe(() => {
+            this.insertAuxCriterio();
+            this.insertResponsavel().then(() => {
+              this.insertAuxCriancaResponsavel();
+            });
+          }).unsubscribe;
+        });
+      }).unsubscribe;
+    });
   }
 
   validarCampo(campo) {

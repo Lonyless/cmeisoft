@@ -6,72 +6,67 @@ import { ResponsavelService } from 'src/app/core/services/responsavel.service.';
 @Component({
   selector: 'app-responsavel-main',
   templateUrl: './responsavel-main.component.html',
-  styleUrls: ['./responsavel-main.component.css']
+  styleUrls: ['./responsavel-main.component.css'],
 })
 export class ResponsavelMainComponent implements OnInit {
+  inicializar = new EventEmitter();
 
-  inicializar = new EventEmitter;
-
-  constructor(public criancaService: CriancaService, public responsavelService: ResponsavelService) {
-    this.criancaService = criancaService
-    this.responsavelService = responsavelService
+  constructor(
+    public criancaService: CriancaService,
+    public responsavelService: ResponsavelService
+  ) {
+    this.criancaService = criancaService;
+    this.responsavelService = responsavelService;
   }
 
   adicionarOnPressed(event) {
+    console.log(event)
     if (this.responsaveisCurrent == null) {
-      this.responsaveisCurrent = [event]
+      this.responsaveisCurrent = [event];
     } else {
-      this.responsaveisCurrent.push(event)
+      this.responsaveisCurrent.push(event);
     }
 
-    console.log(this.responsaveisCurrent)
+    console.log(this.responsaveisCurrent);
   }
 
   remove(responsavel) {
-    this.responsaveisCurrent = this.responsaveisCurrent.filter(obj => obj != responsavel)
+    this.responsaveisCurrent = this.responsaveisCurrent.filter(
+      (obj) => obj != responsavel
+    );
   }
 
-  newVisibility: boolean
+  newVisibility: boolean;
 
   changeVisibility(div: boolean) {
     if (div) {
-      div = false
+      div = false;
     } else {
-      div = true
+      div = true;
     }
 
-    return div
+    return div;
   }
 
-  responsaveisAll: Responsavel[]
-  responsaveisCurrent: Responsavel[]
+  responsaveisAll: Responsavel[];
+  responsaveisCurrent: Responsavel[];
 
   ngOnInit(): void {
+    this.responsaveisCurrent = [];
 
-    //inicializando objeto
-    this.responsaveisCurrent = null
-
-    /*
-    this.responsaveisCurrent = [{
-      id: null, nome: null, cpf: null, telefone1: null, telefone2: null, trabalho: null, renda: null,
-      pensao: null, numeroTitulo: null, zonaTitulo: null, secaoTitulo: null, status: null, tipo: null
-    }]
-    */
-
-    this.newVisibility = true
-    this.listarAll()
+    this.newVisibility = true;
+    this.listarAll();
   }
 
   listarAll() {
-    this.responsavelService.listar().subscribe(res => {
-      this.responsaveisAll = res
-    })
+    this.responsavelService.listar().subscribe((res) => {
+      this.responsaveisAll = res;
+    });
   }
 
   listarCurrent(id) {
-    this.responsavelService.listarCriancas(id).subscribe(res => {
-      this.responsaveisCurrent = res
-    })
+    this.responsavelService.listarCriancas(id).subscribe((res) => {
+      this.responsaveisCurrent = res;
+    });
   }
-
 }

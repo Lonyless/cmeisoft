@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let responsavel of responsaveisCurrent">
+        <tr  *ngFor="let responsavel of responsaveisCurrent">
             <td>{{responsavel.nome}}</td>
             <td>{{responsavel.tipo}}</td>
             <td class="d-flex justify-content-center">
@@ -27,7 +27,6 @@
 
     </tbody>
 </table>
-
 <button class="btn btn-primary mt-3 mr-3" data-toggle="modal" data-target="#exampleModal">
     Adicionar responsavel já cadastrado
 </button>
@@ -52,7 +51,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <app-responsavel-lista (adicionarOnPressed)="adicionarOnPressed($event)"
+                <app-responsavel-lista (adicionarResponsavel)="adicionarOnPressed($event)"
                     [responsaveis]="responsaveisAll">
                     Adicione um responsavel da Lista
                 </app-responsavel-lista>
@@ -68,9 +67,4 @@
     <app-responsavel-form (adicionar)="adicionarOnPressed($event)"></app-responsavel-form>
 </div>
 
-<hr/>
-
-<div class="container d-flex flex-row-reverse">
-    <button class="btn btn-primary mx-2">Confirmar Cadadastro</button>
-    <button class="btn btn-secondary mx-2">Cancelar Cadadastro</button>
-</div>
+<hr />

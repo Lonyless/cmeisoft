@@ -93,45 +93,33 @@ export class ResponsavelFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    if (this.form.value.id != null) {
-      //criando um objeto com os valores do form, usei dois por causa do ID
-      const responsavel = new Responsavel(
-        this.form.value.nomeResponsavel,
-        this.form.value.cpfResponsavel,
-        this.form.value.telefone1Responsavel,
-        this.form.value.telefone2Responsavel,
-        this.form.value.trabalhoResponsavel,
-        this.form.value.rendaResponsavel,
-        this.form.value.pensaoResponsavel,
-        this.form.value.numeroTituloResponsavel,
-        this.form.value.zonaTituloResponsavel,
-        this.form.value.secaoTituloResponsavel,
-        this.form.value.tipoResponsavel,
-        this.form.value.id
-      );
+  async insertResponsavel(responsavel) {
+    this.responsavelService.adicionar(responsavel);
+  }
 
-      //update
-      console.log(this.form.value);
-      this.responsavelService.alterar(responsavel);
-    } else {
-      const responsavel = new Responsavel(
-        this.form.value.nomeResponsavel,
-        this.form.value.cpfResponsavel,
-        this.form.value.telefone1Responsavel,
-        this.form.value.telefone2Responsavel,
-        this.form.value.trabalhoResponsavel,
-        this.form.value.rendaResponsavel,
-        this.form.value.pensaoResponsavel,
-        this.form.value.numeroTituloResponsavel,
-        this.form.value.zonaTituloResponsavel,
-        this.form.value.secaoTituloResponsavel,
-        this.form.value.tipoResponsavel
-      );
+ insertAux() {}
 
-      console.log(responsavel);
-      this.responsavelService.adicionar(responsavel);
-    }
+   onSubmit() {
+    const responsavel = new Responsavel(
+      this.form.value.nomeResponsavel,
+      this.form.value.cpfResponsavel,
+      this.form.value.telefone1Responsavel,
+      this.form.value.telefone2Responsavel,
+      this.form.value.trabalhoResponsavel,
+      this.form.value.rendaResponsavel,
+      this.form.value.pensaoResponsavel,
+      this.form.value.numeroTituloResponsavel,
+      this.form.value.zonaTituloResponsavel,
+      this.form.value.secaoTituloResponsavel,
+      this.form.value.tipoResponsavel
+    );
+
+    console.log(responsavel);
+    this.insertResponsavel(responsavel).then(() => {
+      this.responsavelService.listar().subscribe(() => {
+        this.insertAux();
+      });
+    });
   }
 
   validarCampo(campo) {
