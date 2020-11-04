@@ -151,16 +151,9 @@ export class FormCriancaComponent implements OnInit {
       this.form.value.nomeCrianca
     );
     console.log(crianca);
+    console.log("enderecoID: " + enderecoId)
     this.criancaService.adicionar(crianca);
 
-  }
-
-  async listarEndereco() {
-    let enderecoId;
-    this.enderecoService.listar().subscribe((enderecos) => {
-      return enderecoId = enderecos[enderecos.length - 1].id;
-    }).unsubscribe;
-    console.log("enderecoId: " + enderecoId)
   }
 
   async insertEndereco() {
@@ -174,9 +167,10 @@ export class FormCriancaComponent implements OnInit {
   onSubmit() {
 
     this.insertEndereco().then(() => {
-      this.listarEndereco().then((enderecoId) => {
+      this.enderecoService.listar().subscribe((enderecos) => {
+        let enderecoId = enderecos[enderecos.length - 1].id;
         this.insertCrianca(enderecoId).then(() => {
-          this.insertAuxCriterio().then()
+          this.insertAuxCriterio()
         })
       })
     })
