@@ -126,48 +126,61 @@ export class FormCriancaComponent implements OnInit {
     }).unsubscribe;
   }
 
+  async listarCrianca() {
+    let criancaId
+    this.criancaService.listar().subscribe((criancas) => {
+      criancaId = criancas[criancas.length - 1].id
+
+    })
+    console.log("criancaId: " + criancaId)
+    return criancaId
+  }
+
+  async insertCrianca(enderecoId: number) {
+    const crianca = new Crianca(
+      this.form.value.sexoCrianca,
+      this.form.value.nascimentoCrianca,
+      this.form.value.registroCrianca,
+      this.form.value.livroCrianca,
+      this.form.value.folhaCrianca,
+      this.form.value.cpfCrianca,
+      enderecoId,
+      this.form.value.cmeiOpcao1Crianca,
+      this.form.value.cmeiOpcao2Crianca,
+      1,
+      this.form.value.nomeCrianca
+    );
+    console.log(crianca);
+    this.criancaService.adicionar(crianca);
+
+  }
+
+  async listarEndereco() {
+    let enderecoId;
+    this.enderecoService.listar().subscribe((enderecos) => {
+      return enderecoId = enderecos[enderecos.length - 1].id;
+    }).unsubscribe;
+    console.log("enderecoId: " + enderecoId)
+  }
+
+  async insertEndereco() {
+    this.enderecoEmitterService.onEvent();
+  }
+
+  async insertAuxCriterio() {
+    this.criterioEmmiterService.onEvent()
+  }
+
   onSubmit() {
-    if (this.form.value.id != null) {
-      //criando um objeto com os valores do form, usei dois por causa do ID
-      const crianca = new Crianca(
-        this.form.value.sexoCrianca,
-        this.form.value.nascimentoCrianca,
-        this.form.value.registroCrianca,
-        this.form.value.livroCrianca,
-        this.form.value.folhaCrianca,
-        this.form.value.cpfCrianca,
-        this.enderecos[this.enderecos.length-1].id,
-        this.form.value.cmeiOpcao1Crianca,
-        this.form.value.cmeiOpcao2Crianca,
-        1,
-        this.form.value.nomeCrianca
-      );
 
-      //update
-      console.log(this.form.value);
-      this.criancaService.alterar(crianca);
-    } else {
+    this.insertEndereco().then(() => {
+      this.listarEndereco().then((enderecoId) => {
+        this.insertCrianca(enderecoId).then(() => {
+          this.insertAuxCriterio().then()
+        })
+      })
+    })
 
-
-      const crianca = new Crianca(
-        this.form.value.sexoCrianca,
-        this.form.value.nascimentoCrianca,
-        this.form.value.registroCrianca,
-        this.form.value.livroCrianca,
-        this.form.value.folhaCrianca,
-        this.form.value.cpfCrianca,
-        this.enderecos[this.enderecos.length - 1].id,
-        this.form.value.cmeiOpcao1Crianca,
-        this.form.value.cmeiOpcao2Crianca,
-        1,
-        this.form.value.nomeCrianca
-      );
-
-      console.log(crianca);
-      this.criancaService.adicionar(crianca);
-
-      this.onCriterioSubmit();
-    }
   }
 
   validarCampo(campo) {

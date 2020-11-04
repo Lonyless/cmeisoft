@@ -51,7 +51,7 @@ export class CriterioFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onSubmit() { }
 
   onSubmitAux() {
     let valueSumbit = Object.assign({}, this.form.value);
@@ -64,11 +64,10 @@ export class CriterioFormComponent implements OnInit {
 
     this.criancaService.listar().subscribe((crianca) => {
       valueSumbit.criterios.forEach((criterio: Criterio) => {
-        this.criterioService.adicionarAux(criterio, crianca[crianca.length-1]);
+        this.criterioService.adicionarAux(criterio, crianca[crianca.length - 1]);
       });
-      crianca[crianca.length - 1];
+
     });
 
-   
   }
 }
