@@ -95,6 +95,7 @@ rotasContemplado.delete()
 rotasCriterioSocial.getAll()
 rotasCriterioSocial.getId()
 rotasCriterioSocial.post()
+rotasCriterioSocial.postAux()
 rotasCriterioSocial.put()
 rotasCriterioSocial.delete()
 

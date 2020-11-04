@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Crianca } from 'src/app/core/model/crianca.model';
 import { Criterio } from 'src/app/core/model/criterio.model';
+import { CriancaService } from 'src/app/core/services/crianca.service';
 import { CriterioEmmiterService } from 'src/app/core/services/criterio-emmiter.service';
 import { CriterioService } from 'src/app/core/services/criterioservice';
 
@@ -15,10 +17,12 @@ export class CriterioFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public criterioService: CriterioService,
     private criterioEmmiterService: CriterioEmmiterService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private criancaService: CriancaService
   ) {
     this.criterioList = [];
     this.route = route;
+    this.criancaService = criancaService;
     this.criterioService = criterioService;
   }
 
@@ -58,6 +62,13 @@ export class CriterioFormComponent implements OnInit {
         .filter((v) => v != null),
     });
 
-    console.log(valueSumbit);
+    this.criancaService.listar().subscribe((crianca) => {
+      valueSumbit.criterios.forEach((criterio: Criterio) => {
+        this.criterioService.adicionarAux(criterio, crianca[crianca.length-1]);
+      });
+      crianca[crianca.length - 1];
+    });
+
+   
   }
 }

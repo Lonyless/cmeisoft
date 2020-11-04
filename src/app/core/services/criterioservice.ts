@@ -29,7 +29,7 @@ export class CriterioService {
 
   adicionarAux(criterio: Criterio, crianca: Crianca) {
     const criterioAuxCrianca = {criterioId: criterio.id, criancaId: crianca.id}
-    this.http.post(`${this.apiURL}/criteriosocial`, criterioAuxCrianca)
+    this.http.post(`${this.apiURL}/criteriosocialAux`, criterioAuxCrianca)
       .subscribe(
         resultado => {
           console.log(resultado)

@@ -25,12 +25,12 @@ class rotasCmei {
   }
 
   postAux() {
-    this.router.post("/criteriosocial/aux", (req, res) => {
+    this.router.post("/criteriosocialAux", (req, res) => {
       const criancaId = req.body.criancaId;
       const criterioId = req.body.criterioId;
 
       query(
-        `insert into aux_crianca_criterio(crianca_id,criteriosocial_id,)
+        `insert into aux_crianca_criterio(crianca_id,criteriosocial_id)
                 values(${criancaId},${criterioId})`,
         res
       );
