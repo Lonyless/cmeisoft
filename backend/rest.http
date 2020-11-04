@@ -1,0 +1,17 @@
+POST /responsavel HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{
+    "nome": "teste", 
+    "cpf": 123,
+    "telefone1": 123,  
+    "telefone2": 123, 
+    "trabalho": "teste", 
+    "renda": 123, 
+    "pensao": 123,
+    "numeroTitulo": 123,
+    "zonaTitulo": 123, 
+    "secaoTitulo": 123, 
+    "tipo": "teste"
+}

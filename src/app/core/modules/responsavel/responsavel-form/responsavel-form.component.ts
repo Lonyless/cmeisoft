@@ -36,10 +36,10 @@ export class ResponsavelFormComponent implements OnInit {
       this.form.value.numeroTituloResponsavel,
       this.form.value.zonaTituloResponsavel,
       this.form.value.secaoTituloResponsavel,
-      this.form.value.statusResponsavel,
       this.form.value.tipoResponsavel
     );
-
+    
+    this.onSubmit()
     this.adicionar.emit(responsavel);
     this.form.reset();
   }
@@ -93,13 +93,13 @@ export class ResponsavelFormComponent implements OnInit {
     });
   }
 
-  async insertResponsavel(responsavel) {
+  async insertResponsavel(responsavel: Responsavel) {
     this.responsavelService.adicionar(responsavel);
   }
 
- insertAux() {}
+  insertAux() {}
 
-   onSubmit() {
+  onSubmit() {
     const responsavel = new Responsavel(
       this.form.value.nomeResponsavel,
       this.form.value.cpfResponsavel,

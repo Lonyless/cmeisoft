@@ -33,7 +33,7 @@ export class ResponsavelService {
       responsavelId: responsavel.id,
     };
     this.http
-      .post(`${this.apiURL}/criteriosocialAux`, criterioAuxCrianca)
+      .post(`${this.apiURL}/responsavelAux`, criterioAuxCrianca)
       .subscribe(
         (resultado) => {
           console.log(resultado);

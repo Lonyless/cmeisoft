@@ -23,6 +23,7 @@ class rotasCrianca {
     }
 
     post() {
+        
         this.router.post('/endereco', (req, res) => {
             const rua = req.body.rua
             const numero = req.body.numero
