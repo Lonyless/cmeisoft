@@ -126,16 +126,6 @@ export class FormCriancaComponent implements OnInit {
     }).unsubscribe;
   }
 
-  async listarCrianca() {
-    let criancaId
-    this.criancaService.listar().subscribe((criancas) => {
-      criancaId = criancas[criancas.length - 1].id
-
-    })
-    console.log("criancaId: " + criancaId)
-    return criancaId
-  }
-
   async insertCrianca(enderecoId: number) {
     const crianca = new Crianca(
       this.form.value.sexoCrianca,
