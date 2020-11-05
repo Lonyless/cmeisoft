@@ -37,7 +37,6 @@ export class FormCriancaComponent implements OnInit {
     public enderecoService: EnderecoService,
     public cmeiService: CmeiService,
     private inEnderecoEmitterService: EnderecoEmmiterService,
-    private outEnderecoEmitterService: EnderecoEmmiterService,
     private criterioEmmiterService: CriterioEmmiterService,
     private responsavelEmmiterService: ResponsavelEmmiterService
   ) {
@@ -65,16 +64,17 @@ export class FormCriancaComponent implements OnInit {
   }
 
   onEnderecoSubmit() {
-    this.inEnderecoEmitterService.onEvent();
+    this.inEnderecoEmitterService.firstOnEvent();
   }
 
   cmeiList: Cmei[];
 
   ngOnInit(): void {
-    if (this.outEnderecoEmitterService.subsVar == undefined) {
-      this.outEnderecoEmitterService.subsVar = this.outEnderecoEmitterService.invokeFirstComponentFunction.subscribe(
-        (name: string) => {
-          console.log('out');
+    if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
+      this.inEnderecoEmitterService.secondSubsVar = this.inEnderecoEmitterService.invokeSecondComponentFunction.subscribe(
+        () => {
+          // console.log('OUT');
+          this.onSubmit();
         }
       );
     }
@@ -115,18 +115,6 @@ export class FormCriancaComponent implements OnInit {
       cmeiOpcao1Crianca: [crianca[0].cmeiOpcao1, [Validators.required]],
       cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
     });
-
-    /*
-    this.route.params.subscribe((params: any) => {
-      const id = parseInt(params['id'])
-      console.log(id)
-      //dentro do observable que pega o id tem esse aqui q acha o aluno
-      const aluno$ = this.alunoService.listarPorId(id)
-      aluno$.subscribe( aluno => {
-        this.updateForm(aluno)
-      })
-    })
-    */
   }
 
   enderecos: Endereco[];
@@ -137,7 +125,7 @@ export class FormCriancaComponent implements OnInit {
     }).unsubscribe;
   }
 
-  async insertCrianca(enderecoId: number) {
+  insertCrianca(enderecoId: number) {
     const crianca = new Crianca(
       this.form.value.sexoCrianca,
       this.form.value.nascimentoCrianca,
@@ -156,10 +144,6 @@ export class FormCriancaComponent implements OnInit {
     this.criancaService.adicionar(crianca);
   }
 
-  async insertEndereco() {
-    this.inEnderecoEmitterService.onEvent();
-  }
-
   async insertAuxCriterio() {
     this.criterioEmmiterService.onEvent();
   }
@@ -173,7 +157,7 @@ export class FormCriancaComponent implements OnInit {
     //e DEPOIS chamar o evento insertCrianca
 
     //1
-    this.inEnderecoEmitterService.onEvent();
+
     //2
     this.enderecoService.listar().subscribe((enderecos) => {}).unsubscribe;
     //3

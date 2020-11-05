@@ -14,6 +14,7 @@ import { BairroService } from 'src/app/core/services/bairro.service';
 import { CidadeService } from 'src/app/core/services/cidade.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
 import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.service';
+import { nextTick } from 'process';
 
 @Component({
   selector: 'app-endereco-form',
@@ -23,16 +24,13 @@ import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.s
 export class EnderecoFormComponent implements OnInit {
   form: FormGroup;
 
-  @Output() adicionou = new EventEmitter();
-
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
     public enderecoService: EnderecoService,
     public bairroService: BairroService,
     public cidadeService: CidadeService,
-    private inEventEmitterService: EnderecoEmmiterService,
-    private outEventEmitterService: EnderecoEmmiterService
+    private inEventEmitterService: EnderecoEmmiterService
   ) {
     this.enderecoService = enderecoService;
     this.bairroService = bairroService;
@@ -43,14 +41,11 @@ export class EnderecoFormComponent implements OnInit {
   _visibilidade: boolean;
 
   ngOnInit(): void {
-    //nessa parte ele esta transmitindo a funcao onSubmit para o component crianca, preciso disso pois
-    //só no component form-crianca é que vou estar criando tambem o endereco, então nao posso fazer
-    //isso aqui. mas praticas ou nao, funciona
-    if (this.inEventEmitterService.subsVar == undefined) {
-      this.inEventEmitterService.subsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
-        (name: string) => {
+    if (this.inEventEmitterService.firstSubsVar == undefined) {
+      this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
+        () => {
+          //console.log('IN');
           this.onSubmit();
-          console.log("in")
         }
       );
     }
@@ -75,18 +70,6 @@ export class EnderecoFormComponent implements OnInit {
       numeroEndereco: [endereco[0].numero, [Validators.required]],
       bairroId: [endereco[0].bairroId, [Validators.required]],
     });
-
-    /*
-    this.route.params.subscribe((params: any) => {
-      const id = parseInt(params['id'])
-      console.log(id)
-      //dentro do observable que pega o id tem esse aqui q acha o aluno
-      const aluno$ = this.alunoService.listarPorId(id)
-      aluno$.subscribe( aluno => {
-        this.updateForm(aluno)
-      })
-    })
-    */
   }
 
   setar() {
@@ -109,15 +92,13 @@ export class EnderecoFormComponent implements OnInit {
     console.log(endereco);
     this.enderecoService.adicionar(endereco).subscribe(
       (sucesso) => {
-        this.outEventEmitterService.onEvent();
+        this.inEventEmitterService.secondOnEvent();
         console.log(sucesso);
       },
       (erro) => {
         console.log(erro);
       }
     );
-
-    this.adicionou.emit();
   }
 
   validarCampo(campo) {
