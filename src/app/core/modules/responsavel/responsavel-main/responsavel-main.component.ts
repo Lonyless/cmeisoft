@@ -55,8 +55,8 @@ export class ResponsavelMainComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.responsavelEmmiterService.subsVar == undefined) {
-      this.responsavelEmmiterService.subsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
+    if (this.responsavelEmmiterService.firstSubsVar == undefined) {
+      this.responsavelEmmiterService.firstSubsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
         (name: string) => {
           this.inserirAux();
         }

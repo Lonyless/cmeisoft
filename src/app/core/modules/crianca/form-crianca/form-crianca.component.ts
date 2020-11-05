@@ -80,7 +80,7 @@ export class FormCriancaComponent implements OnInit {
       this.criancaService.adicionar(crianca).subscribe((resposta) => {
         console.log(resposta);
         this.insertAuxCriterio();
-        this.insertResponsavel();
+        this.insertAuxResponsavel();
       });
     }).unsubscribe;
   }
@@ -91,7 +91,7 @@ export class FormCriancaComponent implements OnInit {
   }
 
   //passo 4
-  insertResponsavel() {
+  insertAuxResponsavel() {
     this.responsavelEmmiterService.firstOnEvent();
   }
 
@@ -104,6 +104,10 @@ export class FormCriancaComponent implements OnInit {
         }
       );
     }
+
+    //ativa o evento do passo 5
+
+
 
     //alimenta o objeto Cmei
     this.cmeiService.listar().subscribe((res) => {
