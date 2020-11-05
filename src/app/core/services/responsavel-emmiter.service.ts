@@ -2,16 +2,21 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class ResponsavelEmmiterService {
+  invokeFirstComponentFunction = new EventEmitter();
+  invokeSecondComponentFunction = new EventEmitter();
 
-    invokeFirstComponentFunction = new EventEmitter();
-    subsVar: Subscription;
+  firstSubsVar: Subscription;
+  secondSubsVar: Subscription;
 
-    constructor() { }
+  constructor() {}
 
-    onEvent() {
-        this.invokeFirstComponentFunction.emit();
-    }
-}    
+  firstOnEvent() {
+    this.invokeFirstComponentFunction.emit();
+  }
+  secondOnEvent() {
+    this.invokeSecondComponentFunction.emit();
+  }
+}

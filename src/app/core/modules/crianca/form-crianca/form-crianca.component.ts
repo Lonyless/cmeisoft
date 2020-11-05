@@ -19,6 +19,7 @@ import { CriterioEmmiterService } from 'src/app/core/services/criterio-emmiter.s
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
 import { Cmei } from 'src/app/core/model/cmei.model';
 import { CmeiService } from 'src/app/core/services/cmei.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form-crianca',
@@ -40,50 +41,76 @@ export class FormCriancaComponent implements OnInit {
     private criterioEmmiterService: CriterioEmmiterService,
     private responsavelEmmiterService: ResponsavelEmmiterService
   ) {
-    this.enderecos = [];
     this.cmeiList = [];
     this.cmeiService = cmeiService;
     this.criancaService = criancaService;
     this.enderecoService = enderecoService;
   }
 
-  //aqui eu chamo a funcao onSubmit la do component endereco, adicionando o endereco usando um evento
-  //dessa funcao criar crianca.
-
-  onFormSubmit() {
-    this.onEnderecoSubmit();
-  }
+  cmeiList: Cmei[];
 
   onCriterioSubmit() {
     this.criterioEmmiterService.onEvent();
-    this.onResponsavelSubmit();
   }
 
-  onResponsavelSubmit() {
-    this.responsavelEmmiterService.onEvent();
-  }
-
-  onEnderecoSubmit() {
+  //passo 1
+  insertEndereco() {
     this.inEnderecoEmitterService.firstOnEvent();
   }
 
-  cmeiList: Cmei[];
+  //passo 2
+  insertCrianca() {
+    this.enderecoService.listar().subscribe((enderecos) => {
+      let enderecoId = enderecos[enderecos.length - 1].id;
+      const crianca = new Crianca(
+        this.form.value.sexoCrianca,
+        this.form.value.nascimentoCrianca,
+        this.form.value.registroCrianca,
+        this.form.value.livroCrianca,
+        this.form.value.folhaCrianca,
+        this.form.value.cpfCrianca,
+        enderecoId,
+        this.form.value.cmeiOpcao1Crianca,
+        this.form.value.cmeiOpcao2Crianca,
+        1,
+        this.form.value.nomeCrianca
+      );
+      console.log(crianca);
+      console.log('enderecoID: ' + enderecoId);
+      this.criancaService.adicionar(crianca).subscribe((resposta) => {
+        console.log(resposta);
+        this.insertAuxCriterio();
+        this.insertResponsavel();
+      });
+    }).unsubscribe;
+  }
+
+  //passo 3
+  insertAuxCriterio() {
+    this.criterioEmmiterService.onEvent();
+  }
+
+  //passo 4
+  insertResponsavel() {
+    this.responsavelEmmiterService.firstOnEvent();
+  }
 
   ngOnInit(): void {
+    //ativa o evento do passo 2
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
       this.inEnderecoEmitterService.secondSubsVar = this.inEnderecoEmitterService.invokeSecondComponentFunction.subscribe(
         () => {
-          // console.log('OUT');
-          this.onSubmit();
+          this.insertCrianca();
         }
       );
     }
 
+    //alimenta o objeto Cmei
     this.cmeiService.listar().subscribe((res) => {
       this.cmeiList = res;
     }).unsubscribe;
 
-    //let aluno = this.route.snapshot.data['aluno']
+    //cria um modelo default do objeto
     let crianca = [
       {
         id: null,
@@ -102,7 +129,7 @@ export class FormCriancaComponent implements OnInit {
       },
     ];
 
-    //cria o formulario de criar ou editar, com base no obj(se for nulo: criar)
+    //cria o formulario de criar ou editar
     this.form = this.fb.group({
       id: [crianca[0].id],
       nomeCrianca: [crianca[0].nome, [Validators.required]],
@@ -117,60 +144,20 @@ export class FormCriancaComponent implements OnInit {
     });
   }
 
-  enderecos: Endereco[];
-
-  getEnderecoId() {
-    this.enderecoService.listar().subscribe((res) => {
-      this.enderecos = res;
-    }).unsubscribe;
-  }
-
-  insertCrianca(enderecoId: number) {
-    const crianca = new Crianca(
-      this.form.value.sexoCrianca,
-      this.form.value.nascimentoCrianca,
-      this.form.value.registroCrianca,
-      this.form.value.livroCrianca,
-      this.form.value.folhaCrianca,
-      this.form.value.cpfCrianca,
-      enderecoId,
-      this.form.value.cmeiOpcao1Crianca,
-      this.form.value.cmeiOpcao2Crianca,
-      1,
-      this.form.value.nomeCrianca
-    );
-    console.log(crianca);
-    console.log('enderecoID: ' + enderecoId);
-    this.criancaService.adicionar(crianca);
-  }
-
-  async insertAuxCriterio() {
-    this.criterioEmmiterService.onEvent();
-  }
-
-  async insertResponsavel() {
-    this.responsavelEmmiterService.onEvent();
-  }
-
   onSubmit() {
-    //preciso emitir um evento no component endereco-form, esperar este evento ser completado
-    //e DEPOIS chamar o evento insertCrianca
+    //rotina de insert
+    /*
+    1 - ENDERECO
+    2 - CRIANCA
+    3 - AUX-CRIANCA-CRITERIO
+    4 - RESPONSAVEL
+    5 - AUX-CRIANCA-RESPONSAVEL
 
-    //1
-
-    //2
-    this.enderecoService.listar().subscribe((enderecos) => {
-      this.insertCrianca(enderecos[enderecos.length-1].id);
-    }).unsubscribe;
-
-    //3
-    //this.insertCrianca(enderecos[enderecos.length - 1].id).then(() => {});
-    //4
-    this.criancaService.listar().subscribe(() => {}).unsubscribe;
-    //5
-    this.insertAuxCriterio();
-    //5
-    this.insertResponsavel().then(() => {});
+    botao chama onSubmit(), que chama o insertEndereco(). quando o endereco-form termina a inserção ele 
+    dispara o inEnderecoEmitterService, que chama o insertCrianca(). quando a subscription do insertCrianca
+    termina ele chama o insertResponsavel() e insertAuxCriterio()
+    */
+    this.insertEndereco();
   }
 
   validarCampo(campo) {
