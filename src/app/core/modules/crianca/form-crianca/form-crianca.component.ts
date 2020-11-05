@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -30,7 +36,8 @@ export class FormCriancaComponent implements OnInit {
     public criancaService: CriancaService,
     public enderecoService: EnderecoService,
     public cmeiService: CmeiService,
-    private enderecoEmitterService: EnderecoEmmiterService,
+    private inEnderecoEmitterService: EnderecoEmmiterService,
+    private outEnderecoEmitterService: EnderecoEmmiterService,
     private criterioEmmiterService: CriterioEmmiterService,
     private responsavelEmmiterService: ResponsavelEmmiterService
   ) {
@@ -58,16 +65,20 @@ export class FormCriancaComponent implements OnInit {
   }
 
   onEnderecoSubmit() {
-    this.enderecoEmitterService.onEvent();
-    this.enderecoService.listar().subscribe((res) => {
-      this.enderecos = res;
-      this.onSubmit();
-    }).unsubscribe;
+    this.inEnderecoEmitterService.onEvent();
   }
 
   cmeiList: Cmei[];
 
   ngOnInit(): void {
+    if (this.outEnderecoEmitterService.subsVar == undefined) {
+      this.outEnderecoEmitterService.subsVar = this.outEnderecoEmitterService.invokeFirstComponentFunction.subscribe(
+        (name: string) => {
+          console.log('out');
+        }
+      );
+    }
+
     this.cmeiService.listar().subscribe((res) => {
       this.cmeiList = res;
     }).unsubscribe;
@@ -146,7 +157,7 @@ export class FormCriancaComponent implements OnInit {
   }
 
   async insertEndereco() {
-    this.enderecoEmitterService.onEvent();
+    this.inEnderecoEmitterService.onEvent();
   }
 
   async insertAuxCriterio() {
@@ -158,12 +169,11 @@ export class FormCriancaComponent implements OnInit {
   }
 
   onSubmit() {
-
     //preciso emitir um evento no component endereco-form, esperar este evento ser completado
     //e DEPOIS chamar o evento insertCrianca
 
     //1
-    this.insertEndereco().then(() => {});
+    this.inEnderecoEmitterService.onEvent();
     //2
     this.enderecoService.listar().subscribe((enderecos) => {}).unsubscribe;
     //3

@@ -31,7 +31,8 @@ export class EnderecoFormComponent implements OnInit {
     public enderecoService: EnderecoService,
     public bairroService: BairroService,
     public cidadeService: CidadeService,
-    private eventEmitterService: EnderecoEmmiterService
+    private inEventEmitterService: EnderecoEmmiterService,
+    private outEventEmitterService: EnderecoEmmiterService
   ) {
     this.enderecoService = enderecoService;
     this.bairroService = bairroService;
@@ -45,10 +46,11 @@ export class EnderecoFormComponent implements OnInit {
     //nessa parte ele esta transmitindo a funcao onSubmit para o component crianca, preciso disso pois
     //só no component form-crianca é que vou estar criando tambem o endereco, então nao posso fazer
     //isso aqui. mas praticas ou nao, funciona
-    if (this.eventEmitterService.subsVar == undefined) {
-      this.eventEmitterService.subsVar = this.eventEmitterService.invokeFirstComponentFunction.subscribe(
+    if (this.inEventEmitterService.subsVar == undefined) {
+      this.inEventEmitterService.subsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
         (name: string) => {
           this.onSubmit();
+          console.log("in")
         }
       );
     }
@@ -97,36 +99,23 @@ export class EnderecoFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.value.id != null) {
-      //criando um objeto com os valores do form, usei dois por causa do ID
-      const endereco = new Endereco(
-        this.form.value.id,
-        this.form.value.ruaEndereco,
-        this.form.value.numeroEndereco,
-        this.form.value.bairroId
-      );
+    const endereco = new Endereco(
+      null,
+      this.form.value.ruaEndereco,
+      this.form.value.numeroEndereco,
+      this.form.value.bairroId
+    );
 
-      //update
-      console.log(this.form.value);
-      this.enderecoService.alterar(endereco);
-    } else {
-      const endereco = new Endereco(
-        null,
-        this.form.value.ruaEndereco,
-        this.form.value.numeroEndereco,
-        this.form.value.bairroId
-      );
-
-      console.log(endereco);
-      this.enderecoService.adicionar(endereco).subscribe(
-        (sucesso) => {
-          console.log(sucesso);
-        },
-        (erro) => {
-          console.log(erro);
-        }
-      );
-    }
+    console.log(endereco);
+    this.enderecoService.adicionar(endereco).subscribe(
+      (sucesso) => {
+        this.outEventEmitterService.onEvent();
+        console.log(sucesso);
+      },
+      (erro) => {
+        console.log(erro);
+      }
+    );
 
     this.adicionou.emit();
   }
