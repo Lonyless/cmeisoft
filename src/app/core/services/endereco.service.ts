@@ -28,37 +28,15 @@ export class EnderecoService {
 
   adicionar(endereco: Endereco) {
 
-    this.http.post(`${this.apiURL}/endereco`, endereco)
-      .subscribe(
-        resultado => {
-          console.log(resultado)
-        },
-        erro => {
-          if (erro.status == 400) {
-            console.log(erro);
-          }
-        }
-      );
+    //alterar: remover subscribe e deixar por conta da funcao que chama
+    return this.http.post(`${this.apiURL}/endereco`, endereco)
+ 
   }
 
   alterar(endereco: Endereco) {
 
-    this.http.put(`${this.apiURL}/endereco/` + endereco.id, endereco)
-      .subscribe(
-        resultado => {
-          console.log('alterado com sucesso.')
-        },
-        erro => {
-          switch (erro.status) {
-            case 400:
-              console.log(erro.error.mensagem);
-              break;
-            case 404:
-              console.log('não localizado.');
-              break;
-          }
-        }
-      );
+    return this.http.put(`${this.apiURL}/endereco/` + endereco.id, endereco)
+
   }
 
   excluir(id: number) {

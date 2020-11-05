@@ -157,21 +157,23 @@ export class FormCriancaComponent implements OnInit {
     this.responsavelEmmiterService.onEvent();
   }
 
-  async insertAuxCriancaResponsavel() {}
-
   onSubmit() {
-    this.insertEndereco().then(() => {
-      this.enderecoService.listar().subscribe((enderecos) => {
-        this.insertCrianca(enderecos[enderecos.length - 1].id).then(() => {
-          this.criancaService.listar().subscribe(() => {
-            this.insertAuxCriterio();
-            this.insertResponsavel().then(() => {
-              this.insertAuxCriancaResponsavel();
-            });
-          }).unsubscribe;
-        });
-      }).unsubscribe;
-    });
+
+    //preciso emitir um evento no component endereco-form, esperar este evento ser completado
+    //e DEPOIS chamar o evento insertCrianca
+
+    //1
+    this.insertEndereco().then(() => {});
+    //2
+    this.enderecoService.listar().subscribe((enderecos) => {}).unsubscribe;
+    //3
+    //this.insertCrianca(enderecos[enderecos.length - 1].id).then(() => {});
+    //4
+    this.criancaService.listar().subscribe(() => {}).unsubscribe;
+    //5
+    this.insertAuxCriterio();
+    //5
+    this.insertResponsavel().then(() => {});
   }
 
   validarCampo(campo) {

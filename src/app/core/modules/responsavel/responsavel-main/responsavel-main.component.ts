@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
 import { CriancaService } from 'src/app/core/services/crianca.service';
+import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
 import { ResponsavelService } from 'src/app/core/services/responsavel.service.';
 
 @Component({
@@ -13,14 +14,15 @@ export class ResponsavelMainComponent implements OnInit {
 
   constructor(
     public criancaService: CriancaService,
-    public responsavelService: ResponsavelService
+    public responsavelService: ResponsavelService,
+    private responsavelEmmiterService: ResponsavelEmmiterService
   ) {
     this.criancaService = criancaService;
     this.responsavelService = responsavelService;
   }
 
   adicionarOnPressed(event) {
-    console.log(event)
+    console.log(event);
     if (this.responsaveisCurrent == null) {
       this.responsaveisCurrent = [event];
     } else {
@@ -52,10 +54,29 @@ export class ResponsavelMainComponent implements OnInit {
   responsaveisCurrent: Responsavel[];
 
   ngOnInit(): void {
+
+    if (this.responsavelEmmiterService.subsVar == undefined) {
+      this.responsavelEmmiterService.subsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
+        (name: string) => {
+          this.inserirAux();
+        }
+      );
+    }
+
     this.responsaveisCurrent = [];
 
     this.newVisibility = true;
     this.listarAll();
+  }
+
+  inserirAux() {
+    this.criancaService.listar().subscribe((crianca) => {
+      this.responsaveisCurrent.forEach(responsavel => {
+        this.responsavelService.adicionarAux(responsavel, crianca[crianca.length-1])
+        console.log("responsavel: "+responsavel)
+        console.log("crianca: "+crianca)
+      })
+    });
   }
 
   listarAll() {
@@ -68,5 +89,9 @@ export class ResponsavelMainComponent implements OnInit {
     this.responsavelService.listarCriancas(id).subscribe((res) => {
       this.responsaveisCurrent = res;
     });
+  }
+
+  log() {
+    console.log('emmitiu');
   }
 }

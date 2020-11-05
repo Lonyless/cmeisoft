@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr  *ngFor="let responsavel of responsaveisCurrent">
+        <tr *ngFor="let responsavel of responsaveisCurrent">
             <td>{{responsavel.nome}}</td>
             <td>{{responsavel.tipo}}</td>
             <td class="d-flex justify-content-center">
@@ -64,7 +64,7 @@
 </div>
 
 <div class="container" [hidden]="newVisibility">
-    <app-responsavel-form (adicionar)="adicionarOnPressed($event)"></app-responsavel-form>
+    <app-responsavel-form (adicionarAux)="inserirAux()" (adicionar)="adicionarOnPressed($event)"></app-responsavel-form>
 </div>
 
 <hr />

@@ -14,8 +14,7 @@ export class ResponsavelFormComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
-    public responsavelService: ResponsavelService,
-    private responsavelEmmiterService: ResponsavelEmmiterService
+    public responsavelService: ResponsavelService
   ) {
     this.responsavelService = responsavelService;
   }
@@ -38,21 +37,13 @@ export class ResponsavelFormComponent implements OnInit {
       this.form.value.secaoTituloResponsavel,
       this.form.value.tipoResponsavel
     );
-    
-    this.onSubmit()
+
+    this.onSubmit();
     this.adicionar.emit(responsavel);
     this.form.reset();
   }
 
   ngOnInit(): void {
-    if (this.responsavelEmmiterService.subsVar == undefined) {
-      this.responsavelEmmiterService.subsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
-        (name: string) => {
-          this.onSubmit();
-        }
-      );
-    }
-
     let responsavel = [
       {
         id: null,
@@ -97,7 +88,7 @@ export class ResponsavelFormComponent implements OnInit {
     this.responsavelService.adicionar(responsavel);
   }
 
-  insertAux() {}
+  @Output() adicionarAux = new EventEmitter();
 
   onSubmit() {
     const responsavel = new Responsavel(
@@ -114,11 +105,10 @@ export class ResponsavelFormComponent implements OnInit {
       this.form.value.tipoResponsavel
     );
 
+    //
     console.log(responsavel);
     this.insertResponsavel(responsavel).then(() => {
-      this.responsavelService.listar().subscribe(() => {
-        this.insertAux();
-      });
+      this.responsavelService.listar().subscribe(() => {});
     });
   }
 
