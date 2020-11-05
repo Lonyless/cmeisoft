@@ -159,7 +159,10 @@ export class FormCriancaComponent implements OnInit {
     //1
 
     //2
-    this.enderecoService.listar().subscribe((enderecos) => {}).unsubscribe;
+    this.enderecoService.listar().subscribe((enderecos) => {
+      this.insertCrianca(enderecos[enderecos.length-1].id);
+    }).unsubscribe;
+
     //3
     //this.insertCrianca(enderecos[enderecos.length - 1].id).then(() => {});
     //4
