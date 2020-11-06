@@ -65,7 +65,7 @@ class rotasCmei {
       const responsavelId = req.body.responsavelId;
 
       query(
-        `insert into aux_crianca_responsavel(responsavel_id,crianca_id)values(${criancaId},${responsavelId})`,
+        `insert into aux_crianca_responsavel(responsavel_id,crianca_id)values(${responsavelId},${criancaId})`,
         res
       );
     });
