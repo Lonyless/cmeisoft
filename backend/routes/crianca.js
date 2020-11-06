@@ -23,6 +23,7 @@ class rotasCrianca {
 
   post() {
     this.router.post("/crianca", (req, res) => {
+      const nome = req.body.nome;
       const sexo = req.body.sexo;
       const nascimento = req.body.nascimento;
       const registro = req.body.registro;
@@ -38,8 +39,8 @@ class rotasCrianca {
       console.log(sexo);
       //fix "foha" -> "folha", fix "enderco_id" -> "endereco_id"
       query(
-        `insert into crianca(sexo,nascimento,registro,livro,foha,cpf,enderco_id,cmei_opcao1,cmei_opcao2,
-            status) values (${sexo},"${nascimento}",${registro},${livro},${folha},${cpf},${enderecoId},
+        `insert into crianca(sexo,nascimento,nome,registro,livro,folha,cpf,endereco_id,cmei_opcao1,cmei_opcao2,
+            status) values (${sexo},"${nascimento}","${nome}",${registro},${livro},${folha},${cpf},${enderecoId},
             ${cmeiOpcao1},${cmeiOpcao2},1)`,
         res
       );

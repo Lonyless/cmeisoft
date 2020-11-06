@@ -26,9 +26,13 @@
       <td>{{crianca.cpf}}</td>
       <td>{{crianca.bairro}}</td>
       <td>
-        <button class="btn btn-primary" [routerLink]="['update', crianca.id]">Editar</button>
-        <button (click)="getId(crianca.id)" class="btn btn-danger ml-2 " data-toggle="modal"
-          data-target="#confirmacao">Deletar</button>
+        <div class="d-flex justify-content-center">
+          <button (click)="getCrianca(crianca)" class="btn btn-primary" data-toggle="modal"
+            data-target="#viewModal">View</button>
+          <button class="btn btn-primary ml-2" [routerLink]="['update', crianca.id]">Editar</button>
+          <button (click)="getId(crianca.id)" class="btn btn-danger ml-2 " data-toggle="modal"
+            data-target="#confirmacao">Deletar</button>
+        </div>
       </td>
     </tr>
 
@@ -64,3 +68,37 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModal" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModal">Visualizar Aluno</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <strong>Nome:</strong> {{selectedCrianca.nome}}
+        <br>
+        <strong>Sexo:</strong> {{selectedCrianca.sexo}}
+        <br>
+        <strong>Nascimento:</strong> {{selectedCrianca.nascimento}}
+        <br>
+        <strong>Registro:</strong> {{selectedCrianca.registro}}
+        <br>
+        <strong>Livro:</strong> {{selectedCrianca.livro}}
+        <br>
+        <strong>Folha:</strong> {{selectedCrianca.folha}}
+        <br>
+        <strong>CPF:</strong> {{selectedCrianca.cpf}}
+        <br>
+        <strong>Endereco:</strong> {{selectedCrianca.enderecoId}}
+        <br>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>

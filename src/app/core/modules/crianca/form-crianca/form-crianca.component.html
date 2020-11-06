@@ -157,12 +157,13 @@
                 </div>
             </div>
 
-            <button [disabled]="!this.form.valid" (click)="onSubmit()" class="btn btn-primary">Cadastrar</button>
+            <div class="d-flex flex-row-reverse">
+                <button [disabled]="!this.form.valid" (click)="onSubmit()"
+                    class="btn btn-primary mr-4">Cadastrar</button>
+            </div>
 
         </div>
 
     </div>
-
-    <button (click)="insertEndereco()">Test</button>
 
 </form>
