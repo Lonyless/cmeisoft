@@ -95,6 +95,8 @@ export class FormCriancaComponent implements OnInit {
     this.responsavelEmmiterService.firstOnEvent();
   }
 
+  formEndereco: FormGroup;
+
   ngOnInit(): void {
     //ativa o evento do passo 2
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
@@ -104,10 +106,6 @@ export class FormCriancaComponent implements OnInit {
         }
       );
     }
-
-    //ativa o evento do passo 5
-
-
 
     //alimenta o objeto Cmei
     this.cmeiService.listar().subscribe((res) => {
@@ -146,6 +144,16 @@ export class FormCriancaComponent implements OnInit {
       cmeiOpcao1Crianca: [crianca[0].cmeiOpcao1, [Validators.required]],
       cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
     });
+
+    //Form que é passado pelo Input para o child endereco-form
+    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
+
+    this.formEndereco = this.fb.group({
+      id: [endereco[0].id],
+      ruaEndereco: [endereco[0].rua, [Validators.required]],
+      numeroEndereco: [endereco[0].numero, [Validators.required]],
+      bairroId: [endereco[0].bairroId, [Validators.required]],
+    });
   }
 
   onSubmit() {
@@ -181,6 +189,6 @@ export class FormCriancaComponent implements OnInit {
   }
 
   log() {
-    console.log(this.form.value);
+    console.log(this.formEndereco);
   }
 }

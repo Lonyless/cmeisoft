@@ -15,6 +15,7 @@ import { CidadeService } from 'src/app/core/services/cidade.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
 import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.service';
 import { nextTick } from 'process';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-endereco-form',
@@ -22,7 +23,7 @@ import { nextTick } from 'process';
   styleUrls: ['./endereco-form.component.css'],
 })
 export class EnderecoFormComponent implements OnInit {
-  form: FormGroup;
+  @Input() form: FormGroup;
 
   constructor(
     public fb: FormBuilder,
@@ -39,8 +40,11 @@ export class EnderecoFormComponent implements OnInit {
 
   bairros: Bairro[];
   _visibilidade: boolean;
+  //@Input() formBehavior: BehaviorSubject<FormGroup>;
 
   ngOnInit(): void {
+    //this.formBehavior = new BehaviorSubject<FormGroup>(this.form);
+
     if (this.inEventEmitterService.firstSubsVar == undefined) {
       this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
         () => {
@@ -56,20 +60,17 @@ export class EnderecoFormComponent implements OnInit {
       this.bairros = res;
     }).unsubscribe;
 
-    //let cmei = this.route.snapshot.data['cmei']
+    //Precisa ser instanciado se o form não for passado como input. TODO
+    /*
     let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
 
-    //POG
-    //if (cmei[0] == null)
-    //endereco = [{ id: null, nome: '', telefone: '', idEndereco: '', status: null }]
-
-    //cria o formulario de criar ou editar, com base no obj(se for nulo: criar)
     this.form = this.fb.group({
       id: [endereco[0].id],
       ruaEndereco: [endereco[0].rua, [Validators.required]],
       numeroEndereco: [endereco[0].numero, [Validators.required]],
       bairroId: [endereco[0].bairroId, [Validators.required]],
     });
+    */
   }
 
   setar() {

@@ -33,7 +33,7 @@ export class ListaComponent implements OnInit {
   getId(_id) {
     this.id = _id;
   }
-
+ 
   selectedCrianca: Crianca;
 
   getCrianca(crianca) {

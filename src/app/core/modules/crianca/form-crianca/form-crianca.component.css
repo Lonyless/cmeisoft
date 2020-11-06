@@ -1,0 +1,9 @@
+.has-error:not(form) {
+    border: 1px solid red;
+  }
+  .dngr {
+  
+    border: 1px solid red;
+    border-bottom-color: white;
+    opacity: 0.5;
+  }
