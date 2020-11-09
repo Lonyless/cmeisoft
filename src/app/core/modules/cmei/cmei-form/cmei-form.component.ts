@@ -51,6 +51,11 @@ export class CmeiFormComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    console.log("destroyed")
+    this.enderecoEmitterService.secondSubsVar = undefined
+  }
+
   insertEndereco() {
     this.enderecoEmitterService.firstOnEvent();
   }
@@ -70,7 +75,7 @@ export class CmeiFormComponent implements OnInit {
         this.form.value.telefoneCmei,
         enderecoId
       );
-      console.log(cmei)
+      console.log(cmei);
       this.cmeiService.adicionar(cmei).subscribe((sucess) => {
         console.log(sucess);
       });

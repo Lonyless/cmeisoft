@@ -40,10 +40,8 @@ export class EnderecoFormComponent implements OnInit {
 
   bairros: Bairro[];
   _visibilidade: boolean;
-  //@Input() formBehavior: BehaviorSubject<FormGroup>;
 
   ngOnInit(): void {
-    //this.formBehavior = new BehaviorSubject<FormGroup>(this.form);
 
     if (this.inEventEmitterService.firstSubsVar == undefined) {
       this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
@@ -82,6 +80,8 @@ export class EnderecoFormComponent implements OnInit {
     console.log(endereco);
     this.enderecoService.adicionar(endereco).subscribe(
       (sucesso) => {
+        //erro: quando ele emite a resposta, ela serve para todos os componentes que estao escutando
+        //ou seja, qualquer um que ja foi carregado pelomenos uma vez
         this.inEventEmitterService.secondOnEvent();
         console.log(sucesso);
       },
