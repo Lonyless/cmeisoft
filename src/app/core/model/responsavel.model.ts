@@ -10,7 +10,6 @@ export class Responsavel {
     numeroTitulo?: number,
     zonaTitulo?: number,
     secaoTitulo?: number,
-    tipo?: string,
     id?: number
   ) {
     this.id = id;
@@ -24,7 +23,6 @@ export class Responsavel {
     this.numeroTitulo = numeroTitulo;
     this.zonaTitulo = zonaTitulo;
     this.secaoTitulo = secaoTitulo;
-    this.tipo = tipo;
   }
 
   id?: number;
@@ -39,5 +37,4 @@ export class Responsavel {
   zonaTitulo: number;
   secaoTitulo: number;
   status: number;
-  tipo: string;
 }

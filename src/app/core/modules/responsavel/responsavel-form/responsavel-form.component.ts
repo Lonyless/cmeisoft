@@ -102,7 +102,6 @@ export class ResponsavelFormComponent implements OnInit {
       this.form.value.numeroTituloResponsavel,
       this.form.value.zonaTituloResponsavel,
       this.form.value.secaoTituloResponsavel,
-      this.form.value.tipoResponsavel
     );
 
     //
