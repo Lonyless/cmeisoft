@@ -26,10 +26,10 @@ class rotasCmei {
         this.router.post('/cmei', (req, res) => {
             const nome = req.body.nome
             const telefone = req.body.telefone
-            const idEndereco = req.body.id_endereco
+            const idEndereco = req.body.idEndereco
 
             query(`insert into cmei(nome,telefone,id_endereco,status)
-            values('${nome},${telefone},${idEndereco},1')`, res)
+            values("${nome}",${telefone},${idEndereco},1)`, res)
         })
     }
 
@@ -37,7 +37,7 @@ class rotasCmei {
         this.router.put('/cmei/:id', (req, res) => {
             const nome = req.body.nome
             const telefone = req.body.telefone
-            const idEndereco = req.body.id_endereco
+            const idEndereco = req.body.idEndereco
             const status = req.body.status
             query(`update cmei set nome="${nome}", telefone="${telefone}",id_endereco="${idEndereco}",
             status="${status}" where id=` + parseInt(req.params.id), res)

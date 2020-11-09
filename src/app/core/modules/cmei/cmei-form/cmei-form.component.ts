@@ -52,7 +52,7 @@ export class CmeiFormComponent implements OnInit {
   }
 
   insertEndereco() {
-    this.enderecoEmitterService.secondOnEvent();
+    this.enderecoEmitterService.firstOnEvent();
   }
 
   onSubmit() {
@@ -70,7 +70,7 @@ export class CmeiFormComponent implements OnInit {
         this.form.value.telefoneCmei,
         enderecoId
       );
-
+      console.log(cmei)
       this.cmeiService.adicionar(cmei).subscribe((sucess) => {
         console.log(sucess);
       });

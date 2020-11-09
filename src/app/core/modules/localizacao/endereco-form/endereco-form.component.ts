@@ -48,7 +48,7 @@ export class EnderecoFormComponent implements OnInit {
     if (this.inEventEmitterService.firstSubsVar == undefined) {
       this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
         () => {
-          //console.log('IN');
+          console.log('IN');
           this.onSubmit();
         }
       );
