@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -22,7 +23,7 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './endereco-form.component.html',
   styleUrls: ['./endereco-form.component.css'],
 })
-export class EnderecoFormComponent implements OnInit {
+export class EnderecoFormComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
 
   constructor(
@@ -46,7 +47,6 @@ export class EnderecoFormComponent implements OnInit {
     if (this.inEventEmitterService.firstSubsVar == undefined) {
       this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
         () => {
-          console.log('IN');
           this.onSubmit();
         }
       );
@@ -58,6 +58,10 @@ export class EnderecoFormComponent implements OnInit {
       this.bairros = res;
     }).unsubscribe;
 
+  }
+
+  ngOnDestroy() {
+    console.log("destroy")
   }
 
   setar() {

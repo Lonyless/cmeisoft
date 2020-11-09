@@ -101,6 +101,9 @@ export class FormCriancaComponent implements OnInit {
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
       this.inEnderecoEmitterService.secondSubsVar = this.inEnderecoEmitterService.invokeSecondComponentFunction.subscribe(
         () => {
+
+          //TODO: tentar enviar o form pelo service
+
           this.insertCrianca();
         }
       );

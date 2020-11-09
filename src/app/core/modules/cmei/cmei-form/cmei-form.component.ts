@@ -52,8 +52,8 @@ export class CmeiFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log("destroyed")
-    this.enderecoEmitterService.secondSubsVar = undefined
+    
+    
   }
 
   insertEndereco() {
