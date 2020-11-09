@@ -23,6 +23,6 @@
     <hr>
     <div class="d-flex flex-row-reverse">
         <button [disabled]="!this.formEndereco.valid || !this.form.valid" class="btn btn-primary m-2"
-            (click)="insertEndereco()">Confirmar Cadastro</button>
+            (click)="insertEndereco()" routerLink="/">Confirmar Cadastro</button>
     </div>
 </form>
