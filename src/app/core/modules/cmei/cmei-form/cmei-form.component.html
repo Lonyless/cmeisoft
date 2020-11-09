@@ -1,39 +1,28 @@
 <form class="needs-validation" [formGroup]="form">
-
-    <div class="container mt-5">
-
-        <div class="col">
-            <div class="form-group">
-                <label>CMEI Opção 1</label>
-                <select required formControlName="cmeiOpcao1" name="cmeiOpcao1" id="cmeiOpcao1"
-                    class="form-control form-control-lg" placeholder="">
-                    <option *ngFor="let cmei of cmeiList" value={{cmei.id}}>{{cmei.nome}}</option>
-                </select>
-                <div *ngIf="validarCampo('cmeiOpcao1')" class="alert alert-danger">
-                    Por favor escolha um CMEI
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="form-group">
-                <label>CMEI Opção 2</label>
-                <select required formControlName="cmeiOpcao2" name="cmeiOpcao2" id="cmeiOpcao2"
-                    class="form-control form-control-lg" placeholder="">
-                    <option *ngFor="let cmei of cmeiList" value={{cmei.id}}>{{cmei.nome}}</option>
-                </select>
-                <div *ngIf="validarCampo('cmeiOpcao2')" class="alert alert-danger">
-                    Por favor escolha um CMEI
-                </div>
-            </div>
+    <h2>Dados do CMEI</h2>
+    <div class="form-group">
+        <label>Nome do Cmei</label>
+        <input required [ngClass]="cssErro('nomeCmei')" formControlName="nomeCmei" type="text" id="nomeCmei"
+            class="form-control form-control-lg" placeholder="">
+        <div *ngIf="validarCampo('nomeCmei')" class="alert alert-danger">
+            O nome do cmei é obrigatorio
         </div>
     </div>
 
-    <div class="col">
-        <div class="form-group">
-            <label>data</label>
-            <input formControlName="data" type="date">
+    <div class="form-group">
+        <label>Telefone</label>
+        <input required [ngClass]="cssErro('telefoneCmei')" formControlName="telefoneCmei" type="text" id="telefoneCmei"
+            class="form-control form-control-lg" placeholder="">
+        <div *ngIf="validarCampo('telefoneCmei')" class="alert alert-danger">
+            O nome telefone é obrigatorio
         </div>
     </div>
-    <button (click)="log()">LOG</button>
+    <hr>
+    <h2>Dados de Localização</h2>
+    <app-endereco-form [form]="formEndereco"></app-endereco-form>
+    <hr>
+    <div class="d-flex flex-row-reverse">
+        <button [disabled]="!this.formEndereco.valid || !this.form.valid" class="btn btn-primary m-2"
+            (click)="insertEndereco()">Confirmar Cadastro</button>
+    </div>
 </form>

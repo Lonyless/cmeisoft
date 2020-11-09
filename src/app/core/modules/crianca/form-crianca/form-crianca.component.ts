@@ -19,7 +19,6 @@ import { CriterioEmmiterService } from 'src/app/core/services/criterio-emmiter.s
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
 import { Cmei } from 'src/app/core/model/cmei.model';
 import { CmeiService } from 'src/app/core/services/cmei.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form-crianca',

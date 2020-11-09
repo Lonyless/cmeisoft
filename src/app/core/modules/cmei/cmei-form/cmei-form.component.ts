@@ -3,54 +3,97 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Cmei } from 'src/app/core/model/cmei.model';
 import { CmeiService } from 'src/app/core/services/cmei.service';
+import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.service';
+import { EnderecoService } from 'src/app/core/services/endereco.service';
 
 @Component({
   selector: 'app-cmei-form',
   templateUrl: './cmei-form.component.html',
-  styleUrls: ['./cmei-form.component.css']
+  styleUrls: ['./cmei-form.component.css'],
 })
 export class CmeiFormComponent implements OnInit {
-
-  form: FormGroup;
-
-  constructor(public cmeiService: CmeiService, public fb: FormBuilder, private route: ActivatedRoute) {
-    this.cmeiService = cmeiService
+  constructor(
+    public cmeiService: CmeiService,
+    public fb: FormBuilder,
+    private enderecoService: EnderecoService,
+    private route: ActivatedRoute,
+    private enderecoEmitterService: EnderecoEmmiterService
+  ) {
+    this.enderecoService = enderecoService;
+    this.cmeiService = cmeiService;
   }
 
-  cmeiList: Cmei[]
+  form: FormGroup;
+  formEndereco: FormGroup;
+  cmeiList: Cmei[];
 
   ngOnInit(): void {
-    this.cmeiService.listar().subscribe(res => {
-      this.cmeiList = res
-    }).unsubscribe
+    if (this.enderecoEmitterService.secondSubsVar == undefined) {
+      this.enderecoEmitterService.secondSubsVar = this.enderecoEmitterService.invokeSecondComponentFunction.subscribe(
+        () => {
+          this.onSubmit();
+        }
+      );
+    }
+
+    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
+
+    this.formEndereco = this.fb.group({
+      id: [endereco[0].id],
+      ruaEndereco: [endereco[0].rua, [Validators.required]],
+      numeroEndereco: [endereco[0].numero, [Validators.required]],
+      bairroId: [endereco[0].bairroId, [Validators.required]],
+    });
 
     this.form = this.fb.group({
-      cmeiOpcao1: [[Validators.required]],
-      cmeiOpcao2: [[Validators.required]],
-      data: [[Validators.required]]
-    })
+      nomeCmei: ['', Validators.required],
+      telefoneCmei: ['', Validators.required],
+    });
+  }
+
+  insertEndereco() {
+    this.enderecoEmitterService.secondOnEvent();
+  }
+
+  onSubmit() {
+    this.enderecoService.listar().subscribe((enderecos) => {
+      let enderecoId;
+
+      if (enderecos.length == 0) {
+        enderecoId = 1;
+      } else {
+        enderecoId = enderecos[enderecos.length - 1].id;
+      }
+
+      const cmei = new Cmei(
+        this.form.value.nomeCmei,
+        this.form.value.telefoneCmei,
+        enderecoId
+      );
+
+      this.cmeiService.adicionar(cmei).subscribe((sucess) => {
+        console.log(sucess);
+      });
+    });
   }
 
   validarCampo(campo) {
-
-    return !this.form.get(campo).valid && this.form.get(campo).touched
-
+    return !this.form.get(campo).valid && this.form.get(campo).touched;
   }
 
   cssErro(campo) {
     return {
-      'has-error': this.validarCampo(campo)
-    }
+      'has-error': this.validarCampo(campo),
+    };
   }
 
   tabErro(campo) {
     return {
-      'dngr': this.validarCampo(campo)
-    }
+      dngr: this.validarCampo(campo),
+    };
   }
 
   log() {
-    console.log( this.form.value.data.replace(/-/g, "/"))
+    //console.log(this.form.value.data.replace(/-/g, '/'));
   }
-
 }

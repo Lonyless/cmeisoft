@@ -60,17 +60,6 @@ export class EnderecoFormComponent implements OnInit {
       this.bairros = res;
     }).unsubscribe;
 
-    //Precisa ser instanciado se o form não for passado como input. TODO
-    /*
-    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
-
-    this.form = this.fb.group({
-      id: [endereco[0].id],
-      ruaEndereco: [endereco[0].rua, [Validators.required]],
-      numeroEndereco: [endereco[0].numero, [Validators.required]],
-      bairroId: [endereco[0].bairroId, [Validators.required]],
-    });
-    */
   }
 
   setar() {
