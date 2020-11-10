@@ -61,7 +61,7 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("destroy")
+   
   }
 
   setar() {

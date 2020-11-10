@@ -24,6 +24,7 @@ import { CmeiService } from 'src/app/core/services/cmei.service';
   selector: 'app-form-crianca',
   templateUrl: './form-crianca.component.html',
   styleUrls: ['./form-crianca.component.css'],
+  providers: [EnderecoEmmiterService]
 })
 export class FormCriancaComponent implements OnInit {
   form: FormGroup;
@@ -44,6 +45,15 @@ export class FormCriancaComponent implements OnInit {
     this.cmeiService = cmeiService;
     this.criancaService = criancaService;
     this.enderecoService = enderecoService;
+
+    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
+
+    this.formEndereco = this.fb.group({
+      id: [endereco[0].id],
+      ruaEndereco: [endereco[0].rua, [Validators.required]],
+      numeroEndereco: [endereco[0].numero, [Validators.required]],
+      bairroId: [endereco[0].bairroId, [Validators.required]],
+    });
   }
 
   cmeiList: Cmei[];
@@ -101,7 +111,6 @@ export class FormCriancaComponent implements OnInit {
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
       this.inEnderecoEmitterService.secondSubsVar = this.inEnderecoEmitterService.invokeSecondComponentFunction.subscribe(
         () => {
-
           //TODO: tentar enviar o form pelo service
 
           this.insertCrianca();
@@ -148,14 +157,6 @@ export class FormCriancaComponent implements OnInit {
     });
 
     //Form que é passado pelo Input para o child endereco-form
-    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
-
-    this.formEndereco = this.fb.group({
-      id: [endereco[0].id],
-      ruaEndereco: [endereco[0].rua, [Validators.required]],
-      numeroEndereco: [endereco[0].numero, [Validators.required]],
-      bairroId: [endereco[0].bairroId, [Validators.required]],
-    });
   }
 
   onSubmit() {

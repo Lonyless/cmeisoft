@@ -10,6 +10,7 @@ import { EnderecoService } from 'src/app/core/services/endereco.service';
   selector: 'app-cmei-form',
   templateUrl: './cmei-form.component.html',
   styleUrls: ['./cmei-form.component.css'],
+  providers: [EnderecoEmmiterService]
 })
 export class CmeiFormComponent implements OnInit {
   constructor(
@@ -52,8 +53,7 @@ export class CmeiFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    
-    
+   
   }
 
   insertEndereco() {

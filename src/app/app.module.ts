@@ -29,6 +29,7 @@ import { CriterioListComponent } from './core/modules/criterio/criterio-list/cri
 import { CmeiListComponent } from './core/modules/cmei/cmei-list/cmei-list.component';
 import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.component';
 import { CriterioGuard } from './core/guard/criterio-guard.service';
+import { EnderecoEmmiterService } from './core/services/endereco-emmiter.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,12 @@ import { CriterioGuard } from './core/guard/criterio-guard.service';
     ReactiveFormsModule,
     CommonModule,
   ],
-  providers: [CriancaService, CmeiService, CriterioGuard],
+  providers: [
+    CriancaService,
+    CmeiService,
+    EnderecoEmmiterService,
+    CriterioGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
