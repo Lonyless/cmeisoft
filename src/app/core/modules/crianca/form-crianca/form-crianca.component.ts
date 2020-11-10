@@ -54,27 +54,17 @@ export class FormCriancaComponent implements OnInit {
     this.cmeiService = cmeiService;
     this.criancaService = criancaService;
     this.enderecoService = enderecoService;
-
-    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
-
-    this.formEndereco = this.fb.group({
-      id: [endereco[0].id],
-      ruaEndereco: [endereco[0].rua, [Validators.required]],
-      numeroEndereco: [endereco[0].numero, [Validators.required]],
-      bairroId: [endereco[0].bairroId, [Validators.required]],
-    });
-
-    this.formCriterio = this.fb.group({
-      criterios: this.buildFormArray(),
-    });
   }
 
-  buildFormArray() {
-    this.criterioService.listar().subscribe((criterioList) => {
-      const values = criterioList.map((val) => new FormControl(false));
+  formEndereco: FormGroup;
+  formCriterio: FormGroup;
 
-      return this.fb.array(values);
-    });
+  criterioList: Criterio[];
+
+  buildFormArray() {
+    const values = this.criterioList.map((val) => new FormControl(false));
+
+    return this.fb.array(values);
   }
 
   cmeiList: Cmei[];
@@ -125,25 +115,32 @@ export class FormCriancaComponent implements OnInit {
     this.responsavelEmmiterService.firstOnEvent();
   }
 
-  formEndereco: FormGroup;
-  formCriterio: FormGroup;
-
   ngOnInit(): void {
     //ativa o evento do passo 2
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
       this.inEnderecoEmitterService.secondSubsVar = this.inEnderecoEmitterService.invokeSecondComponentFunction.subscribe(
         () => {
-          //TODO: tentar enviar o form pelo service
-
           this.insertCrianca();
         }
       );
     }
+    //-------------------------
+
+    //buildando form de criterios
+
+    //pega os dados que são passados pelo guard da rota, o criterio-guard.service
+    this.criterioList = this.route.snapshot.data.criterios;
+
+    this.formCriterio = this.fb.group({
+      criterios: this.buildFormArray(),
+    });
+    //---------------------------------------------------------------------------
 
     //alimenta o objeto Cmei
     this.cmeiService.listar().subscribe((res) => {
       this.cmeiList = res;
     }).unsubscribe;
+    //----------------------
 
     //cria um modelo default do objeto
     let crianca = [
@@ -163,8 +160,9 @@ export class FormCriancaComponent implements OnInit {
         nome: null,
       },
     ];
+    //-------------------------------
 
-    //cria o formulario de criar ou editar
+    //cria o formulario de criar ou editar criança
     this.form = this.fb.group({
       id: [crianca[0].id],
       nomeCrianca: [crianca[0].nome, [Validators.required]],
@@ -177,8 +175,18 @@ export class FormCriancaComponent implements OnInit {
       cmeiOpcao1Crianca: [crianca[0].cmeiOpcao1, [Validators.required]],
       cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
     });
+    //--------------------------------------------
 
-    //Form que é passado pelo Input para o child endereco-form
+    //criando o formulario de enderecos
+    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
+
+    this.formEndereco = this.fb.group({
+      id: [endereco[0].id],
+      ruaEndereco: [endereco[0].rua, [Validators.required]],
+      numeroEndereco: [endereco[0].numero, [Validators.required]],
+      bairroId: [endereco[0].bairroId, [Validators.required]],
+    });
+    //----------------------------------
   }
 
   onSubmit() {
@@ -197,6 +205,7 @@ export class FormCriancaComponent implements OnInit {
     this.insertEndereco();
   }
 
+  //validações e css
   validarCampo(campo) {
     return !this.form.get(campo).valid && this.form.get(campo).touched;
   }

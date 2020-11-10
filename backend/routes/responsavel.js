@@ -60,9 +60,10 @@ class rotasCmei {
     this.router.post("/responsavelAux", (req, res) => {
       const criancaId = req.body.criancaId;
       const responsavelId = req.body.responsavelId;
+      const responsavelTipo = req.body.responsavelTipo;
 
       query(
-        `insert into aux_crianca_responsavel(responsavel_id,crianca_id)values(${responsavelId},${criancaId})`,
+        `insert into aux_crianca_responsavel(responsavel_id,crianca_id,tipo)values(${responsavelId},${criancaId},"${responsavelTipo}")`,
         res
       );
     });

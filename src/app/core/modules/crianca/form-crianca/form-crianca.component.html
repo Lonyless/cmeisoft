@@ -122,10 +122,14 @@
 
         <div class="tab-pane fade show" id="criterios" role="tabpanel" aria-labelledby="home-tab">
 
-            <app-criterio-form [form]="formCriterio">
-                
-            </app-criterio-form>
-
+            <div [formGroup]="formCriterio">
+                <div formArrayName="criterios" class="form-group"
+                    *ngFor="let item of formCriterio.get('criterios')['controls']; let i = index">
+                    <h1>{{criterioList[i].descricao}}</h1>
+                    <input type="checkbox" [formControlName]="i"> Sim
+                </div>
+            </div>
+            
         </div>
 
         <div class="tab-pane fade show" id="cmei" role="tabpanel" aria-labelledby="home-tab">
