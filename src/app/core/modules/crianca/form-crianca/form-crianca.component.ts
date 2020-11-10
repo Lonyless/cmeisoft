@@ -6,7 +6,13 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  Form,
+  FormControl,
+} from '@angular/forms';
 
 import { CriancaService } from '../../../services/crianca.service';
 
@@ -19,12 +25,14 @@ import { CriterioEmmiterService } from 'src/app/core/services/criterio-emmiter.s
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
 import { Cmei } from 'src/app/core/model/cmei.model';
 import { CmeiService } from 'src/app/core/services/cmei.service';
+import { Criterio } from 'src/app/core/model/criterio.model';
+import { CriterioService } from 'src/app/core/services/criterioservice';
 
 @Component({
   selector: 'app-form-crianca',
   templateUrl: './form-crianca.component.html',
   styleUrls: ['./form-crianca.component.css'],
-  providers: [EnderecoEmmiterService]
+  providers: [EnderecoEmmiterService],
 })
 export class FormCriancaComponent implements OnInit {
   form: FormGroup;
@@ -37,6 +45,7 @@ export class FormCriancaComponent implements OnInit {
     public criancaService: CriancaService,
     public enderecoService: EnderecoService,
     public cmeiService: CmeiService,
+    public criterioService: CriterioService,
     private inEnderecoEmitterService: EnderecoEmmiterService,
     private criterioEmmiterService: CriterioEmmiterService,
     private responsavelEmmiterService: ResponsavelEmmiterService
@@ -53,6 +62,18 @@ export class FormCriancaComponent implements OnInit {
       ruaEndereco: [endereco[0].rua, [Validators.required]],
       numeroEndereco: [endereco[0].numero, [Validators.required]],
       bairroId: [endereco[0].bairroId, [Validators.required]],
+    });
+
+    this.formCriterio = this.fb.group({
+      criterios: this.buildFormArray(),
+    });
+  }
+
+  buildFormArray() {
+    this.criterioService.listar().subscribe((criterioList) => {
+      const values = criterioList.map((val) => new FormControl(false));
+
+      return this.fb.array(values);
     });
   }
 
@@ -105,6 +126,7 @@ export class FormCriancaComponent implements OnInit {
   }
 
   formEndereco: FormGroup;
+  formCriterio: FormGroup;
 
   ngOnInit(): void {
     //ativa o evento do passo 2

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Crianca } from 'src/app/core/model/crianca.model';
@@ -26,7 +26,7 @@ export class CriterioFormComponent implements OnInit {
     this.criterioService = criterioService;
   }
 
-  form: FormGroup;
+  @Input() form: FormGroup;
   criterioList: Criterio[];
 
   buildFormArray() {
@@ -38,6 +38,10 @@ export class CriterioFormComponent implements OnInit {
   ngOnInit(): void {
     this.criterioList = this.route.snapshot.data.criterios;
 
+    this.form = this.formBuilder.group({
+      criterios: this.buildFormArray(),
+    });
+
     if (this.criterioEmmiterService.subsVar == undefined) {
       this.criterioEmmiterService.subsVar = this.criterioEmmiterService.invokeFirstComponentFunction.subscribe(
         (name: string) => {
@@ -45,10 +49,6 @@ export class CriterioFormComponent implements OnInit {
         }
       );
     }
-
-    this.form = this.formBuilder.group({
-      criterios: this.buildFormArray(),
-    });
   }
 
   onSubmit() {}

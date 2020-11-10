@@ -122,7 +122,9 @@
 
         <div class="tab-pane fade show" id="criterios" role="tabpanel" aria-labelledby="home-tab">
 
-            <app-criterio-form></app-criterio-form>
+            <app-criterio-form [form]="formCriterio">
+                
+            </app-criterio-form>
 
         </div>
 
@@ -165,5 +167,5 @@
         </div>
 
     </div>
-    <button (click)="log()">print form</button>
+
 </form>
