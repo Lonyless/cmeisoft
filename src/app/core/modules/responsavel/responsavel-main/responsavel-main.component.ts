@@ -29,16 +29,24 @@ export class ResponsavelMainComponent implements OnInit {
     this.responsavelService = responsavelService;
   }
 
-  adicionarOnPressed(event) {
-    console.log(event);
-    if (this.responsaveisCurrent == null) {
-      this.responsaveisCurrent = [event];
-    } else {
-      this.responsaveisCurrent.push(event);
-    }
+  adicionarOnPressed(responsavel: Responsavel) {
+    this.responsavelService.listar().subscribe((responsavelList) => {
+      if (responsavel.id == null) {
+        if (responsavelList.length < 1) {
+          responsavel.id = 1;
+        } else {
+          responsavel.id = responsavelList[responsavelList.length - 1].id;
+        }
+      }
 
-    this.buildForm();
-    console.log(this.responsaveisCurrent);
+      if (this.responsaveisCurrent == null) {
+        this.responsaveisCurrent = [responsavel];
+      } else {
+        this.responsaveisCurrent.push(responsavel);
+      }
+
+      this.buildForm();
+    }).unsubscribe;
   }
 
   remove(responsavel) {
@@ -113,6 +121,6 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   log() {
-    console.log(this.form);
+    console.log(this.responsaveisCurrent);
   }
 }
