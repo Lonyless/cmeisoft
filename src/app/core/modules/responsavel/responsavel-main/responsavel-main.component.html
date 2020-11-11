@@ -8,7 +8,7 @@
     3 - Form no Modal para cadastro de responsavel
 -->
 
-<table class="table table table-hover">
+<table class="table table-hover">
     <thead>
         <tr>
             <th class="d-flex justify-content-center" scope="col" class="text-center">Nome do Responsavel</th>
@@ -17,21 +17,9 @@
         </tr>
     </thead>
 
-    <tbody>
-        <!--
-                    <div [formGroup]="formCriterio">
-            <div formArrayName="tipo" class="form-group"
-                *ngFor="let item of formCriterio.get('criterios')['controls']; let i = index">
-                <h1>{{criterioList[i].descricao}}</h1>
-                <input type="checkbox" [formControlName]="i"> Sim
-            </div>
-        </div>
-        -->
-
-
-        <div [formGroup]="form">
-            <tr class="form-group" formArrayName="tipo"
-                *ngFor="let item of form.get('tipo')['controls']; let i = index">
+    <tbody class="form-group" [formGroup]="form">
+        <ng-container formArrayName="tipo" *ngFor="let item of form.get('tipo')['controls']; let i = index">
+            <tr>
                 <td>
                     <div class="d-flex justify-content-center">
                         {{responsaveisCurrent[i].nome}}
@@ -53,7 +41,7 @@
                     </div>
                 </td>
             </tr>
-        </div>
+        </ng-container>
     </tbody>
 </table>
 <button (click)="log()">print form</button>

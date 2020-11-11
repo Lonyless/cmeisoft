@@ -30,7 +30,6 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   adicionarOnPressed(event) {
-    
     console.log(event);
     if (this.responsaveisCurrent == null) {
       this.responsaveisCurrent = [event];
@@ -38,7 +37,7 @@ export class ResponsavelMainComponent implements OnInit {
       this.responsaveisCurrent.push(event);
     }
 
-    this.buildForm()
+    this.buildForm();
     console.log(this.responsaveisCurrent);
   }
 
@@ -47,7 +46,7 @@ export class ResponsavelMainComponent implements OnInit {
       (obj) => obj != responsavel
     );
 
-    this.buildForm()
+    this.buildForm();
   }
 
   newVisibility: boolean;
@@ -91,11 +90,12 @@ export class ResponsavelMainComponent implements OnInit {
 
   inserirAux() {
     this.criancaService.listar().subscribe((crianca) => {
-      this.responsaveisCurrent.forEach((responsavel) => {
-        this.responsavelService.adicionarAux(
-          responsavel,
-          crianca[crianca.length - 1]
-        );
+      this.responsaveisCurrent.forEach((responsavel, i) => {
+        (responsavel.tipo = this.form.value.tipo[i]),
+          this.responsavelService.adicionarAux(
+            responsavel,
+            crianca[crianca.length - 1]
+          );
       });
     });
   }

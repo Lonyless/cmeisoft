@@ -31,6 +31,7 @@ export class ResponsavelService {
     const criterioAuxCrianca = {
       criancaId: crianca.id,
       responsavelId: responsavel.id,
+      responsavelTipo: responsavel.tipo,
     };
     this.http
       .post(`${this.apiURL}/responsavelAux`, criterioAuxCrianca)
