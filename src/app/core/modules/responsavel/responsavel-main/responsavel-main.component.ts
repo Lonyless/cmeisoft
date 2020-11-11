@@ -1,4 +1,10 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
 import { CriancaService } from 'src/app/core/services/crianca.service';
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
@@ -11,8 +17,10 @@ import { ResponsavelService } from 'src/app/core/services/responsavel.service.';
 })
 export class ResponsavelMainComponent implements OnInit {
   inicializar = new EventEmitter();
+  form: FormGroup;
 
   constructor(
+    public fb: FormBuilder,
     public criancaService: CriancaService,
     public responsavelService: ResponsavelService,
     private responsavelEmmiterService: ResponsavelEmmiterService
@@ -22,6 +30,7 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   adicionarOnPressed(event) {
+    
     console.log(event);
     if (this.responsaveisCurrent == null) {
       this.responsaveisCurrent = [event];
@@ -29,6 +38,7 @@ export class ResponsavelMainComponent implements OnInit {
       this.responsaveisCurrent.push(event);
     }
 
+    this.buildForm()
     console.log(this.responsaveisCurrent);
   }
 
@@ -36,6 +46,8 @@ export class ResponsavelMainComponent implements OnInit {
     this.responsaveisCurrent = this.responsaveisCurrent.filter(
       (obj) => obj != responsavel
     );
+
+    this.buildForm()
   }
 
   newVisibility: boolean;
@@ -54,7 +66,6 @@ export class ResponsavelMainComponent implements OnInit {
   responsaveisCurrent: Responsavel[];
 
   ngOnInit(): void {
-
     if (this.responsavelEmmiterService.firstSubsVar == undefined) {
       this.responsavelEmmiterService.firstSubsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
         (name: string) => {
@@ -62,20 +73,30 @@ export class ResponsavelMainComponent implements OnInit {
         }
       );
     }
-
     this.responsaveisCurrent = [];
+
+    this.buildForm();
 
     this.newVisibility = true;
     this.listarAll();
   }
 
+  buildForm() {
+    const values = this.responsaveisCurrent.map((val) => new FormControl());
+
+    this.form = this.fb.group({
+      tipo: this.fb.array(values),
+    });
+  }
+
   inserirAux() {
     this.criancaService.listar().subscribe((crianca) => {
-      this.responsaveisCurrent.forEach(responsavel => {
-        this.responsavelService.adicionarAux(responsavel, crianca[crianca.length-1])
-        console.log("responsavel: "+responsavel)
-        console.log("crianca: "+crianca)
-      })
+      this.responsaveisCurrent.forEach((responsavel) => {
+        this.responsavelService.adicionarAux(
+          responsavel,
+          crianca[crianca.length - 1]
+        );
+      });
     });
   }
 
@@ -92,6 +113,6 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   log() {
-    console.log('emmitiu');
+    console.log(this.form);
   }
 }

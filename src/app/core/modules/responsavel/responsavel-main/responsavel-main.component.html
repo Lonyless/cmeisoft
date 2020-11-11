@@ -11,22 +11,53 @@
 <table class="table table table-hover">
     <thead>
         <tr>
-            <th scope="col" class="text-center">Nome do Responsavel</th>
-            <th scope="col" class="text-center">Tipo</th>
-            <th scope="col" class="text-center">Opções</th>
+            <th class="d-flex justify-content-center" scope="col" class="text-center">Nome do Responsavel</th>
+            <th class="d-flex justify-content-center" scope="col" class="text-center">Tipo</th>
+            <th class="d-flex justify-content-center" scope="col" class="text-center">Opções</th>
         </tr>
     </thead>
-    <tbody>
-        <tr *ngFor="let responsavel of responsaveisCurrent">
-            <td>{{responsavel.nome}}</td>
-            <td>{{responsavel.tipo}}</td>
-            <td class="d-flex justify-content-center">
-                <button class="btn btn-danger" (click)="remove(responsavel)">Remover</button>
-            </td>
-        </tr>
 
+    <tbody>
+        <!--
+                    <div [formGroup]="formCriterio">
+            <div formArrayName="tipo" class="form-group"
+                *ngFor="let item of formCriterio.get('criterios')['controls']; let i = index">
+                <h1>{{criterioList[i].descricao}}</h1>
+                <input type="checkbox" [formControlName]="i"> Sim
+            </div>
+        </div>
+        -->
+
+
+        <div [formGroup]="form">
+            <tr class="form-group" formArrayName="tipo"
+                *ngFor="let item of form.get('tipo')['controls']; let i = index">
+                <td>
+                    <div class="d-flex justify-content-center">
+                        {{responsaveisCurrent[i].nome}}
+                    </div>
+                </td>
+                <td class="d-flex justify-content-center">
+                    <select class="form-control" [formControlName]="i">
+                        <option value="Pai">Pai</option>
+                        <option value="Mae">Mãe</option>
+                        <option value="AvoM">Avô</option>
+                        <option value="AvoF">Avó</option>
+                        <option value="Tio">Tio</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-danger " (click)="remove(responsaveisCurrent[i])">Remover</button>
+                    </div>
+                </td>
+            </tr>
+        </div>
     </tbody>
 </table>
+<button (click)="log()">print form</button>
+<button (click)="buildForm()">buildar</button>
 <button class="btn btn-primary mt-3 mr-3" data-toggle="modal" data-target="#exampleModal">
     Adicionar responsavel já cadastrado
 </button>
@@ -39,6 +70,8 @@
     </svg>
     Cadastrar Novo Responsavel
 </button>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
