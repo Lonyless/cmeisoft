@@ -41,11 +41,10 @@ class rotasCmei {
     this.router.post("/criteriosocial", (req, res) => {
       const descricao = req.body.descricao;
       const peso = req.body.peso;
-      const criancaId = req.body.crianca_id;
 
       query(
-        `insert into criteriosocial(descricao,peso,crianca_id)
-                values('${descricao},${peso},${criancaId},1')`,
+        `insert into criteriosocial(descricao,peso,status)
+                values("${descricao}",${peso},1)`,
         res
       );
     });

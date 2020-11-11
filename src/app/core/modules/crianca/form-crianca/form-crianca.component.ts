@@ -117,14 +117,17 @@ export class FormCriancaComponent implements OnInit {
 
   //passo 3
   insertAuxCriterio() {
+    //atribuindo os criterios a um objeto
     let valueSumbit = Object.assign({}, this.formCriterio.value);
 
+    //mapeando os objetos: retorna uma lista apenas com os criterios selecionados
     valueSumbit = Object.assign(valueSumbit, {
       criterios: valueSumbit.criterios
         .map((v, i) => (v ? this.criterioList[i] : null))
         .filter((v) => v != null),
     });
 
+    //lista as crianças, percorre o vetor e adiciona os criterios na tabela auxiliar
     this.criancaService.listar().subscribe((crianca) => {
       valueSumbit.criterios.forEach((criterio: Criterio) => {
         this.criterioService.adicionarAux(
