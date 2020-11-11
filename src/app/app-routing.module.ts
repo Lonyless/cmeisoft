@@ -30,6 +30,13 @@ const routes: Routes = [
     },
   },
   {
+    path: 'crianca/:id',
+    component: FormCriancaComponent,
+    resolve: {
+      criterios: CriterioGuard,
+    },
+  },
+  {
     path: 'localizacao',
     component: MenuComponent,
   },

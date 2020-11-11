@@ -27,6 +27,7 @@ import { Cmei } from 'src/app/core/model/cmei.model';
 import { CmeiService } from 'src/app/core/services/cmei.service';
 import { Criterio } from 'src/app/core/model/criterio.model';
 import { CriterioService } from 'src/app/core/services/criterioservice';
+import { ResponsavelService } from 'src/app/core/services/responsavel.service.';
 
 @Component({
   selector: 'app-form-crianca',
@@ -48,7 +49,8 @@ export class FormCriancaComponent implements OnInit {
     public criterioService: CriterioService,
     private inEnderecoEmitterService: EnderecoEmmiterService,
     private criterioEmmiterService: CriterioEmmiterService,
-    private responsavelEmmiterService: ResponsavelEmmiterService
+    private responsavelEmmiterService: ResponsavelEmmiterService,
+    private responsavelService: ResponsavelService
   ) {
     this.cmeiList = [];
     this.cmeiService = cmeiService;
@@ -170,25 +172,40 @@ export class FormCriancaComponent implements OnInit {
     }).unsubscribe;
     //----------------------
 
-    //cria um modelo default do objeto
-    let crianca = [
-      {
-        id: null,
-        sexo: null,
-        nascimento: null,
-        registro: null,
-        livro: null,
-        folha: null,
-        cpf: null,
-        enderecoId: null,
-        cmeiOpcao1: null,
-        cmeiOpcao2: null,
-        cidadeId: null,
-        status: null,
-        nome: null,
-      },
-    ];
+    /* 
+    criando um modelo default do objeto
+
+    se a rota possuir um parametro de id (id==null) sera criado um form vazio, 
+    se possuir o parametro (id!=null) o form sera abastecido com os valores 
+    de um listarPorId com o id passado pela rota
+    */
+    if (this.route.snapshot.params['id'] == null) {
+      this.buildFormCrianca([new Crianca()]);
+    } else {
+      this.criancaService
+        .listarPorId(this.route.snapshot.params['id'])
+        .subscribe((res) => {
+          this.buildFormCrianca(res);
+          console.log(res);
+        }).unsubscribe;
+    }
     //-------------------------------
+
+    //criando o formulario de enderecos
+    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
+
+    this.formEndereco = this.fb.group({
+      id: [endereco[0].id],
+      ruaEndereco: [endereco[0].rua, [Validators.required]],
+      numeroEndereco: [endereco[0].numero, [Validators.required]],
+      bairroId: [endereco[0].bairroId, [Validators.required]],
+    });
+    //----------------------------------
+  }
+
+  buildFormCrianca(crianca) {
+    //todo
+    this.responsavelService.listarCriancas(crianca.id).subscribe()
 
     //cria o formulario de criar ou editar criança
     this.form = this.fb.group({
@@ -204,17 +221,6 @@ export class FormCriancaComponent implements OnInit {
       cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
     });
     //--------------------------------------------
-
-    //criando o formulario de enderecos
-    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
-
-    this.formEndereco = this.fb.group({
-      id: [endereco[0].id],
-      ruaEndereco: [endereco[0].rua, [Validators.required]],
-      numeroEndereco: [endereco[0].numero, [Validators.required]],
-      bairroId: [endereco[0].bairroId, [Validators.required]],
-    });
-    //----------------------------------
   }
 
   onSubmit() {
