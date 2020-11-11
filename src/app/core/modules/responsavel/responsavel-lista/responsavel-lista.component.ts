@@ -19,7 +19,7 @@ export class ResponsavelListaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listar()
+    this.listar();
     this.filteredResponsavel = this.responsaveis;
   }
 

@@ -70,6 +70,16 @@ export class FormCriancaComponent implements OnInit {
   cmeiList: Cmei[];
 
   onCriterioSubmit() {
+    let valueSumbit = Object.assign({}, this.formCriterio.value);
+
+    valueSumbit = Object.assign(valueSumbit, {
+      criterios: valueSumbit.criterios
+        .map((v, i) => (v ? this.criterioList[i] : null))
+        .filter((v) => v != null),
+    });
+
+    console.log('SUBMIT: ' + valueSumbit);
+
     this.criterioEmmiterService.onEvent();
   }
 
@@ -101,13 +111,28 @@ export class FormCriancaComponent implements OnInit {
         console.log(resposta);
         this.insertAuxCriterio();
         this.insertAuxResponsavel();
-      });
+      }).unsubscribe;
     }).unsubscribe;
   }
 
   //passo 3
   insertAuxCriterio() {
-    this.criterioEmmiterService.onEvent();
+    let valueSumbit = Object.assign({}, this.formCriterio.value);
+
+    valueSumbit = Object.assign(valueSumbit, {
+      criterios: valueSumbit.criterios
+        .map((v, i) => (v ? this.criterioList[i] : null))
+        .filter((v) => v != null),
+    });
+
+    this.criancaService.listar().subscribe((crianca) => {
+      valueSumbit.criterios.forEach((criterio: Criterio) => {
+        this.criterioService.adicionarAux(
+          criterio,
+          crianca[crianca.length - 1]
+        );
+      });
+    }).unsubscribe;
   }
 
   //passo 4

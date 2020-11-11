@@ -29,23 +29,12 @@ export class CriterioFormComponent implements OnInit {
   @Input() form: FormGroup;
   criterioList: Criterio[];
 
-  buildFormArray() {
-    const values = this.criterioList.map((val) => new FormControl(false));
-
-    return this.formBuilder.array(values);
-  }
-
   ngOnInit(): void {
-    this.criterioList = this.route.snapshot.data.criterios;
-
-    this.form = this.formBuilder.group({
-      criterios: this.buildFormArray(),
-    });
-
     if (this.criterioEmmiterService.subsVar == undefined) {
       this.criterioEmmiterService.subsVar = this.criterioEmmiterService.invokeFirstComponentFunction.subscribe(
-        (name: string) => {
-          this.onSubmitAux();
+        (event) => {
+          this.onSubmitAux(event);
+          console.log('evento: ' + event);
         }
       );
     }
@@ -53,7 +42,7 @@ export class CriterioFormComponent implements OnInit {
 
   onSubmit() {}
 
-  onSubmitAux() {
+  onSubmitAux(listaCriterios) {
     let valueSumbit = Object.assign({}, this.form.value);
 
     valueSumbit = Object.assign(valueSumbit, {
