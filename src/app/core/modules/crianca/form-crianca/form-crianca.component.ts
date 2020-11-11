@@ -180,12 +180,12 @@ export class FormCriancaComponent implements OnInit {
     de um listarPorId com o id passado pela rota
     */
     if (this.route.snapshot.params['id'] == null) {
-      this.buildFormCrianca([new Crianca()]);
+      this.buildFormCrianca([new Crianca()], 1);
     } else {
       this.criancaService
         .listarPorId(this.route.snapshot.params['id'])
         .subscribe((res) => {
-          this.buildFormCrianca(res);
+          this.buildFormCrianca(res, 2);
           console.log(res);
         }).unsubscribe;
     }
@@ -203,9 +203,12 @@ export class FormCriancaComponent implements OnInit {
     //----------------------------------
   }
 
-  buildFormCrianca(crianca) {
-    //todo
-    this.responsavelService.listarCriancas(crianca.id).subscribe()
+  buildFormCrianca(crianca, op) {
+    //op == 1: create / op == 2: update
+    if (op == 2) {
+      //todo
+      this.responsavelService.listarCriancas(crianca.id).subscribe();
+    }
 
     //cria o formulario de criar ou editar criança
     this.form = this.fb.group({
