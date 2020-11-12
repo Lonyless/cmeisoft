@@ -182,7 +182,7 @@ export class FormCriancaComponent implements OnInit {
     de um listarPorId com o id passado pela rota
     */
     if (this.route.snapshot.params['id'] == null) {
-      this.buildFormCrianca(new Crianca(), 1);
+      this.buildFormCrianca([new Crianca()], 1);
     } else {
       this.criancaService
         .listarPorId(this.route.snapshot.params['id'])
@@ -200,18 +200,18 @@ export class FormCriancaComponent implements OnInit {
     //-------------------------------
 
     //criando o formulario de enderecos
-    let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
+    let endereco = [{ id: null, rua: null, numero: null, bairro_id: null }];
 
     this.formEndereco = this.fb.group({
       id: [endereco[0].id],
       ruaEndereco: [endereco[0].rua, [Validators.required]],
       numeroEndereco: [endereco[0].numero, [Validators.required]],
-      bairroId: [endereco[0].bairroId, [Validators.required]],
+      bairroId: [endereco[0].bairro_id, [Validators.required]],
     });
     //----------------------------------
   }
 
-  buildFormCrianca(crianca: Crianca, op, enderecoId?) {
+  buildFormCrianca(crianca, op, enderecoId?) {
     //op == 1: create / op == 2: update
 
     if (op == 2) {
@@ -221,7 +221,14 @@ export class FormCriancaComponent implements OnInit {
       this.enderecoService
         .listarPorId(crianca[0].endereco_id)
         .subscribe((endereco) => {
-          this.bairroService.listar().subscribe((bairroList) => {
+          this.formEndereco = this.fb.group({
+            id: [endereco[0].id],
+            ruaEndereco: [endereco[0].rua, [Validators.required]],
+            numeroEndereco: [endereco[0].numero, [Validators.required]],
+            bairroId: [endereco[0].bairro_id, [Validators.required]],
+          });
+
+          /* this.bairroService.listar().subscribe((bairroList) => {
             let selectedBairro = bairroList.filter(
               (bairro) => bairro.id == endereco[0].bairro_id
             );
@@ -232,9 +239,11 @@ export class FormCriancaComponent implements OnInit {
               numeroEndereco: [endereco[0].numero, [Validators.required]],
               bairroId: [selectedBairro[0].id, [Validators.required]],
             });
-          });
+          });*/
         });
     }
+
+    console.log(crianca);
 
     //cria o formulario de criar ou editar criança
     this.form = this.fb.group({
@@ -246,13 +255,11 @@ export class FormCriancaComponent implements OnInit {
       livroCrianca: [crianca[0].livro, [Validators.required]],
       folhaCrianca: [crianca[0].folha, [Validators.required]],
       cpfCrianca: [crianca[0].cpf, [Validators.required]],
-      cmeiOpcao1Crianca: [crianca[0].cmeiOpcao1, [Validators.required]],
-      cmeiOpcao2Crianca: [crianca[0].cmeiOpcao2, [Validators.required]],
+      cmeiOpcao1Crianca: [crianca[0].cmei_opcao1, [Validators.required]],
+      cmeiOpcao2Crianca: [crianca[0].cmei_opcao2, [Validators.required]],
     });
     //--------------------------------------------
   }
-
-  buildFormEndereco() {}
 
   onSubmit() {
     //rotina de insert
@@ -288,6 +295,6 @@ export class FormCriancaComponent implements OnInit {
   }
 
   log() {
-    console.log(this.formEndereco);
+    console.log(this.form);
   }
 }

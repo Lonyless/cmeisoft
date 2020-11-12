@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
 import { CriancaService } from 'src/app/core/services/crianca.service';
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
@@ -23,7 +24,8 @@ export class ResponsavelMainComponent implements OnInit {
     public fb: FormBuilder,
     public criancaService: CriancaService,
     public responsavelService: ResponsavelService,
-    private responsavelEmmiterService: ResponsavelEmmiterService
+    private responsavelEmmiterService: ResponsavelEmmiterService,
+    private route: ActivatedRoute
   ) {
     this.criancaService = criancaService;
     this.responsavelService = responsavelService;
@@ -80,7 +82,22 @@ export class ResponsavelMainComponent implements OnInit {
         }
       );
     }
+
     this.responsaveisCurrent = [];
+
+    if (this.route.snapshot.data['id'] != null) {
+      this.responsavelService
+        .listarCriancas(this.route.snapshot.data['id'])
+        .subscribe((listaResponsavel) => {
+          listaResponsavel.forEach((responsavel) => {
+            this.responsavelService
+              .listarPorId(responsavel.id)
+              .subscribe((responsavel) => {
+                this.responsaveisCurrent.push(responsavel);
+              });
+          });
+        });
+    }
 
     this.buildForm();
 
