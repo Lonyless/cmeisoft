@@ -28,6 +28,7 @@ import { CmeiService } from 'src/app/core/services/cmei.service';
 import { Criterio } from 'src/app/core/model/criterio.model';
 import { CriterioService } from 'src/app/core/services/criterioservice';
 import { ResponsavelService } from 'src/app/core/services/responsavel.service.';
+import { BairroService } from 'src/app/core/services/bairro.service';
 
 @Component({
   selector: 'app-form-crianca',
@@ -50,7 +51,8 @@ export class FormCriancaComponent implements OnInit {
     private inEnderecoEmitterService: EnderecoEmmiterService,
     private criterioEmmiterService: CriterioEmmiterService,
     private responsavelEmmiterService: ResponsavelEmmiterService,
-    private responsavelService: ResponsavelService
+    private responsavelService: ResponsavelService,
+    private bairroService: BairroService
   ) {
     this.cmeiList = [];
     this.cmeiService = cmeiService;
@@ -180,15 +182,21 @@ export class FormCriancaComponent implements OnInit {
     de um listarPorId com o id passado pela rota
     */
     if (this.route.snapshot.params['id'] == null) {
-      this.buildFormCrianca([new Crianca()], 1);
+      this.buildFormCrianca(new Crianca(), 1);
     } else {
       this.criancaService
         .listarPorId(this.route.snapshot.params['id'])
         .subscribe((res) => {
-          this.buildFormCrianca(res, 2);
-          console.log(res);
+          this.enderecoService.listar().subscribe((enderecoList) => {
+            enderecoList.filter((endereco) => {
+              endereco.id == res[0].endereco_id
+                ? this.buildFormCrianca(res, 2, endereco.id)
+                : null;
+            });
+          });
         }).unsubscribe;
     }
+
     //-------------------------------
 
     //criando o formulario de enderecos
@@ -203,11 +211,29 @@ export class FormCriancaComponent implements OnInit {
     //----------------------------------
   }
 
-  buildFormCrianca(crianca, op) {
+  buildFormCrianca(crianca: Crianca, op, enderecoId?) {
     //op == 1: create / op == 2: update
+
     if (op == 2) {
       //todo
-      this.responsavelService.listarCriancas(crianca.id).subscribe();
+      //this.responsavelService.listarCriancas(crianca[0].id).subscribe();
+
+      this.enderecoService
+        .listarPorId(crianca[0].endereco_id)
+        .subscribe((endereco) => {
+          this.bairroService.listar().subscribe((bairroList) => {
+            let selectedBairro = bairroList.filter(
+              (bairro) => bairro.id == endereco[0].bairro_id
+            );
+         
+            this.formEndereco = this.fb.group({
+              id: [endereco[0].id],
+              ruaEndereco: [endereco[0].rua, [Validators.required]],
+              numeroEndereco: [endereco[0].numero, [Validators.required]],
+              bairroId: [selectedBairro[0].id, [Validators.required]],
+            });
+          });
+        });
     }
 
     //cria o formulario de criar ou editar criança
@@ -225,6 +251,8 @@ export class FormCriancaComponent implements OnInit {
     });
     //--------------------------------------------
   }
+
+  buildFormEndereco() {}
 
   onSubmit() {
     //rotina de insert
