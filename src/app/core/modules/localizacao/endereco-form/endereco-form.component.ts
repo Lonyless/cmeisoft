@@ -74,6 +74,9 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+
+    //TODO: Alterar local de inserção, usar de forma dinamica
+
     const endereco = new Endereco(
       null,
       this.form.value.ruaEndereco,

@@ -217,7 +217,7 @@ export class FormCriancaComponent implements OnInit {
                 ? this.buildFormCrianca(crianca, 2)
                 : null;
             });
-          });
+          }).unsubscribe;
         }).unsubscribe;
     }
 
@@ -294,7 +294,13 @@ export class FormCriancaComponent implements OnInit {
     dispara o inEnderecoEmitterService, que chama o insertCrianca(). quando a subscription do insertCrianca
     termina ele chama o insertResponsavel() e insertAuxCriterio()
     */
-    this.insertEndereco();
+
+    //verifica se é um update ou create
+    if (this.route.snapshot.params['id'] == null) {
+      this.insertEndereco();
+    } else {
+    }
+    
   }
 
   //validações e css
