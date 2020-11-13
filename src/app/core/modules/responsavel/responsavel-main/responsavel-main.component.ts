@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -30,6 +30,8 @@ export class ResponsavelMainComponent implements OnInit {
     this.criancaService = criancaService;
     this.responsavelService = responsavelService;
   }
+
+  @Input() idCrianca: number;
 
   adicionarOnPressed(responsavel: Responsavel) {
     this.responsavelService.listar().subscribe((responsavelList) => {
@@ -85,18 +87,20 @@ export class ResponsavelMainComponent implements OnInit {
 
     this.responsaveisCurrent = [];
 
-    if (this.route.snapshot.data['id'] != null) {
+    //aqui ta async
+    if (this.idCrianca != null) {
       this.responsavelService
-        .listarCriancas(this.route.snapshot.data['id'])
-        .subscribe((listaResponsavel) => {
-          listaResponsavel.forEach((responsavel) => {
+        .listarCriancas(this.idCrianca)
+        .subscribe((listaAuxiliarResponsavel) => {
+          listaAuxiliarResponsavel.forEach((responsavel: any) => {
             this.responsavelService
-              .listarPorId(responsavel.id)
+              .listarPorId(responsavel.responsavel_id)
               .subscribe((responsavel) => {
-                this.responsaveisCurrent.push(responsavel);
+                this.responsaveisCurrent.push(responsavel[0]);
+                this.buildForm();
               });
           });
-        });
+        }).unsubscribe;
     }
 
     this.buildForm();

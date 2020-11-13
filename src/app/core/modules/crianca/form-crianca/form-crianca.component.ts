@@ -52,7 +52,7 @@ export class FormCriancaComponent implements OnInit {
     private responsavelService: ResponsavelService,
     private bairroService: BairroService
   ) {
-    this.criterioList = []
+    this.criterioList = [];
     this.cmeiList = [];
     this.cmeiService = cmeiService;
     this.criancaService = criancaService;
@@ -146,6 +146,8 @@ export class FormCriancaComponent implements OnInit {
     this.responsavelEmmiterService.firstOnEvent();
   }
 
+  idCrianca: number;
+
   ngOnInit(): void {
     //ativa o evento do passo 2
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
@@ -161,7 +163,7 @@ export class FormCriancaComponent implements OnInit {
 
     //pega os dados que são passados pelo guard da rota, o criterio-guard.service
     this.criterioList = this.route.snapshot.data.criterios;
-    console.log(this.criterioList)
+
     this.formCriterio = this.fb.group({
       criterios: this.buildFormArray(),
     });
@@ -180,16 +182,39 @@ export class FormCriancaComponent implements OnInit {
     se possuir o parametro (id!=null) o form sera abastecido com os valores 
     de um listarPorId com o id passado pela rota
     */
+
+    //chamo pra instanciar o form, é necessario pq o else chama essa função porem de forma assincrona, causando erro
+    //ao renderizar a page. chamando antes ele renderiza o form vazio e DEPOIS atribui valores se houver params['id']
+    this.buildFormCrianca(new Crianca(), 1);
+
     if (this.route.snapshot.params['id'] == null) {
-      this.buildFormCrianca([new Crianca()], 1);
+      //parametro passado para o component de responsavel
+      this.idCrianca = null;
     } else {
+      //parametro passado para o component de responsavel
+      this.idCrianca = this.route.snapshot.params['id'];
+
       this.criancaService
         .listarPorId(this.route.snapshot.params['id'])
         .subscribe((res) => {
           this.enderecoService.listar().subscribe((enderecoList) => {
             enderecoList.filter((endereco) => {
+              let crianca = new Crianca(
+                res[0].sexo,
+                res[0].nascimento,
+                res[0].registro,
+                res[0].livro,
+                res[0].folha,
+                res[0].cpf,
+                res[0].endereco_id,
+                res[0].cmei_opcao1,
+                res[0].cmei_opcao2,
+                res[0].status,
+                res[0].nome,
+                res[0].id
+              );
               endereco.id == res[0].endereco_id
-                ? this.buildFormCrianca(res, 2, endereco.id)
+                ? this.buildFormCrianca(crianca, 2)
                 : null;
             });
           });
@@ -199,26 +224,24 @@ export class FormCriancaComponent implements OnInit {
     //-------------------------------
 
     //criando o formulario de enderecos
-    let endereco = [{ id: null, rua: null, numero: null, bairro_id: null }];
 
-    this.formEndereco = this.fb.group({
-      id: [endereco[0].id],
-      ruaEndereco: [endereco[0].rua, [Validators.required]],
-      numeroEndereco: [endereco[0].numero, [Validators.required]],
-      bairroId: [endereco[0].bairro_id, [Validators.required]],
-    });
     //----------------------------------
   }
 
-  buildFormCrianca(crianca, op, enderecoId?) {
+  buildFormCrianca(crianca: Crianca, op, enderecoId?) {
+    this.formEndereco = this.fb.group({
+      id: [],
+      ruaEndereco: ['', [Validators.required]],
+      numeroEndereco: ['', [Validators.required]],
+      bairroId: ['', [Validators.required]],
+    });
+
     //op == 1: create / op == 2: update
 
     if (op == 2) {
-      //todo
-      //this.responsavelService.listarCriancas(crianca[0].id).subscribe();
-
+      console.log(crianca);
       this.enderecoService
-        .listarPorId(crianca[0].endereco_id)
+        .listarPorId(crianca.enderecoId)
         .subscribe((endereco) => {
           this.formEndereco = this.fb.group({
             id: [endereco[0].id],
@@ -242,20 +265,18 @@ export class FormCriancaComponent implements OnInit {
         });
     }
 
-    console.log(crianca);
-
     //cria o formulario de criar ou editar criança
     this.form = this.fb.group({
-      id: [crianca[0].id],
-      nomeCrianca: [crianca[0].nome, [Validators.required]],
-      sexoCrianca: [crianca[0].sexo, [Validators.required]],
-      nascimentoCrianca: [crianca[0].nascimento, [Validators.required]],
-      registroCrianca: [crianca[0].registro, [Validators.required]],
-      livroCrianca: [crianca[0].livro, [Validators.required]],
-      folhaCrianca: [crianca[0].folha, [Validators.required]],
-      cpfCrianca: [crianca[0].cpf, [Validators.required]],
-      cmeiOpcao1Crianca: [crianca[0].cmei_opcao1, [Validators.required]],
-      cmeiOpcao2Crianca: [crianca[0].cmei_opcao2, [Validators.required]],
+      id: [crianca.id],
+      nomeCrianca: [crianca.nome, [Validators.required]],
+      sexoCrianca: [crianca.sexo, [Validators.required]],
+      nascimentoCrianca: [crianca.nascimento, [Validators.required]],
+      registroCrianca: [crianca.registro, [Validators.required]],
+      livroCrianca: [crianca.livro, [Validators.required]],
+      folhaCrianca: [crianca.folha, [Validators.required]],
+      cpfCrianca: [crianca.cpf, [Validators.required]],
+      cmeiOpcao1Crianca: [crianca.cmeiOpcao1, [Validators.required]],
+      cmeiOpcao2Crianca: [crianca.cmeiOpcao2, [Validators.required]],
     });
     //--------------------------------------------
   }
