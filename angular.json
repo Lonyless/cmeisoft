@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "cmeisoft"
+    }
+  },
+  "defaultProject": "cmeisoft",
+  "cli": {
+    "analytics": "df49046a-ae0d-4bb5-a36b-8e47bec24b24"
+  }
 }

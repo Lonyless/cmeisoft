@@ -18,8 +18,6 @@ import { CriancaService } from '../../../services/crianca.service';
 
 import { Crianca } from '../../../model/crianca.model';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
-import { Endereco } from 'src/app/core/model/endereco.model';
-import { EnderecoFormComponent } from '../../localizacao/endereco-form/endereco-form.component';
 import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.service';
 import { CriterioEmmiterService } from 'src/app/core/services/criterio-emmiter.service';
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
@@ -54,6 +52,7 @@ export class FormCriancaComponent implements OnInit {
     private responsavelService: ResponsavelService,
     private bairroService: BairroService
   ) {
+    this.criterioList = []
     this.cmeiList = [];
     this.cmeiService = cmeiService;
     this.criancaService = criancaService;
@@ -162,7 +161,7 @@ export class FormCriancaComponent implements OnInit {
 
     //pega os dados que são passados pelo guard da rota, o criterio-guard.service
     this.criterioList = this.route.snapshot.data.criterios;
-
+    console.log(this.criterioList)
     this.formCriterio = this.fb.group({
       criterios: this.buildFormArray(),
     });
