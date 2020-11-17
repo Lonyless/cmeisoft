@@ -147,6 +147,7 @@ export class FormCriancaComponent implements OnInit {
   }
 
   idCrianca: number;
+  crianca: Crianca;
 
   ngOnInit(): void {
     //ativa o evento do passo 2
@@ -199,7 +200,7 @@ export class FormCriancaComponent implements OnInit {
         .subscribe((res) => {
           this.enderecoService.listar().subscribe((enderecoList) => {
             enderecoList.filter((endereco) => {
-              let crianca = new Crianca(
+              this.crianca = new Crianca(
                 res[0].sexo,
                 res[0].nascimento,
                 res[0].registro,
@@ -214,7 +215,7 @@ export class FormCriancaComponent implements OnInit {
                 res[0].id
               );
               endereco.id == res[0].endereco_id
-                ? this.buildFormCrianca(crianca, 2)
+                ? this.buildFormCrianca(this.crianca, 2)
                 : null;
             });
           }).unsubscribe;
@@ -226,6 +227,19 @@ export class FormCriancaComponent implements OnInit {
     //criando o formulario de enderecos
 
     //----------------------------------
+  }
+
+  checkSeleceted(criterio) {
+    if (this.route.snapshot.params['id'] != null) {
+      this.criterioService.listarAux().subscribe((res: any) => {
+        res.forEach((item) => {
+          if (this.crianca.id == item.crianca_id && item.criteriosocial_id == criterio.id) {
+            return true
+          }
+        });
+      });
+    }
+    return false
   }
 
   buildFormCrianca(crianca: Crianca, op, enderecoId?) {
@@ -300,7 +314,6 @@ export class FormCriancaComponent implements OnInit {
       this.insertEndereco();
     } else {
     }
-    
   }
 
   //validações e css

@@ -21,6 +21,10 @@ export class CriterioService {
 
   }
 
+  listarAux() {
+    return this.http.get<[]>(`${this.apiURL}/criteriosocial/aux`)  
+  }
+
   listarPorId(id: number) {
 
     return this.http.get<Criterio>(`${this.apiURL}/criteriosocial/` + id);

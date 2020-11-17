@@ -94,9 +94,10 @@ rotasContemplado.delete()
 //tabela criterio
 rotasCriterioSocial.getAll()
 rotasCriterioSocial.getId()
-rotasCriterioSocial.post()
-rotasCriterioSocial.postAux()
-rotasCriterioSocial.put()
+rotasCriterioSocial.getAux()
+rotasCriterioSocial.post()                  
+rotasCriterioSocial.postAux()        
+rotasCriterioSocial.put() 
 rotasCriterioSocial.delete()
 
 //tabela responsavel

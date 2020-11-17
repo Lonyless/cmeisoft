@@ -126,7 +126,7 @@
                 <div formArrayName="criterios" class="form-group"
                     *ngFor="let item of formCriterio.get('criterios')['controls']; let i = index">
                     <h1>{{criterioList[i].descricao}}</h1>
-                    <input type="checkbox" [formControlName]="i"> Sim
+                    <input [selected]="checkSeleceted(criterioList[i])" type="checkbox" [formControlName]="i"> Sim
                 </div>
             </div>
 

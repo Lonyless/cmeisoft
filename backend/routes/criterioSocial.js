@@ -24,6 +24,12 @@ class rotasCmei {
     });
   }
 
+  getAux() {
+    this.router.get("/criteriosocialAux", (req, res) => {
+      query("select * from aux_crianca_criterio", res);
+    });
+  }
+
   postAux() {
     this.router.post("/criteriosocialAux", (req, res) => {
       const criancaId = req.body.criancaId;
