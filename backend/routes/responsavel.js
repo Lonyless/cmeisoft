@@ -24,8 +24,18 @@ class rotasCmei {
     });
   }
 
+  getCriancaResponsavel() {
+    this.router.get("/responsavel/aux/getWithRespId/:responsavel_id", (req, res) => {
+      query(
+        "select * from aux_crianca_responsavel where responsavel_id=" +
+          parseInt(req.params.responsavel_id),
+        res
+      );
+    });
+  }
+
   getResponsavelCrianca() {
-    this.router.get("/responsavel/get/:crianca_id", (req, res) => {
+    this.router.get("/responsavel/aux/getWithCriancaId/:crianca_id", (req, res) => {
       query(
         "select * from aux_crianca_responsavel where crianca_id=" +
           parseInt(req.params.crianca_id),

@@ -91,11 +91,12 @@ export class ResponsavelMainComponent implements OnInit {
     if (this.idCrianca != null) {
       this.responsavelService
         .listarCriancas(this.idCrianca)
-        .subscribe((listaAuxiliarResponsavel) => {
-          listaAuxiliarResponsavel.forEach((responsavel: any) => {
+        .subscribe((listaAuxiliarResponsavel) => {  
+          listaAuxiliarResponsavel.forEach((res: any) => {
             this.responsavelService
-              .listarPorId(responsavel.responsavel_id)
+              .listarPorId(res.responsavel_id)
               .subscribe((responsavel) => {
+                responsavel[0].tipo = res.tipo;
                 this.responsaveisCurrent.push(responsavel[0]);
                 this.buildForm();
               });
@@ -107,6 +108,14 @@ export class ResponsavelMainComponent implements OnInit {
 
     this.newVisibility = true;
     this.listarAll();
+  }
+
+  //verifica o tipo de responsavel pra dar fill no form
+  checkSelected(responsavel: Responsavel, tipo: string) {
+    if (responsavel.tipo == tipo) {
+      return true
+    }
+    return false
   }
 
   buildForm() {

@@ -28,12 +28,12 @@
                 </td>
                 <td class="d-flex justify-content-center">
                     <select class="form-control" [formControlName]="i">
-                        <option value="Pai">Pai</option>
-                        <option value="Mae">Mãe</option>
-                        <option value="AvoM">Avô</option>
-                        <option value="AvoF">Avó</option>
-                        <option value="Tio">Tio</option>
-                        <option value="Outro">Outro</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Pai')" value="Pai">Pai</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Mae')" value="Mae">Mãe</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'AvoM')" value="AvoM">Avô</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'AvoF')" value="AvoF">Avó</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Tio')" value="Tio">Tio</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Outro')" value="Outro">Outro</option>
                     </select>
                 </td>
                 <td>

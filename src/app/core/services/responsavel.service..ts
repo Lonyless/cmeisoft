@@ -24,7 +24,11 @@ export class ResponsavelService {
   }
 
   listarCriancas(id: number) {
-    return this.http.get<[]>(`${this.apiURL}/responsavel/get/` + id);
+    return this.http.get<[]>(`${this.apiURL}/responsavel/aux/getWithCriancaId/` + id);
+  }
+
+  listarResponsavel(id: number) {
+    return this.http.get<[]>(`${this.apiURL}/responsavel/aux/getWithRespId/` + id);
   }
 
   adicionarAux(responsavel: Responsavel, crianca: Crianca) {
