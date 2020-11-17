@@ -64,10 +64,33 @@ export class FormCriancaComponent implements OnInit {
 
   criterioList: Criterio[];
 
-  buildFormArray() {
-    const values = this.criterioList.map((val) => new FormControl(false));
+  buildFormArray(criteriosPossuidos) {
+    let values;
 
-    return this.fb.array(values);
+    if (criteriosPossuidos != null) {
+
+      values = this.criterioList.map((criterio) => {
+        criteriosPossuidos.forEach((crit) => {
+          if (crit.criteriosocial_id == criterio.id) {
+            console.log(criterio);
+            return new FormControl(true);
+          }
+        });
+
+        return new FormControl(false); //retorna para a variavel value
+      });
+      
+      console.log(values);
+      return this.fb.array(values);
+    } else {
+
+      values = this.criterioList.map((criterio) => new FormControl(false));
+      console.log(values);
+      return this.fb.array(values);
+
+    }
+
+    //cria um control pra cada criterio
   }
 
   cmeiList: Cmei[];
@@ -165,9 +188,22 @@ export class FormCriancaComponent implements OnInit {
     //pega os dados que são passados pelo guard da rota, o criterio-guard.service
     this.criterioList = this.route.snapshot.data.criterios;
 
-    this.formCriterio = this.fb.group({
-      criterios: this.buildFormArray(),
-    });
+    if (this.route.snapshot.params['id'] == null) {
+      this.formCriterio = this.fb.group({
+        criterios: this.buildFormArray(null),
+      });
+    } else {
+      this.criterioService.listarAux().subscribe((res: any) => {
+        let criteriosPossuidos = res.filter(
+          (crit) => crit.crianca_id == this.idCrianca
+        ); //retorna os criterios que a crianca possui
+
+        this.formCriterio = this.fb.group({
+          criterios: this.buildFormArray(criteriosPossuidos),
+        });
+      }).unsubscribe;
+    }
+
     //---------------------------------------------------------------------------
 
     //alimenta o objeto Cmei
@@ -229,18 +265,7 @@ export class FormCriancaComponent implements OnInit {
     //----------------------------------
   }
 
-  checkSeleceted(criterio) {
-    if (this.route.snapshot.params['id'] != null) {
-      this.criterioService.listarAux().subscribe((res: any) => {
-        res.forEach((item) => {
-          if (this.crianca.id == item.crianca_id && item.criteriosocial_id == criterio.id) {
-            return true
-          }
-        });
-      });
-    }
-    return false
-  }
+  checkSeleceted(criterio) {}
 
   buildFormCrianca(crianca: Crianca, op, enderecoId?) {
     this.formEndereco = this.fb.group({
