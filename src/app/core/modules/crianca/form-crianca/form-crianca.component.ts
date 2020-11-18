@@ -63,34 +63,31 @@ export class FormCriancaComponent implements OnInit {
   formCriterio: FormGroup;
 
   criterioList: Criterio[];
+  criterioAuxList: any;
 
-  buildFormArray(criteriosPossuidos) {
+  buildFormArray() {
     let values;
-
-    if (criteriosPossuidos != null) {
-
+    let flag;
+    console.log(this.criterioAuxList)
+    if (this.criterioAuxList != null) {
       values = this.criterioList.map((criterio) => {
-        criteriosPossuidos.forEach((crit) => {
-          if (crit.criteriosocial_id == criterio.id) {
-            console.log(criterio);
-            return new FormControl(true);
+        flag = false;
+        this.criterioAuxList.forEach((crit) => {
+          if (crit.crianca_id == this.idCrianca && criterio.id == crit.criteriosocial_id) {
+          
+            flag = true;
           }
         });
 
-        return new FormControl(false); //retorna para a variavel value
+        return new FormControl(flag); //retorna para a variavel value
       });
-      
       console.log(values);
       return this.fb.array(values);
     } else {
-
       values = this.criterioList.map((criterio) => new FormControl(false));
       console.log(values);
       return this.fb.array(values);
-
     }
-
-    //cria um control pra cada criterio
   }
 
   cmeiList: Cmei[];
@@ -173,6 +170,7 @@ export class FormCriancaComponent implements OnInit {
   crianca: Crianca;
 
   ngOnInit(): void {
+    this.idCrianca = this.route.snapshot.params['id'];  
     //ativa o evento do passo 2
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
       this.inEnderecoEmitterService.secondSubsVar = this.inEnderecoEmitterService.invokeSecondComponentFunction.subscribe(
@@ -186,24 +184,23 @@ export class FormCriancaComponent implements OnInit {
     //buildando form de criterios
 
     //pega os dados que são passados pelo guard da rota, o criterio-guard.service
+    //this.criterioList = this.route.snapshot.data.criterios.auxList;
     this.criterioList = this.route.snapshot.data.criterios;
+    this.criterioAuxList = this.route.snapshot.data.aux;
 
-    if (this.route.snapshot.params['id'] == null) {
+    if (this.route.snapshot.params['id'] != null) {
       this.formCriterio = this.fb.group({
-        criterios: this.buildFormArray(null),
+        criterios: this.buildFormArray(),
       });
     } else {
-      this.criterioService.listarAux().subscribe((res: any) => {
-        let criteriosPossuidos = res.filter(
-          (crit) => crit.crianca_id == this.idCrianca
-        ); //retorna os criterios que a crianca possui
-
-        this.formCriterio = this.fb.group({
-          criterios: this.buildFormArray(criteriosPossuidos),
-        });
-      }).unsubscribe;
+      this.formCriterio = this.fb.group({
+        criterios: this.buildFormArray(),
+      });
     }
 
+    this.formCriterio = this.fb.group({
+      criterios: this.buildFormArray(),
+    });
     //---------------------------------------------------------------------------
 
     //alimenta o objeto Cmei

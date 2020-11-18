@@ -13,7 +13,7 @@ import { CriterioService } from '../services/criterioservice';
 @Injectable({
   providedIn: 'root',
 }) //Serve pra criar o objeto antes de acessar a rota
-export class CriterioGuard implements Resolve<any> {
+export class AuxCriterioGuard implements Resolve<any> {
   //criterios: Criterio[];
 
   constructor(public service: CriterioService) {}
@@ -26,6 +26,6 @@ export class CriterioGuard implements Resolve<any> {
     //return this.service.listarPorId(route.params['id'])
     //  }
 
-    return this.service.listar();
+    return this.service.listarAux();
   }
 }
