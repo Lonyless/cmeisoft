@@ -68,13 +68,15 @@ export class FormCriancaComponent implements OnInit {
   buildFormArray() {
     let values;
     let flag;
-    console.log(this.criterioAuxList)
+    console.log(this.criterioAuxList);
     if (this.criterioAuxList != null) {
       values = this.criterioList.map((criterio) => {
         flag = false;
         this.criterioAuxList.forEach((crit) => {
-          if (crit.crianca_id == this.idCrianca && criterio.id == crit.criteriosocial_id) {
-          
+          if (
+            crit.crianca_id == this.idCrianca &&
+            criterio.id == crit.criteriosocial_id
+          ) {
             flag = true;
           }
         });
@@ -128,13 +130,22 @@ export class FormCriancaComponent implements OnInit {
         1,
         this.form.value.nomeCrianca
       );
-      console.log(crianca);
-      console.log('enderecoID: ' + enderecoId);
-      this.criancaService.adicionar(crianca).subscribe((resposta) => {
-        console.log(resposta);
-        this.insertAuxCriterio();
-        this.insertAuxResponsavel();
-      }).unsubscribe;
+
+      //Update,
+      if (this.route.snapshot.data != null) {
+        this.criancaService.alterar(crianca).subscribe((resposta) => {
+          console.log(resposta);
+          this.insertAuxCriterio();
+          this.insertAuxResponsavel();
+        }).unsubscribe;
+        //Create
+      } else {
+        this.criancaService.adicionar(crianca).subscribe((resposta) => {
+          console.log(resposta);
+          this.insertAuxCriterio();
+          this.insertAuxResponsavel();
+        }).unsubscribe;
+      }
     }).unsubscribe;
   }
 
@@ -170,7 +181,7 @@ export class FormCriancaComponent implements OnInit {
   crianca: Crianca;
 
   ngOnInit(): void {
-    this.idCrianca = this.route.snapshot.params['id'];  
+    this.idCrianca = this.route.snapshot.params['id'];
     //ativa o evento do passo 2
     if (this.inEnderecoEmitterService.secondSubsVar == undefined) {
       this.inEnderecoEmitterService.secondSubsVar = this.inEnderecoEmitterService.invokeSecondComponentFunction.subscribe(
@@ -298,7 +309,7 @@ export class FormCriancaComponent implements OnInit {
               bairroId: [selectedBairro[0].id, [Validators.required]],
             });
           });*/
-        });
+        }).unsubscribe;
     }
 
     //cria o formulario de criar ou editar criança

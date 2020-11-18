@@ -27,21 +27,7 @@ export class CriancaService {
   }
 
   alterar(crianca: Crianca) {
-    this.http.put(`${this.apiURL}/crianca/` + crianca.id, crianca).subscribe(
-      (resultado) => {
-        console.log('alterado com sucesso.');
-      },
-      (erro) => {
-        switch (erro.status) {
-          case 400:
-            console.log(erro.error.mensagem);
-            break;
-          case 404:
-            console.log('não localizado.');
-            break;
-        }
-      }
-    );
+    return this.http.put(`${this.apiURL}/crianca/` + crianca.id, crianca)
   }
 
   excluir(id: number) {
