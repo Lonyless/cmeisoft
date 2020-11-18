@@ -109,8 +109,8 @@ export class FormCriancaComponent implements OnInit {
   }
 
   //passo 1
-  insertEndereco() {
-    this.inEnderecoEmitterService.firstOnEvent();
+  insertEndereco(crianca) {
+    this.inEnderecoEmitterService.firstOnEvent(crianca);
   }
 
   //passo 2
@@ -161,6 +161,8 @@ export class FormCriancaComponent implements OnInit {
         .filter((v) => v != null),
     });
 
+    //TODO: Criar metodo excluir por id e inserir novamente
+
     //lista as crianças, percorre o vetor e adiciona os criterios na tabela auxiliar
     this.criancaService.listar().subscribe((crianca) => {
       valueSumbit.criterios.forEach((criterio: Criterio) => {
@@ -170,6 +172,7 @@ export class FormCriancaComponent implements OnInit {
         );
       });
     }).unsubscribe;
+    
   }
 
   //passo 4
@@ -344,7 +347,7 @@ export class FormCriancaComponent implements OnInit {
 
     //verifica se é um update ou create
 
-    this.insertEndereco();
+    this.insertEndereco(this.crianca);
    
   }
 

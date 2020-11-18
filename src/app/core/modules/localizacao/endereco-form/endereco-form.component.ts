@@ -45,8 +45,9 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.inEventEmitterService.firstSubsVar == undefined) {
       this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
-        () => {
-          this.onSubmit();
+        (crianca) => {
+          //pega a crianca passada como parametro
+          this.onSubmit(crianca);
         }
       );
     }
@@ -69,9 +70,7 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
     }).unsubscribe;
   }
 
-  onSubmit() {
-   
-    //TODO ***** --> Pegar crianca como parametro no event emmiter
+  onSubmit(crianca) {
 
     const endereco = new Endereco(
       null,
@@ -91,6 +90,9 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
         }
       );
     } else {
+      console.log(this.form.value.bairroId)
+      //pega o id do endereco que esta contido na crianca a ser editada
+      endereco.id = crianca.enderecoId
       this.enderecoService.alterar(endereco).subscribe(
         (sucesso) => {
           this.inEventEmitterService.secondOnEvent();

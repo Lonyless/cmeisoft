@@ -20,7 +20,7 @@ export class EnderecoEmmiterService {
     this.invokeSecondComponentFunction.emit();
   }
   //emite o evento
-  firstOnEvent() {
-    this.invokeFirstComponentFunction.emit();
+  firstOnEvent(data) {
+    this.invokeFirstComponentFunction.emit(data);
   }
 }

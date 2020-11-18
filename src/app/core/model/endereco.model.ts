@@ -1,15 +1,15 @@
 export class Endereco {
 
-    constructor(id?: number, rua?: string, numero?: number, bairroId?: number) {
+    constructor(id?: number, rua?: string, numero?: number, idBairro?: number) {
         this.id = id
         this.rua = rua
         this.numero = numero
-        this.bairroId = bairroId
+        this.idBairro = idBairro
     }
 
     id: number
     rua: string
     numero: number
-    bairroId: number
+    idBairro: number
 
 }

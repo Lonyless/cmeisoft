@@ -37,7 +37,7 @@ class rotasCrianca {
             const rua = req.body.rua
             const numero = req.body.numero
             const idBairro = req.body.idBairro
-            query(`update endereco set endereco="${rua}",numero="${numero}",idBairro="${idBairro}"
+            query(`update endereco set rua="${rua}",numero="${numero}",bairro_id="${idBairro}"
              where id=` + parseInt(req.params.id), res)
         })
     }
