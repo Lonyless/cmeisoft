@@ -43,7 +43,6 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   _visibilidade: boolean;
 
   ngOnInit(): void {
-
     if (this.inEventEmitterService.firstSubsVar == undefined) {
       this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
         () => {
@@ -57,12 +56,9 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
     this.bairroService.listar().subscribe((res) => {
       this.bairros = res;
     }).unsubscribe;
-
   }
 
-  ngOnDestroy() {
-   
-  }
+  ngOnDestroy() {}
 
   setar() {
     this.bairroService.listar().subscribe((res) => {
@@ -74,8 +70,8 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-
-    //TODO: Alterar local de inserção, usar de forma dinamica
+   
+    //TODO ***** --> Pegar crianca como parametro no event emmiter
 
     const endereco = new Endereco(
       null,
@@ -83,19 +79,28 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
       this.form.value.numeroEndereco,
       this.form.value.bairroId
     );
-
-    console.log(endereco);
-    this.enderecoService.adicionar(endereco).subscribe(
-      (sucesso) => {
-        //erro: quando ele emite a resposta, ela serve para todos os componentes que estao escutando
-        //ou seja, qualquer um que ja foi carregado pelomenos uma vez
-        this.inEventEmitterService.secondOnEvent();
-        console.log(sucesso);
-      },
-      (erro) => {
-        console.log(erro);
-      }
-    );
+    
+    if (this.route.snapshot.params['id'] == null) {
+      this.enderecoService.adicionar(endereco).subscribe(
+        (sucesso) => {
+          this.inEventEmitterService.secondOnEvent();
+          console.log(sucesso);
+        },
+        (erro) => {
+          console.log(erro);
+        }
+      );
+    } else {
+      this.enderecoService.alterar(endereco).subscribe(
+        (sucesso) => {
+          this.inEventEmitterService.secondOnEvent();
+          console.log(sucesso);
+        },
+        (erro) => {
+          console.log(erro);
+        }
+      );
+    }
   }
 
   validarCampo(campo) {

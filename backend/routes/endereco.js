@@ -36,8 +36,8 @@ class rotasCrianca {
         this.router.put('/endereco/:id', (req, res) => {
             const rua = req.body.rua
             const numero = req.body.numero
-            const idBairro = req.body.bairro_id
-            query(`update posts set endereco="${rua}",numero="${numero}",idBairro="${idBairro}"
+            const idBairro = req.body.idBairro
+            query(`update endereco set endereco="${rua}",numero="${numero}",idBairro="${idBairro}"
              where id=` + parseInt(req.params.id), res)
         })
     }

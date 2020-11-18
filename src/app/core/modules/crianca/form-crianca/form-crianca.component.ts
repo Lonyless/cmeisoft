@@ -68,7 +68,7 @@ export class FormCriancaComponent implements OnInit {
   buildFormArray() {
     let values;
     let flag;
-    console.log(this.criterioAuxList);
+
     if (this.criterioAuxList != null) {
       values = this.criterioList.map((criterio) => {
         flag = false;
@@ -83,7 +83,7 @@ export class FormCriancaComponent implements OnInit {
 
         return new FormControl(flag); //retorna para a variavel value
       });
-      console.log(values);
+
       return this.fb.array(values);
     } else {
       values = this.criterioList.map((criterio) => new FormControl(false));
@@ -132,7 +132,7 @@ export class FormCriancaComponent implements OnInit {
       );
 
       //Update,
-      if (this.route.snapshot.data != null) {
+      if (this.route.snapshot.params['id'] != null) {
         this.criancaService.alterar(crianca).subscribe((resposta) => {
           console.log(resposta);
           this.insertAuxCriterio();
@@ -343,10 +343,9 @@ export class FormCriancaComponent implements OnInit {
     */
 
     //verifica se é um update ou create
-    if (this.route.snapshot.params['id'] == null) {
-      this.insertEndereco();
-    } else {
-    }
+
+    this.insertEndereco();
+   
   }
 
   //validações e css
