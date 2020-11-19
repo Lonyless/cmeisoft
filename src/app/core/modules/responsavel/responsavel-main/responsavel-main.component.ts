@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Crianca } from 'src/app/core/model/crianca.model';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
 import { CriancaService } from 'src/app/core/services/crianca.service';
 import { ResponsavelEmmiterService } from 'src/app/core/services/responsavel-emmiter.service';
@@ -79,8 +80,8 @@ export class ResponsavelMainComponent implements OnInit {
   ngOnInit(): void {
     if (this.responsavelEmmiterService.firstSubsVar == undefined) {
       this.responsavelEmmiterService.firstSubsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
-        (name: string) => {
-          this.inserirAux();
+        (crianca) => {
+          this.inserirAux(crianca);
         }
       );
     }
@@ -91,7 +92,7 @@ export class ResponsavelMainComponent implements OnInit {
     if (this.idCrianca != null) {
       this.responsavelService
         .listarCriancas(this.idCrianca)
-        .subscribe((listaAuxiliarResponsavel) => {  
+        .subscribe((listaAuxiliarResponsavel) => {
           listaAuxiliarResponsavel.forEach((res: any) => {
             this.responsavelService
               .listarPorId(res.responsavel_id)
@@ -113,9 +114,9 @@ export class ResponsavelMainComponent implements OnInit {
   //verifica o tipo de responsavel pra dar fill no form
   checkSelected(responsavel: Responsavel, tipo: string) {
     if (responsavel.tipo == tipo) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   buildForm() {
@@ -126,16 +127,22 @@ export class ResponsavelMainComponent implements OnInit {
     });
   }
 
-  inserirAux() {
-    this.criancaService.listar().subscribe((crianca) => {
+  inserirAux(crianca: Crianca) {
+    //se for editar ele pega a crianca passada pelo event emmiter
+    if (this.route.snapshot.params['id'] != null) {
       this.responsaveisCurrent.forEach((responsavel, i) => {
         (responsavel.tipo = this.form.value.tipo[i]),
-          this.responsavelService.adicionarAux(
-            responsavel,
-            crianca[crianca.length - 1]
-          );
+          this.responsavelService.adicionarAux(responsavel, crianca);
       });
-    });
+    } else {
+      //se for criar ele pega o ultimo adicionado da lista
+      this.criancaService.listar().subscribe((criancaList) => {
+        this.responsaveisCurrent.forEach((responsavel, i) => {
+          (responsavel.tipo = this.form.value.tipo[i]),
+            this.responsavelService.adicionarAux(responsavel, criancaList[criancaList.length - 1]);
+        });
+      });
+    }
   }
 
   listarAll() {

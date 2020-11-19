@@ -13,8 +13,8 @@ export class ResponsavelEmmiterService {
 
   constructor() {}
 
-  firstOnEvent() {
-    this.invokeFirstComponentFunction.emit();
+  firstOnEvent(data) {
+    this.invokeFirstComponentFunction.emit(data);
   }
   secondOnEvent() {
     this.invokeSecondComponentFunction.emit();

@@ -25,23 +25,29 @@ class rotasCmei {
   }
 
   getCriancaResponsavel() {
-    this.router.get("/responsavel/aux/getWithRespId/:responsavel_id", (req, res) => {
-      query(
-        "select * from aux_crianca_responsavel where responsavel_id=" +
-          parseInt(req.params.responsavel_id),
-        res
-      );
-    });
+    this.router.get(
+      "/responsavel/aux/getWithRespId/:responsavel_id",
+      (req, res) => {
+        query(
+          "select * from aux_crianca_responsavel where responsavel_id=" +
+            parseInt(req.params.responsavel_id),
+          res
+        );
+      }
+    );
   }
 
   getResponsavelCrianca() {
-    this.router.get("/responsavel/aux/getWithCriancaId/:crianca_id", (req, res) => {
-      query(
-        "select * from aux_crianca_responsavel where crianca_id=" +
-          parseInt(req.params.crianca_id),
-        res
-      );
-    });
+    this.router.get(
+      "/responsavel/aux/getWithCriancaId/:crianca_id",
+      (req, res) => {
+        query(
+          "select * from aux_crianca_responsavel where crianca_id=" +
+            parseInt(req.params.crianca_id),
+          res
+        );
+      }
+    );
   }
 
   post() {
@@ -74,6 +80,15 @@ class rotasCmei {
 
       query(
         `insert into aux_crianca_responsavel(responsavel_id,crianca_id,tipo)values(${responsavelId},${criancaId},"${responsavelTipo}")`,
+        res
+      );
+    });
+  }
+
+  deleteAux() {
+    this.router.delete("/criteriosocialAux/:id", (req, res) => {
+      query(
+        `delete from aux_crianca_responsavel where crianca_id=${req.params.id}`,
         res
       );
     });

@@ -66,6 +66,7 @@ export class FormCriancaComponent implements OnInit {
   criterioAuxList: any;
 
   buildFormArray() {
+    console.log(this.criterioList)
     let values;
     let flag;
 
@@ -181,7 +182,7 @@ export class FormCriancaComponent implements OnInit {
 
   //passo 4
   insertAuxResponsavel() {
-    this.responsavelEmmiterService.firstOnEvent();
+    this.responsavelEmmiterService.firstOnEvent(this.crianca);
   }
 
   idCrianca: number;
@@ -251,9 +252,13 @@ export class FormCriancaComponent implements OnInit {
         .subscribe((res) => {
           this.enderecoService.listar().subscribe((enderecoList) => {
             enderecoList.filter((endereco) => {
+
+              //alterando data pra remover o fuso horario
+              let nascimento = res[0].nascimento.slice(0,10)
+
               this.crianca = new Crianca(
                 res[0].sexo,
-                res[0].nascimento,
+                nascimento,
                 res[0].registro,
                 res[0].livro,
                 res[0].folha,
