@@ -123,7 +123,7 @@ export class ResponsavelMainComponent implements OnInit {
     const values = this.responsaveisCurrent.map((val) => new FormControl());
 
     this.form = this.fb.group({
-      tipo: this.fb.array(values),
+      tipo: this.fb.array(values), 
     });
   }
 

@@ -27,7 +27,7 @@
                     </div>
                 </td>
                 <td class="d-flex justify-content-center">
-                    <select class="form-control" [formControlName]="i">
+                    <select required class="form-control" [formControlName]="i">
                         <option [selected]="checkSelected(responsaveisCurrent[i], 'Pai')" value="Pai">Pai</option>
                         <option [selected]="checkSelected(responsaveisCurrent[i], 'Mae')" value="Mae">Mãe</option>
                         <option [selected]="checkSelected(responsaveisCurrent[i], 'AvoM')" value="AvoM">Avô</option>
