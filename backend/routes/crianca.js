@@ -49,24 +49,22 @@ class rotasCrianca {
 
   put() {
     this.router.put("/crianca/:id", (req, res) => {
-      const id = req.body.id;
+      const nome = req.body.nome;
       const sexo = req.body.sexo;
       const nascimento = req.body.nascimento;
       const registro = req.body.registro;
       const livro = req.body.livro;
       const folha = req.body.folha;
       const cpf = req.body.cpf;
-      const idEndereco = req.body.endereco_id;
-      const bairroId = req.body.bairro_id;
-      const cmeiOpcao1 = req.body.cmei_opcao1;
-      const cmeiOpcao2 = req.body.cmei_opcao2;
-      const cidadeId = req.body.cidade_id;
-      const status = req.body.status;
+      const enderecoId = req.body.enderecoId;
+      const cmeiOpcao1 = req.body.cmeiOpcao1;
+      const cmeiOpcao2 = req.body.cmeiOpcao2;
+      const id = req.body.id
+
       query(
-        `update crianca set sexo="${sexo}",nascimento="${nascimento}",registro="${registro}",
-                livro="${livro}",folha="${folha}",cpf="${cpf}",endereco_id="${idEndereco}",
-                bairro_id="${bairroId}",cmei_opcao1="${cmeiOpcao1}",cmei_opcao2="${cmeiOpcao2}",
-                cidade_id="${cidadeId}",status = "${status}" where id=` + id,
+        `update crianca set sexo="${sexo}",nascimento="${nascimento}",nome="${nome}",registro="${registro}",
+                livro="${livro}",folha="${folha}",cpf="${cpf}",endereco_id="${enderecoId}",
+                cmei_opcao1="${cmeiOpcao1}",cmei_opcao2="${cmeiOpcao2}",status = 1 where id=${id}`,
         res
       );
     });

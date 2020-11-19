@@ -128,7 +128,8 @@ export class FormCriancaComponent implements OnInit {
         this.form.value.cmeiOpcao1Crianca,
         this.form.value.cmeiOpcao2Crianca,
         1,
-        this.form.value.nomeCrianca
+        this.form.value.nomeCrianca,
+        this.route.snapshot.params['id']
       );
 
       //Update,
@@ -161,7 +162,11 @@ export class FormCriancaComponent implements OnInit {
         .filter((v) => v != null),
     });
 
-    //TODO: Criar metodo excluir por id e inserir novamente
+    if (this.route.snapshot.params['id'] != null) {
+      this.criterioService
+        .deletarAux(this.route.snapshot.params['id'])
+        .subscribe(() => {});
+    }
 
     //lista as crianças, percorre o vetor e adiciona os criterios na tabela auxiliar
     this.criancaService.listar().subscribe((crianca) => {
@@ -172,7 +177,6 @@ export class FormCriancaComponent implements OnInit {
         );
       });
     }).unsubscribe;
-    
   }
 
   //passo 4
@@ -348,7 +352,6 @@ export class FormCriancaComponent implements OnInit {
     //verifica se é um update ou create
 
     this.insertEndereco(this.crianca);
-   
   }
 
   //validações e css

@@ -99,6 +99,7 @@ rotasCriterioSocial.post()
 rotasCriterioSocial.postAux()        
 rotasCriterioSocial.put() 
 rotasCriterioSocial.delete()
+rotasCriterioSocial.deleteAux()
 
 //tabela responsavel
 rotasResponsavel.getAll()

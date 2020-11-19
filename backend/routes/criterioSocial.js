@@ -43,6 +43,12 @@ class rotasCmei {
     });
   }
 
+  deleteAux() {
+    this.router.delete("/criteriosocialAux/:id", (req, res) => {
+      query(`delete from aux_crianca_criterio where crianca_id=${req.params.id}`, res);
+    });
+  }
+
   post() {
     this.router.post("/criteriosocial", (req, res) => {
       const descricao = req.body.descricao;
