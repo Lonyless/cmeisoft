@@ -51,6 +51,10 @@ export class ResponsavelService {
       );
   }
 
+  deleteAux(id: number) {
+    return this.http.delete(`${this.apiURL}/responsavelAux/` + id)
+  }
+
   adicionar(responsavel: Responsavel) {
     this.http.post(`${this.apiURL}/responsavel`, responsavel).subscribe(
       (resultado) => {

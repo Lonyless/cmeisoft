@@ -86,7 +86,7 @@ class rotasCmei {
   }
 
   deleteAux() {
-    this.router.delete("/criteriosocialAux/:id", (req, res) => {
+    this.router.delete("/responsavelAux/:id", (req, res) => {
       query(
         `delete from aux_crianca_responsavel where crianca_id=${req.params.id}`,
         res

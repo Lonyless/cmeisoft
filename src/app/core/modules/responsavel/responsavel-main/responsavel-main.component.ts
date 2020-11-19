@@ -130,16 +130,23 @@ export class ResponsavelMainComponent implements OnInit {
   inserirAux(crianca: Crianca) {
     //se for editar ele pega a crianca passada pelo event emmiter
     if (this.route.snapshot.params['id'] != null) {
-      this.responsaveisCurrent.forEach((responsavel, i) => {
-        (responsavel.tipo = this.form.value.tipo[i]),
-          this.responsavelService.adicionarAux(responsavel, crianca);
-      });
+      this.responsavelService
+        .deleteAux(this.route.snapshot.params['id'])
+        .subscribe(() => {
+          this.responsaveisCurrent.forEach((responsavel, i) => {
+            (responsavel.tipo = this.form.value.tipo[i]),
+              this.responsavelService.adicionarAux(responsavel, crianca);
+          });
+        });
     } else {
       //se for criar ele pega o ultimo adicionado da lista
       this.criancaService.listar().subscribe((criancaList) => {
         this.responsaveisCurrent.forEach((responsavel, i) => {
           (responsavel.tipo = this.form.value.tipo[i]),
-            this.responsavelService.adicionarAux(responsavel, criancaList[criancaList.length - 1]);
+            this.responsavelService.adicionarAux(
+              responsavel,
+              criancaList[criancaList.length - 1]
+            );
         });
       });
     }
