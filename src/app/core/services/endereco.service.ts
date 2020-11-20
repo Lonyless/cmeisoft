@@ -28,7 +28,7 @@ export class EnderecoService {
 
   adicionar(endereco: Endereco) {
 
-    //alterar: remover subscribe e deixar por conta da funcao que chama
+    console.log(endereco)
     return this.http.post(`${this.apiURL}/endereco`, endereco)
  
   }

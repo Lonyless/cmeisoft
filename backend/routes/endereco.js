@@ -27,7 +27,7 @@ class rotasCrianca {
         this.router.post('/endereco', (req, res) => {
             const rua = req.body.rua
             const numero = req.body.numero
-            const idBairro = req.body.bairroId
+            const idBairro = req.body.idBairro
             console.log(idBairro)
             query(`insert into endereco (rua,numero,bairro_id) values("${rua}",${numero},${idBairro})`, res)
         })
