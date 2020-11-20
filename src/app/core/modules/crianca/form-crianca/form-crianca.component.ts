@@ -61,6 +61,7 @@ export class FormCriancaComponent implements OnInit {
 
   formEndereco: FormGroup;
   formCriterio: FormGroup;
+  formTipoResponsavel: FormGroup;
 
   criterioList: Criterio[];
   criterioAuxList: any;
@@ -377,6 +378,6 @@ export class FormCriancaComponent implements OnInit {
   }
 
   log() {
-    console.log(this.form);
+    console.log(this.formTipoResponsavel);
   }
 }

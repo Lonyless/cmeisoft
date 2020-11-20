@@ -116,7 +116,7 @@
 
         <div class="tab-pane fade show" id="responsavel" role="tabpanel" aria-labelledby="home-tab">
 
-            <app-responsavel-main [idCrianca]="idCrianca"></app-responsavel-main>
+            <app-responsavel-main [form]="formTipoResponsavel" [idCrianca]="idCrianca"></app-responsavel-main>
 
         </div>
 
@@ -171,5 +171,5 @@
         </div>
 
     </div>
-
+    <button (click)="log()">LOG FOMR</button>
 </form>

@@ -19,7 +19,7 @@ import { ResponsavelService } from 'src/app/core/services/responsavel.service.';
 })
 export class ResponsavelMainComponent implements OnInit {
   inicializar = new EventEmitter();
-  form: FormGroup;
+  @Input() form: FormGroup;
 
   constructor(
     public fb: FormBuilder,
@@ -123,7 +123,7 @@ export class ResponsavelMainComponent implements OnInit {
     const values = this.responsaveisCurrent.map((val) => new FormControl());
 
     this.form = this.fb.group({
-      tipo: this.fb.array(values), 
+      tipo: this.fb.array(values, [Validators.required]),
     });
   }
 
