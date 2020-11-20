@@ -165,6 +165,6 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   log() {
-    console.log(this.responsaveisCurrent);
+    console.log(this.form);
   }
 }
