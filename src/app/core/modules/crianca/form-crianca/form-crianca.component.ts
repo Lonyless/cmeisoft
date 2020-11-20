@@ -377,6 +377,6 @@ export class FormCriancaComponent implements OnInit {
   }
 
   log() {
-    console.log(this.formTipoResponsavel);
+    console.log(this.formEndereco);
   }
 }
