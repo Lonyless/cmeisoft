@@ -44,6 +44,8 @@ export class ResponsavelMainComponent implements OnInit {
         }
       }
 
+      console.log(responsavel)
+
       if (this.responsaveisCurrent == null) {
         this.responsaveisCurrent = [responsavel];
       } else {
@@ -51,6 +53,10 @@ export class ResponsavelMainComponent implements OnInit {
       }
 
       this.buildForm();
+      //acessando o ultimo item do array de forms 
+      
+      this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
+      console.log(this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1])
     }).unsubscribe;
   }
 
@@ -106,13 +112,14 @@ export class ResponsavelMainComponent implements OnInit {
     }
 
     this.buildForm();
-
+    
     this.newVisibility = true;
     this.listarAll();
   }
 
   //verifica o tipo de responsavel pra dar fill no form
   checkSelected(responsavel: Responsavel, tipo: string) {
+    this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
     if (responsavel.tipo == tipo) {
       return true;
     }
@@ -165,6 +172,6 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   log() {
-    console.log(this.form);
+    console.log(this.form.controls['tipo'])
   }
 }

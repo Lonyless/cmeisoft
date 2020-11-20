@@ -105,8 +105,6 @@ export class ResponsavelFormComponent implements OnInit {
       this.form.value.tipoResponsavel
     );
 
-    //
-    console.log(responsavel);
     this.insertResponsavel(responsavel).then(() => {
       this.responsavelService.listar().subscribe(() => {});
     });
