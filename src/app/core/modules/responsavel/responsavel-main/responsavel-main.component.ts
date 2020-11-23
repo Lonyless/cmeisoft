@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Crianca } from 'src/app/core/model/crianca.model';
 import { Responsavel } from 'src/app/core/model/responsavel.model';
 import { CriancaService } from 'src/app/core/services/crianca.service';
@@ -35,38 +36,50 @@ export class ResponsavelMainComponent implements OnInit {
   @Input() idCrianca: number;
 
   adicionarOnPressed(responsavel: Responsavel) {
-    this.responsavelService.listar().subscribe((responsavelList) => {
-      if (responsavel.id == null) {
-        if (responsavelList.length < 1) {
-          //TOFIX: se a table não estiver truncada isso aqui vai gerar um BUG
-          responsavel.id = 1;
-        } else {
-          responsavel.id = responsavelList[responsavelList.length - 1].id;
+    //atribui a uma variavel para poder dar unsubscribe de forma asincrona
+
+    const subscription = this.responsavelService
+      .listar()
+      .subscribe((responsavelList) => {
+        
+        console.log(responsavelList)
+
+        if (responsavel.id == null) {
+          if (responsavelList.length < 1) {
+            //TOFIX: se a table não estiver truncada isso aqui vai gerar um BUG
+            responsavel.id = 1;
+          } else {
+            //erro: gerando id repetido
+            responsavel.id = responsavelList[responsavelList.length - 1].id+1;
+          }
         }
-      }
 
-      console.log(responsavel);
+        console.log(responsavel);
 
-      //working on 23-11-2020
-      if (this.responsaveisCurrent == null) {
-        this.responsaveisCurrent = [responsavel];
-      } else {
-        const exist = this.responsaveisCurrent.filter((res) => {
-          return res.nome == responsavel.nome;
-        });
-        console.log(exist)
-        if (exist.length < 1) {
-          this.responsaveisCurrent.push(responsavel);
+        //verifica se o responsavel ja esta na lista
+        if (this.responsaveisCurrent == null) {
+          this.responsaveisCurrent = [responsavel];
         } else {
-          alert('Responsavel ja esta na lista');
+          const exist = this.responsaveisCurrent.filter((res) => {
+            return res.nome == responsavel.nome;
+          });
+          console.log(exist);
+          if (exist.length < 1) {
+            this.responsaveisCurrent.push(responsavel);
+          } else {
+            alert('Responsavel ja esta na lista');
+          }
         }
-      }
 
-      this.buildForm();
+        this.buildForm();
 
-      //acessando o ultimo item do array de forms
-      //this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
-    }).unsubscribe;
+        //unsubs depois que todas as operações forem concluidas
+        //evitando bugs
+        subscription.unsubscribe();
+
+        //acessando o ultimo item do array de forms
+        //this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
+      });
   }
 
   remove(responsavel) {
@@ -141,6 +154,7 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   buildForm() {
+    //TOFIX: Quando é adicionado um responsavel criado ele rebuilda o form e perde os valores de tipo ja adicionados
     const values = this.responsaveisCurrent.map((val) => new FormControl());
 
     this.form = this.fb.group({
