@@ -56,16 +56,7 @@ export class ResponsavelService {
   }
 
   adicionar(responsavel: Responsavel) {
-    this.http.post(`${this.apiURL}/responsavel`, responsavel).subscribe(
-      (resultado) => {
-        console.log(resultado);
-      },
-      (erro) => {
-        if (erro.status == 400) {
-          console.log(erro);
-        }
-      }
-    );
+    return this.http.post(`${this.apiURL}/responsavel`, responsavel)
   }
 
   alterar(responsavel: Responsavel) {

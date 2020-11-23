@@ -12,6 +12,7 @@ import { BairroFormComponent } from './core/modules/localizacao/bairro-form/bair
 import { CidadeFormComponent } from './core/modules/localizacao/cidade-form/cidade-form.component';
 import { CidadeListaComponent } from './core/modules/localizacao/cidade-lista/cidade-lista.component';
 import { MenuComponent } from './core/modules/localizacao/menu/menu.component';
+import { RelatorioListComponent } from './core/modules/relatorio/relatorio-list/relatorio-list.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,10 @@ const routes: Routes = [
   {
     path: 'criterio',
     component: CriterioFormComponent,
+  },
+  {
+    path: 'relatorio',
+    component: RelatorioListComponent
   },
 ];
 

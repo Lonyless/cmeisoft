@@ -30,6 +30,7 @@ import { CmeiListComponent } from './core/modules/cmei/cmei-list/cmei-list.compo
 import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.component';
 import { CriterioGuard } from './core/guard/criterio-guard.service';
 import { EnderecoEmmiterService } from './core/services/endereco-emmiter.service';
+import { RelatorioListComponent } from './core/modules/relatorio/relatorio-list/relatorio-list.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { EnderecoEmmiterService } from './core/services/endereco-emmiter.service
     CriterioListComponent,
     CmeiListComponent,
     CmeiFormComponent,
+    RelatorioListComponent,
   ],
   imports: [
     BrowserModule,

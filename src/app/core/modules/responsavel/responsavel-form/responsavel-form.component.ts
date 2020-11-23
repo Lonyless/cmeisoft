@@ -84,12 +84,6 @@ export class ResponsavelFormComponent implements OnInit {
     });
   }
 
-  //nao sei pq deixei como promisse
-  //TODO: remover promisse e alterar service pra permitir subscription em tempo real
-  async insertResponsavel(responsavel: Responsavel) {
-    this.responsavelService.adicionar(responsavel);
-  }
-
   @Output() adicionarAux = new EventEmitter();
 
   onSubmit() {
@@ -107,7 +101,9 @@ export class ResponsavelFormComponent implements OnInit {
       this.form.value.tipoResponsavel
     );
 
-    this.insertResponsavel(responsavel).then(() => {});
+    const subs = this.responsavelService.adicionar(responsavel).subscribe(() => {
+      subs.unsubscribe()
+    })
   }
 
   validarCampo(campo) {
