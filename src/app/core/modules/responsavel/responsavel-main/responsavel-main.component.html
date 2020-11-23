@@ -28,12 +28,12 @@
                 </td>
                 <td class="d-flex justify-content-center">
                     <select required  class="form-control" [formControlName]="i">
-                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Pai')" value="Pai">Pai</option>
-                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Mae')" value="Mae">Mãe</option>
-                        <option [selected]="checkSelected(responsaveisCurrent[i], 'AvoM')" value="AvoM">Avô</option>
-                        <option [selected]="checkSelected(responsaveisCurrent[i], 'AvoF')" value="AvoF">Avó</option>
-                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Tio')" value="Tio">Tio</option>
-                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Outro')" value="Outro">Outro</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Pai', i)" value="Pai">Pai</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Mae', i)" value="Mae">Mãe</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Avô', i)" value="Avô">Avô</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Avó', i)" value="Avó">Avó</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Tio', i)" value="Tio">Tio</option>
+                        <option [selected]="checkSelected(responsaveisCurrent[i], 'Outro', i)" value="Outro">Outro</option>
                     </select>
                 </td>
                 <td>

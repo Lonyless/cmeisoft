@@ -45,19 +45,26 @@ export class ResponsavelMainComponent implements OnInit {
         }
       }
 
-      console.log(responsavel)
+      console.log(responsavel);
 
+      //working on 23-11-2020
       if (this.responsaveisCurrent == null) {
         this.responsaveisCurrent = [responsavel];
       } else {
+        const exist = this.responsaveisCurrent.filter(res => {
+          res.nome == responsavel.nome 
+        })
+        console.log("exist: ")
+        console.log(responsavel)
+        console.log(this.responsaveisCurrent)
+        //if (this.responsaveisCurrent.)
         this.responsaveisCurrent.push(responsavel);
       }
 
       this.buildForm();
-      //acessando o ultimo item do array de forms 
-      
-      this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
-      console.log(this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1])
+
+      //acessando o ultimo item do array de forms
+      //this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
     }).unsubscribe;
   }
 
@@ -113,15 +120,19 @@ export class ResponsavelMainComponent implements OnInit {
     }
 
     this.buildForm();
-    
+
     this.newVisibility = true;
     this.listarAll();
   }
 
   //verifica o tipo de responsavel pra dar fill no form
-  checkSelected(responsavel: Responsavel, tipo: string) {
+  checkSelected(responsavel: Responsavel, tipo: string, index: number) {
     //meio POG, atribui o tipo passado para o ultimo responsavel da lista (na posicao .length-1)
-    this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
+    //this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo;
+    if (responsavel.tipo != null) {
+      this.form.controls['tipo'].value[index] = responsavel.tipo;
+    }
+
     if (responsavel.tipo == tipo) {
       return true;
     }
@@ -144,6 +155,7 @@ export class ResponsavelMainComponent implements OnInit {
         .subscribe(() => {
           this.responsaveisCurrent.forEach((responsavel, i) => {
             (responsavel.tipo = this.form.value.tipo[i]),
+              console.log(responsavel),
               this.responsavelService.adicionarAux(responsavel, crianca);
           });
         });
@@ -174,6 +186,6 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   log() {
-    console.log(this.form.controls['tipo'])
+    console.log(this.form.value);
   }
 }
