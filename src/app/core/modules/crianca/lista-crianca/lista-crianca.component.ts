@@ -38,6 +38,7 @@ export class ListaComponent implements OnInit {
 
   getCrianca(crianca) {
     this.selectedCrianca = crianca;
+    this.selectedCrianca.nascimento = this.selectedCrianca.nascimento.slice(0, 10);
     console.log(this.selectedCrianca)
   }
 

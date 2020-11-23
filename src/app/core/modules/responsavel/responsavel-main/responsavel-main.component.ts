@@ -51,14 +51,15 @@ export class ResponsavelMainComponent implements OnInit {
       if (this.responsaveisCurrent == null) {
         this.responsaveisCurrent = [responsavel];
       } else {
-        const exist = this.responsaveisCurrent.filter(res => {
-          res.nome == responsavel.nome 
-        })
-        console.log("exist: ")
-        console.log(responsavel)
-        console.log(this.responsaveisCurrent)
-        //if (this.responsaveisCurrent.)
-        this.responsaveisCurrent.push(responsavel);
+        const exist = this.responsaveisCurrent.filter((res) => {
+          return res.nome == responsavel.nome;
+        });
+        console.log(exist)
+        if (exist.length < 1) {
+          this.responsaveisCurrent.push(responsavel);
+        } else {
+          alert('Responsavel ja esta na lista');
+        }
       }
 
       this.buildForm();
