@@ -38,6 +38,7 @@ export class ResponsavelMainComponent implements OnInit {
     this.responsavelService.listar().subscribe((responsavelList) => {
       if (responsavel.id == null) {
         if (responsavelList.length < 1) {
+          //TOFIX: se a table não estiver truncada isso aqui vai gerar um BUG
           responsavel.id = 1;
         } else {
           responsavel.id = responsavelList[responsavelList.length - 1].id;
@@ -119,6 +120,7 @@ export class ResponsavelMainComponent implements OnInit {
 
   //verifica o tipo de responsavel pra dar fill no form
   checkSelected(responsavel: Responsavel, tipo: string) {
+    //meio POG, atribui o tipo passado para o ultimo responsavel da lista (na posicao .length-1)
     this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
     if (responsavel.tipo == tipo) {
       return true;
