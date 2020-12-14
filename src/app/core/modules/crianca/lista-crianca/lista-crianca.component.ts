@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Endereco } from 'src/app/core/model/endereco.model';
 import { CriancaService } from 'src/app/core/services/crianca.service';
+import { EnderecoService } from 'src/app/core/services/endereco.service';
 
 import { Crianca } from '../../../model/crianca.model';
 
@@ -16,7 +18,10 @@ export class ListaComponent implements OnInit {
   filteredCriancas: Crianca[];
   _filterBy: string;
 
-  constructor(public criancaService: CriancaService) {
+  constructor(
+    public criancaService: CriancaService,
+    public enderecoService: EnderecoService
+  ) {
     this.criancaService = criancaService;
     this.selectedCrianca = new Crianca();
   }
@@ -34,9 +39,11 @@ export class ListaComponent implements OnInit {
     this.id = _id;
   }
 
-  selectedCrianca: Crianca;
+  selectedCrianca: any;
+  //selectedCriancaEndereco: Endereco = new Endereco(null, null, null, null);
 
   getCrianca(crianca) {
+  
     this.selectedCrianca = crianca;
     this.selectedCrianca.nascimento = this.selectedCrianca.nascimento.slice(
       0,

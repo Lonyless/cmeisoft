@@ -5,7 +5,8 @@
     <path fill-rule="evenodd"
       d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
     <path fill-rule="evenodd"
-      d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" /></svg>
+      d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+  </svg>
   <div class="col">
     <input type="text" [(ngModel)]="filter" class="form-control" placeholder="Digite o nome da criança">
   </div>
@@ -16,7 +17,7 @@
     <tr>
       <th scope="col">Nome da Crianca</th>
       <th scope="col">CPF</th>
-     
+
       <th scope="col" class="text-center">Opções</th>
     </tr>
   </thead>
@@ -24,14 +25,14 @@
     <tr *ngFor="let crianca of filteredCriancas">
       <td>{{crianca.nome}}</td>
       <td>{{crianca.cpf}}</td>
-      
+
       <td>
         <div class="d-flex justify-content-center">
           <button (click)="getCrianca(crianca)" class="btn btn-primary" data-toggle="modal"
             data-target="#viewModal">View</button>
           <button class="btn btn-primary ml-2" [routerLink]="['/crianca', crianca.id]">Editar</button>
           <button (click)="getId(crianca.id);" class="btn btn-danger ml-2 " data-toggle="modal"
-            data-target="#confirmacao" >Deletar</button>
+            data-target="#confirmacao">Deletar</button>
         </div>
       </td>
     </tr>
@@ -41,7 +42,8 @@
         xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd"
           d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4.5 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-        <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" /></svg>
+        <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z" />
+      </svg>
       Novo
     </button>
   </tbody>
@@ -61,8 +63,8 @@
         Tem certeza que deseja deletar?
       </div>
       <div class="modal-footer">
-        <button (click)="criancaService.excluir(this.id); refresh()" routerLink="/main" type="button" class="btn btn-danger"
-          data-dismiss="modal" href="/">Deletar</button>
+        <button (click)="criancaService.excluir(this.id); refresh()" routerLink="/main" type="button"
+          class="btn btn-danger" data-dismiss="modal" href="/">Deletar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
@@ -79,26 +81,40 @@
         </button>
       </div>
       <div class="modal-body">
-        <strong>Nome:</strong> {{selectedCrianca.nome}}
-        <br>
-        <strong>Sexo:</strong> {{selectedCrianca.sexo}}
-        <br>
-        <strong>Nascimento:</strong> {{selectedCrianca.nascimento}}
-        <br>
-        <strong>Registro:</strong> {{selectedCrianca.registro}}
-        <br>
-        <strong>Livro:</strong> {{selectedCrianca.livro}}
-        <br>
-        <strong>Folha:</strong> {{selectedCrianca.folha}}
-        <br>
-        <strong>CPF:</strong> {{selectedCrianca.cpf}}
-        <br>
-        <strong>Endereco:</strong> {{selectedCrianca.enderecoId}}
-        <br>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div class="row">
+          <div class="col"> <strong>Nome:</strong> {{selectedCrianca.nome}}
+            <br>
+          </div>
+          <div class="col"><strong>Sexo:</strong> {{selectedCrianca.sexo}}
+            <br>
+          </div>
+          <div class="col"><strong>Nascimento:</strong> {{selectedCrianca.nascimento}}
+            <br>
+          </div>
+          <div class="col"> <strong>Registro:</strong> {{selectedCrianca.registro}}
+            <br>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col"> <strong>Livro:</strong> {{selectedCrianca.livro}}
+              <br>
+            </div>
+            <div class="col">
+              <strong>Folha:</strong> {{selectedCrianca.folha}}
+              <br>
+            </div>
+            <div class="col"> <strong>CPF:</strong> {{selectedCrianca.cpf}}
+              <br>
+            </div>
+            <div class="col">
+              <strong>Rua:</strong> {{selectedCrianca.endereco_id}}
+              <br>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
-  </div>

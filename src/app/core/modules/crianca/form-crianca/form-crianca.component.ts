@@ -66,6 +66,10 @@ export class FormCriancaComponent implements OnInit {
   criterioList: Criterio[];
   criterioAuxList: any;
 
+  refresh(): void {
+    window.location.reload();
+  }
+
   buildFormArray() {
     console.log(this.criterioList);
     let values;
