@@ -72,7 +72,9 @@ class rotasCrianca {
 
   delete() {
     this.router.delete("/crianca/:id", (req, res) => {
-      query("delete from crianca where id=" + parseInt(req.params.id), res);
+      query("delete from aux_crianca_criterio where crianca_id="+parseInt(req.params.id), res);
+      query("delete from aux_crianca_responsavel where crianca_id="+parseInt(req.params.id));
+      query("delete from crianca where id=" + parseInt(req.params.id));
     });
   }
 }

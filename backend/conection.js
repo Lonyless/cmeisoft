@@ -11,10 +11,14 @@ function execSQLQuery(sqlQry, res) {
     })
 
     connection.query(sqlQry, function (error, results, fields) {
-        if (error)
-            res.json(error);
-        else
-            res.json(results);
+        if (res != null) {
+            console.log("dif null")
+            if (error)
+                res.json(error);
+            else
+                res.json(results);
+        }
+     
         connection.end();
         console.log('executou');
     });

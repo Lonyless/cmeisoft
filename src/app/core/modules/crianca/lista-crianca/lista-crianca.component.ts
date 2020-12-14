@@ -18,7 +18,7 @@ export class ListaComponent implements OnInit {
 
   constructor(public criancaService: CriancaService) {
     this.criancaService = criancaService;
-    this.selectedCrianca = new Crianca
+    this.selectedCrianca = new Crianca();
   }
 
   criancas$: Observable<Crianca[]>;
@@ -33,13 +33,20 @@ export class ListaComponent implements OnInit {
   getId(_id) {
     this.id = _id;
   }
- 
+
   selectedCrianca: Crianca;
 
   getCrianca(crianca) {
     this.selectedCrianca = crianca;
-    this.selectedCrianca.nascimento = this.selectedCrianca.nascimento.slice(0, 10);
-    console.log(this.selectedCrianca)
+    this.selectedCrianca.nascimento = this.selectedCrianca.nascimento.slice(
+      0,
+      10
+    );
+    console.log(this.selectedCrianca);
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   set filter(value: string) {

@@ -30,8 +30,8 @@
           <button (click)="getCrianca(crianca)" class="btn btn-primary" data-toggle="modal"
             data-target="#viewModal">View</button>
           <button class="btn btn-primary ml-2" [routerLink]="['/crianca', crianca.id]">Editar</button>
-          <button (click)="getId(crianca.id)" class="btn btn-danger ml-2 " data-toggle="modal"
-            data-target="#confirmacao"  >Deletar</button>
+          <button (click)="getId(crianca.id);" class="btn btn-danger ml-2 " data-toggle="modal"
+            data-target="#confirmacao" >Deletar</button>
         </div>
       </td>
     </tr>
@@ -61,8 +61,8 @@
         Tem certeza que deseja deletar?
       </div>
       <div class="modal-footer">
-        <button (click)="criancaService.excluir(this.id)" routerLink="/" type="button" class="btn btn-danger"
-          data-dismiss="modal">Deletar</button>
+        <button (click)="criancaService.excluir(this.id); refresh()" routerLink="/main" type="button" class="btn btn-danger"
+          data-dismiss="modal" href="/">Deletar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
