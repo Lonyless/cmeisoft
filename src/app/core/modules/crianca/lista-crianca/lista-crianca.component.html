@@ -16,7 +16,7 @@
     <tr>
       <th scope="col">Nome da Crianca</th>
       <th scope="col">CPF</th>
-      <th scope="col">Bairro</th>
+     
       <th scope="col" class="text-center">Opções</th>
     </tr>
   </thead>
@@ -24,7 +24,7 @@
     <tr *ngFor="let crianca of filteredCriancas">
       <td>{{crianca.nome}}</td>
       <td>{{crianca.cpf}}</td>
-      <td>{{crianca.bairro}}</td>
+      
       <td>
         <div class="d-flex justify-content-center">
           <button (click)="getCrianca(crianca)" class="btn btn-primary" data-toggle="modal"

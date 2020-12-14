@@ -5,7 +5,7 @@ function execSQLQuery(sqlQry, res) {
     const connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        port: 3308,
+        port: 3306,
         password: '',
         database: 'cmeidb'
     })
