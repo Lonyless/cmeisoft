@@ -30,11 +30,14 @@ export class ResponsavelListaComponent implements OnInit {
     });
   }
 
-  adicionarResponsavelOnPressed(responsavel) {
+  adicionarResponsavelOnPressed(responsavel: Responsavel) {
+    console.log(responsavel)
     this.adicionarResponsavel.emit(responsavel);
   }
 
   id: number;
+
+  //responsavelList: Responsavel[]
 
   @Output() adicionarResponsavel = new EventEmitter();
   @Input() responsaveis: Responsavel[];

@@ -24,22 +24,7 @@ export class ResponsavelFormComponent implements OnInit {
   @Output() adicionar = new EventEmitter();
 
   adicionarOnPressed() {
-    const responsavel = new Responsavel(
-      this.form.value.nomeResponsavel,
-      this.form.value.cpfResponsavel,
-      this.form.value.telefone1Responsavel,
-      this.form.value.telefone2Responsavel,
-      this.form.value.trabalhoResponsavel,
-      this.form.value.rendaResponsavel,
-      this.form.value.pensaoResponsavel,
-      this.form.value.numeroTituloResponsavel,
-      this.form.value.zonaTituloResponsavel,
-      this.form.value.secaoTituloResponsavel,
-      this.form.value.tipoResponsavel
-    );
-
     this.onSubmit();
-    this.adicionar.emit(responsavel);
     this.form.reset();
   }
 
@@ -84,8 +69,6 @@ export class ResponsavelFormComponent implements OnInit {
     });
   }
 
-  @Output() adicionarAux = new EventEmitter();
-
   onSubmit() {
     const responsavel = new Responsavel(
       this.form.value.nomeResponsavel,
@@ -101,7 +84,12 @@ export class ResponsavelFormComponent implements OnInit {
       this.form.value.tipoResponsavel
     );
 
-    const subs = this.responsavelService.adicionar(responsavel).subscribe(() => {
+    const subs = this.responsavelService.adicionar(responsavel).subscribe(_responsavel => {
+
+      responsavel.id = _responsavel['insertId']
+
+      this.adicionar.emit(responsavel);
+
       subs.unsubscribe()
     })
   }

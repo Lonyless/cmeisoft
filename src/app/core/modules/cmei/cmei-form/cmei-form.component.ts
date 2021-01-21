@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Cmei } from 'src/app/core/model/cmei.model';
+import { Endereco } from 'src/app/core/model/endereco.model';
 import { CmeiService } from 'src/app/core/services/cmei.service';
 import { EnderecoEmmiterService } from 'src/app/core/services/endereco-emmiter.service';
 import { EnderecoService } from 'src/app/core/services/endereco.service';
@@ -16,9 +17,7 @@ export class CmeiFormComponent implements OnInit {
   constructor(
     public cmeiService: CmeiService,
     public fb: FormBuilder,
-    private enderecoService: EnderecoService,
-    private route: ActivatedRoute,
-    private enderecoEmitterService: EnderecoEmmiterService
+    private enderecoService: EnderecoService
   ) {
     this.enderecoService = enderecoService;
     this.cmeiService = cmeiService;
@@ -29,13 +28,6 @@ export class CmeiFormComponent implements OnInit {
   cmeiList: Cmei[];
 
   ngOnInit(): void {
-    if (this.enderecoEmitterService.secondSubsVar == undefined) {
-      this.enderecoEmitterService.secondSubsVar = this.enderecoEmitterService.invokeSecondComponentFunction.subscribe(
-        () => {
-          this.onSubmit();
-        }
-      );
-    }
 
     let endereco = [{ id: null, rua: null, numero: null, bairroId: null }];
 
@@ -53,33 +45,31 @@ export class CmeiFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-   
-  }
 
-  insertEndereco() {
-    this.enderecoEmitterService.firstOnEvent(null);
   }
 
   onSubmit() {
-    this.enderecoService.listar().subscribe((enderecos) => {
-      let enderecoId;
 
-      if (enderecos.length == 0) {
-        enderecoId = 1;
-      } else {
-        enderecoId = enderecos[enderecos.length - 1].id;
-      }
+    const endereco = new Endereco(null,
+      this.formEndereco.value.ruaEndereco,
+      this.formEndereco.value.numeroEndereco,
+      this.formEndereco.value.bairroId);
+
+    const enderecoSub = this.enderecoService.adicionar(endereco).subscribe((_endereco) => {
+      
+      enderecoSub.unsubscribe();
 
       const cmei = new Cmei(
         this.form.value.nomeCmei,
         this.form.value.telefoneCmei,
-        enderecoId
+        _endereco['insertId']
       );
-      console.log(cmei);
-      this.cmeiService.adicionar(cmei).subscribe((sucess) => {
-        console.log(sucess);
-      });
-    });
+
+      const cmeiSub = this.cmeiService.adicionar(cmei).subscribe(cmei => {
+        cmeiSub.unsubscribe()
+      })
+      
+    })
   }
 
   validarCampo(campo) {
