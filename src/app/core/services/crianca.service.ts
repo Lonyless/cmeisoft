@@ -64,7 +64,7 @@ export class CriancaService {
     responsavelList: Responsavel[],
     criterioList: Criterio[]) {
 
-    if (crianca.id == null) {
+    if (crianca.id == null) { //create
       var insertEndereco = this.http.post(`${this.apiURL}/endereco/`, endereco).subscribe(_endereco => {
 
         crianca.enderecoId = _endereco['insertId'];
@@ -100,9 +100,9 @@ export class CriancaService {
             });
 
           })
-        })     //--------------------------------------------------------------------------------
-      })      //--------------------------------------------------------------------------------
-    } else { //--------------------------------------------------------------------------------
+        })     
+      })      
+    } else { //update --------------------------------------------------------------------------------
       var insertEndereco = this.http.put(`${this.apiURL}/endereco/` + endereco.id, endereco).subscribe(_endereco => {
 
         //crianca.enderecoId = _endereco['insertId'];
