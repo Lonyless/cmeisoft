@@ -1,3 +1,5 @@
+import { Responsavel } from "../entity/responsavel.model";
+
 const express = require("express"); //usado na conexao com a API
 
 class rotasCmei {
@@ -7,25 +9,26 @@ class rotasCmei {
     this.router = router;
   }
 
-  getAll() {
+  getAll(connection) {
     this.router.get("/responsavel", (req, res) => {
-    //  query("select * from responsavel order by id", res);
+      res.send(connection.getRepository(Responsavel).find())
+
     });
   }
 
-  getId() {
+  getId(connection) {
     this.router.get("/responsavel/:id", (req, res) => {
-      // query(
-      //   "select * from responsavel where id=" + parseInt(req.params.id),
-      //   res
-      // );
+      res.send(connection.getRepository(Responsavel).findOne(req.params.id))
     });
   }
 
-  getCriancaResponsavel() {
+  getCriancaResponsavel(connection) {
     this.router.get(
       "/responsavel/aux/getWithRespId/:responsavel_id",
       (req, res) => {
+
+        res.send("deprecated")
+
         // query(
         //   "select * from aux_crianca_responsavel where responsavel_id=" +
         //     parseInt(req.params.responsavel_id),
@@ -35,13 +38,14 @@ class rotasCmei {
     );
   }
 
-  /**
-   * retorna lista de responsaveis usando apenas o id da criança
-   */
-  getResponsavelCrianca() {
+
+  getResponsavelCrianca(connection) {
     this.router.get(
       "/responsavel/aux/getWithCriancaId/:crianca_id",
       (req, res) => {
+
+        res.send("deprecated")
+
         // query(
         //   "select * from responsavel join aux_crianca_responsavel where responsavel.id = aux_crianca_responsavel.responsavel_id and crianca_id ="+
         //   //"select * from aux_crianca_responsavel where crianca_id=" +
@@ -52,7 +56,7 @@ class rotasCmei {
     );
   }
 
-  post() {
+  post(connection) {
     this.router.post("/responsavel", (req, res) => {
       const nome = req.body.nome;
       const cpf = req.body.cpf;
@@ -65,20 +69,20 @@ class rotasCmei {
       const zonaTitulo = req.body.zonaTitulo;
       const secaoTitulo = req.body.secaoTitulo;
 
-      // query(
-      //   `insert into responsavel(nome,cpf,telefone_1,telefone_2,trabalho,renda,pensao,numero_titulo,
-      //     zona_titulo,secao_titulo,status) values ("${nome}",${cpf},${telefone1},${telefone2},
-      //       "${trabalho}",${renda},${pensao},${numeroTitulo},${zonaTitulo},${secaoTitulo},1)`,
-      //   res
-      // );
+      const responsavel = new Responsavel(nome, cpf, telefone1, telefone2, trabalho, renda, pensao, numeroTitulo, zonaTitulo, secaoTitulo)
+
+      res.send(connection.getRepository(Responsavel).save(responsavel))
+
     });
   }
 
-  postAux() {
+  postAux(connection) {
     this.router.post("/responsavelAux", (req, res) => {
       const criancaId = req.body.criancaId;
       const responsavelId = req.body.responsavelId;
       const responsavelTipo = req.body.responsavelTipo;
+
+      res.send("deprecated")
 
       // query(
       //   `insert into aux_crianca_responsavel(responsavel_id,crianca_id,tipo)values(${responsavelId},${criancaId},"${responsavelTipo}")`,
@@ -87,8 +91,11 @@ class rotasCmei {
     });
   }
 
-  deleteAux() {
+  deleteAux(connection) {
     this.router.delete("/responsavelAux/:id", (req, res) => {
+
+      res.send("deprecated")
+
       // query(
       //   `delete from aux_crianca_responsavel where crianca_id=${req.params.id}`,
       //   res
@@ -96,7 +103,7 @@ class rotasCmei {
     });
   }
 
-  put() {
+  put(connection) {
     this.router.put("/responsavel/:id", (req, res) => {
       const nome = req.body.nome;
       const cpf = req.body.cpf;
@@ -109,19 +116,22 @@ class rotasCmei {
       const zonaTitulo = req.body.zonaTitulo;
       const secaoTitulo = req.body.secaoTitulo;
 
-      // query(
-      //   `update responsavel set nome="${nome}",cpf="${cpf}"telefone_1="${telefone1}",
-      //           telefone_2="${telefone2}",trabalho="${trabalho}",renda="${renda}",pensao="${pensao}",
-      //           numero_titulo="${numeroTitulo}",zona_titulo="${zonaTitulo}",secao_titulo="${secaoTitulo}",
-      //           status="${status}" where id=` + parseInt(req.params.id),
-      //   res
-      // );
+      const responsavel = new Responsavel(
+        nome, cpf, telefone1, telefone2, trabalho, renda, pensao, numeroTitulo, zonaTitulo, secaoTitulo, 
+        null, req.params.id);
+
+      res.send(connection.getRepository(Responsavel).save(responsavel))
+
     });
   }
 
-  delete() {
+  delete(connection) {
     this.router.delete("/responsavel/:id", (req, res) => {
-  //    query("delete from responsavel where id=" + parseInt(req.params.id), res);
+
+      const responsavel = new Responsavel(
+        null, null, null, null, null, null, null, null, null, null, null, req.params.id);
+
+      res.send(connection.getRepository(Responsavel).remove(responsavel))
     });
   }
 }

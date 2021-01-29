@@ -1,3 +1,5 @@
+import { Endereco } from "../entity/endereco.model";
+
 const express = require('express')  //usado na conexao com a API
 
 
@@ -9,42 +11,50 @@ class rotasCrianca {
         this.router = router;
     }
 
-    getAll() {
+    getAll(connection) {
         this.router.get('/endereco', (req, res) => {
-          //  query("select * from endereco order by id", res)
+            res.send(connection.getRepository(Endereco).find())
         })
     }
 
-    getId() {
+    getId(connection) {
         this.router.get('/endereco/:id', (req, res) => {
-            //query("select * from endereco where id=" + parseInt(req.params.id), res)
+            res.send(connection.getRepository(Endereco).findOne(req.params.id))
+
         })
     }
 
-    post() {
-        
+    post(connection) {
+
         this.router.post('/endereco', (req, res) => {
             const rua = req.body.rua
             const numero = req.body.numero
             const idBairro = req.body.idBairro
-            console.log(idBairro)
-          //  query(`insert into endereco (rua,numero,bairro_id) values("${rua}",${numero},${idBairro})`, res)
+
+            const endereco = new Endereco(null, rua, numero, idBairro)
+
+            res.send(connection.getRepository(Endereco).save(endereco))
+
         })
     }
 
-    put() {
+    put(connection) {
         this.router.put('/endereco/:id', (req, res) => {
             const rua = req.body.rua
             const numero = req.body.numero
             const idBairro = req.body.idBairro
-            // query(`update endereco set rua="${rua}",numero="${numero}",bairro_id="${idBairro}"
-            //  where id=` + parseInt(req.params.id), res)
+
+            const endereco = new Endereco(req.params.id, rua, numero, idBairro)
+
+            res.send(connection.getRepository(Endereco).save(endereco))
         })
     }
 
-    delete() {
+    delete(connection) {
         this.router.delete('/endereco/:id', (req, res) => {
-         //   query('delete from endereco where id=' + parseInt(req.params.id), res)
+            const endereco = new Endereco(req.params.id, null, null, null)
+
+            res.send(connection.getRespository(Endereco).remove(endereco))
         })
     }
 

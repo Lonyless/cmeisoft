@@ -17,20 +17,23 @@ class rotasCmei {
 
   getId(connection) {
     this.router.get("/criteriosocial/:id", (req, res) => {
-      res.send(connection.getRepository().findOne(req.params.id))
+      res.send(connection.getRepository(Criterio).findOne(req.params.id))
     });
   }
 
-  getAux() {
+  getAux(connection) {
     this.router.get("/criteriosocialAux", (req, res) => {
-    //  query("select * from aux_crianca_criterio", res);
+      res.send("deprecated")
+      //  query("select * from aux_crianca_criterio", res);
     });
   }
 
-  postAux() {
+  postAux(connection) {
     this.router.post("/criteriosocialAux", (req, res) => {
       const criancaId = req.body.criancaId;
       const criterioId = req.body.criterioId;
+
+      res.send("deprecated")
 
       // query(
       //   `insert into aux_crianca_criterio(crianca_id,criteriosocial_id)
@@ -40,46 +43,47 @@ class rotasCmei {
     });
   }
 
-  deleteAux() {
+  deleteAux(connection) {
     this.router.delete("/criteriosocialAux/:id", (req, res) => {
-   //   query(`delete from aux_crianca_criterio where crianca_id=${req.params.id}`, res);
+
+      res.send("deprecated")
+
+      //   query(`delete from aux_crianca_criterio where crianca_id=${req.params.id}`, res);
     });
   }
 
-  post() {
+  post(connection) {
     this.router.post("/criteriosocial", (req, res) => {
       const descricao = req.body.descricao;
       const peso = req.body.peso;
 
-      // query(
-      //   `insert into criteriosocial(descricao,peso,status)
-      //           values("${descricao}",${peso},1)`,
-      //   res
-      // );
+      const criterio = new Criterio(descricao, peso, 1)
+
+      res.send(connection.getRepository(Criterio).save(criterio))
+
     });
   }
 
-  put() {
+  put(connection) {
     this.router.put("/criteriosocial/:id", (req, res) => {
       const descricao = req.body.descricao;
       const peso = req.body.peso;
-      const criancaId = req.body.crianca_id;
       const status = req.body.status;
 
-      // query(
-      //   `update criteriosocial set descricao="${descricao}",peso="${peso}",crianca_id="${criancaId}" 
-      //           where id=` + parseInt(req.params.id),
-      //   res
-      // );
+      const criterio = new Criterio(descricao, peso, status, req.params.id)
+
+      res.send(connection.getRepository(Criterio).save(criterio))
+
     });
   }
 
-  delete() {
+  delete(connection) {
     this.router.delete("/criteriosocial/:id", (req, res) => {
-      // query(
-      //   "delete from criteriosocial where id=" + parseInt(req.params.id),
-      //   res
-      // );
+
+      const criterio = new Criterio(null, null, null, req.params.id)
+
+      res.send(connection.getRepository(Criterio).remove(criterio))
+
     });
   }
 }
