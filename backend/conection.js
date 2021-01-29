@@ -4,9 +4,9 @@ function execSQLQuery(sqlQry, res) {
 
     const connection = mysql.createConnection({
         host: 'localhost',
-        user: 'root',
+        user: 'comercial',
         port: 3306,
-        password: '',
+        password: 'pgcadmin',
         database: 'cmeidb'
     })
 
@@ -17,8 +17,10 @@ function execSQLQuery(sqlQry, res) {
                 res.json(error);
             else
                 res.json(results);
+                console.log(results)
         }
-     
+        
+       
         connection.end();
         console.log('executou');
     });
