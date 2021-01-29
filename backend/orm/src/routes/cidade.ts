@@ -11,13 +11,13 @@ class rotasCmei {
 
   getAll(connection) {
     this.router.get("/cidade", (req, res) => {
-      res.send(connection.getRepository(Cidade).find())
+      connection.getRepository(Cidade).find().then(result => {res.json(result)})
     });
   }
 
   getId(connection) {
     this.router.get("/cidade/:id", (req, res) => {
-      res.send(connection.getRepository(Cidade).findOne(req.params.id))
+      connection.getRepository(Cidade).findOne(req.params.id).then(result => {res.json(result)})
     });
   }
 
@@ -27,7 +27,7 @@ class rotasCmei {
 
       const cidade = new Cidade(nome)
 
-      res.send(connection.getRepository(Cidade).save(cidade))
+      connection.getRepository(Cidade).save(cidade).then(result => {res.json(result)})
 
     });
   }
@@ -38,7 +38,7 @@ class rotasCmei {
 
       const cidade = new Cidade(nome, req.params.id)
 
-      res.send(connection.getRepository(Cidade).save(cidade))
+      connection.getRepository(Cidade).save(cidade).then(result => {res.json(result)})
 
     });
   }
@@ -47,7 +47,7 @@ class rotasCmei {
     this.router.delete("/cidade/:id", (req, res) => {
       const cidade = new Cidade(null, req.params.id)
 
-      res.send(connection.getRepository(Cidade).remove(cidade))
+      connection.getRepository(Cidade).remove(cidade).then(result => {res.json(result)})
     });
   }
 }

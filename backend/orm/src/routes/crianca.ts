@@ -1,4 +1,5 @@
 import { Crianca } from "../entity/crianca.model";
+const express = require("express")
 
 class rotasCrianca {
   router = express.Router();
@@ -9,13 +10,13 @@ class rotasCrianca {
 
   getAll(connection) {
     this.router.get("/crianca", (req, res) => {
-      res.send(connection.getRepository(Crianca).find())
+      connection.getRepository(Crianca).find().then(result => { res.json(result) })
     });
   }
 
   getId(connection) {
     this.router.get("/crianca/:id", (req, res) => {
-      res.send(connection.getRepository(Crianca).findOne(req.params.id))
+      connection.getRepository(Crianca).findOne(req.params.id).then(result => { res.json(result) })
     });
   }
 
@@ -34,7 +35,7 @@ class rotasCrianca {
 
       const crianca = new Crianca(sexo, nascimento, registro, livro, folha, cpf, enderecoId, cmeiOpcao1, cmeiOpcao2, 1, nome)
 
-      res.send(connection.getRepository(Crianca).save(crianca))
+      connection.getRepository(Crianca).save(crianca).then(result => { res.json(result) })
 
     });
   }
@@ -54,7 +55,7 @@ class rotasCrianca {
 
       const crianca = new Crianca(sexo, nascimento, registro, livro, folha, cpf, enderecoId, cmeiOpcao1, cmeiOpcao2, 1, nome, req.params.id)
 
-      res.send(connection.getRepository(Crianca).save(crianca))
+      connection.getRepository(Crianca).save(crianca).then(result => { res.json(result) })
 
     });
   }
@@ -62,8 +63,8 @@ class rotasCrianca {
   delete(connection) {
     this.router.delete("/crianca/:id", (req, res) => {
       const crianca = new Crianca(null, null, null, null, null, null, null, null, null, null, null, req.params.id)
-    
-      res.send(connection.getRepository(Crianca).remove(crianca))
+
+      connection.getRepository(Crianca).remove(crianca).then(result => { res.json(result) })
     });
   }
 }

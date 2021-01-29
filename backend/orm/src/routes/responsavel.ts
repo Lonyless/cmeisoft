@@ -11,14 +11,14 @@ class rotasCmei {
 
   getAll(connection) {
     this.router.get("/responsavel", (req, res) => {
-      res.send(connection.getRepository(Responsavel).find())
+      connection.getRepository(Responsavel).find().then(result => {res.json(result)})
 
     });
   }
 
   getId(connection) {
     this.router.get("/responsavel/:id", (req, res) => {
-      res.send(connection.getRepository(Responsavel).findOne(req.params.id))
+      connection.getRepository(Responsavel).findOne(req.params.id).then(result => {res.json(result)})
     });
   }
 
@@ -71,7 +71,7 @@ class rotasCmei {
 
       const responsavel = new Responsavel(nome, cpf, telefone1, telefone2, trabalho, renda, pensao, numeroTitulo, zonaTitulo, secaoTitulo)
 
-      res.send(connection.getRepository(Responsavel).save(responsavel))
+      connection.getRepository(Responsavel).save(responsavel).then(result => {res.json(result)})
 
     });
   }
@@ -120,7 +120,7 @@ class rotasCmei {
         nome, cpf, telefone1, telefone2, trabalho, renda, pensao, numeroTitulo, zonaTitulo, secaoTitulo, 
         null, req.params.id);
 
-      res.send(connection.getRepository(Responsavel).save(responsavel))
+      connection.getRepository(Responsavel).save(responsavel).then(result => {res.json(result)})
 
     });
   }
@@ -131,7 +131,7 @@ class rotasCmei {
       const responsavel = new Responsavel(
         null, null, null, null, null, null, null, null, null, null, null, req.params.id);
 
-      res.send(connection.getRepository(Responsavel).remove(responsavel))
+      connection.getRepository(Responsavel).remove(responsavel).then(result => {res.json(result)})
     });
   }
 }

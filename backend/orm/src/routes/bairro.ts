@@ -12,13 +12,13 @@ class rotasCrianca {
 
     getAll(connection) {
         this.router.get('/bairro', (req, res) => {
-            res.send(connection.getRepository(Bairro).find())
+            connection.getRepository(Bairro).find().then(result => {res.json(result)})
         })
     }
 
     getId(connection) {
         this.router.get('/bairro/:id', (req, res) => {
-            res.send(connection.getRepository(Bairro).findOne(parseInt(req.params.id)))
+            connection.getRepository(Bairro).findOne(parseInt(req.params.id)).then(result => {res.json(result)})
         })
     }
 
@@ -29,7 +29,7 @@ class rotasCrianca {
 
             const bairro = new Bairro(nome, cidadeId)
 
-            res.send(connection.getRepository(Bairro).save(bairro))
+            connection.getRepository(Bairro).save(bairro).then(result => {res.json(result)})
 
         })
     }
@@ -41,7 +41,7 @@ class rotasCrianca {
 
             const bairro = new Bairro(nome, cidadeId, req.params.id)
 
-            res.send(connection.getRepository(Bairro).save(bairro))
+            connection.getRepository(Bairro).save(bairro).then(result => {res.json(result)})
         })
     }
 
@@ -50,7 +50,7 @@ class rotasCrianca {
 
             const bairro = new Bairro(null, null, req.params.id)
 
-            res.send(connection.getRepository(Bairro).remove(bairro))
+            connection.getRepository(Bairro).remove(bairro).then(result => {res.json(result)})
         })
     }
 

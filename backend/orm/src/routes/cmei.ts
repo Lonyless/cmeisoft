@@ -13,15 +13,13 @@ class rotasCmei {
 
     getAll(connection) {
         this.router.get('/cmei', (req, res) => {
-
-            res.send(connection.getRepository(Cmei).find())
-
+            connection.getRepository(Cmei).find().then(result => { res.json(result) })
         })
     }
 
     getId(connection) {
         this.router.get('/cmei/:id', (req, res) => {
-            res.send(connection.getRepository(Cmei).findOne(parseInt(req.params.id)))
+            connection.getRepository(Cmei).findOne(parseInt(req.params.id)).then(result => { res.json(result) })
         })
     }
 
@@ -33,7 +31,7 @@ class rotasCmei {
 
             const cmei = new Cmei(nome, telefone, idEndereco, 1)
 
-            res.send(connection.getRepository(Cmei).save(cmei))
+            connection.getRepository(Cmei).save(cmei).then(result => { res.json(result) })
 
         })
     }
@@ -47,7 +45,7 @@ class rotasCmei {
 
             const cmei = new Cmei(nome, telefone, idEndereco, status, req.params.id)
 
-            res.send(connection.getRepository(Cmei).save(cmei))
+            connection.getRepository(Cmei).save(cmei).then(result => { res.json(result) })
 
         })
     }
@@ -57,7 +55,7 @@ class rotasCmei {
 
             const cmei = new Cmei(null, null, null, null, req.params.id)
 
-            res.send(connection.getRepository(Cmei).remove(cmei))
+            connection.getRepository(Cmei).remove(cmei).then(result => {res.json(result)})
 
         })
     }

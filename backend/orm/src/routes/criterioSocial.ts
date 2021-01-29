@@ -11,13 +11,13 @@ class rotasCmei {
 
   getAll(connection) {
     this.router.get("/criteriosocial", (req, res) => {
-      res.send(connection.getRepository(Criterio).find())
+      connection.getRepository(Criterio).find().then(result => {res.json(result)})
     });
   }
 
   getId(connection) {
     this.router.get("/criteriosocial/:id", (req, res) => {
-      res.send(connection.getRepository(Criterio).findOne(req.params.id))
+      connection.getRepository(Criterio).findOne(req.params.id).then(result => {res.json(result)})
     });
   }
 
@@ -46,7 +46,7 @@ class rotasCmei {
   deleteAux(connection) {
     this.router.delete("/criteriosocialAux/:id", (req, res) => {
 
-      res.send("deprecated")
+      res.json("deprecated")
 
       //   query(`delete from aux_crianca_criterio where crianca_id=${req.params.id}`, res);
     });
@@ -59,7 +59,9 @@ class rotasCmei {
 
       const criterio = new Criterio(descricao, peso, 1)
 
-      res.send(connection.getRepository(Criterio).save(criterio))
+      console.log(criterio)
+
+     connection.getRepository(Criterio).save(criterio).then(result => {res.json(result)})
 
     });
   }
@@ -72,7 +74,7 @@ class rotasCmei {
 
       const criterio = new Criterio(descricao, peso, status, req.params.id)
 
-      res.send(connection.getRepository(Criterio).save(criterio))
+      connection.getRepository(Criterio).save(criterio).then(result => {res.json(result)})
 
     });
   }
@@ -82,7 +84,7 @@ class rotasCmei {
 
       const criterio = new Criterio(null, null, null, req.params.id)
 
-      res.send(connection.getRepository(Criterio).remove(criterio))
+      connection.getRepository(Criterio).remove(criterio).then(result => {res.json(result)})
 
     });
   }

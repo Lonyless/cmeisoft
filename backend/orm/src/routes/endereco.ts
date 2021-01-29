@@ -13,14 +13,13 @@ class rotasCrianca {
 
     getAll(connection) {
         this.router.get('/endereco', (req, res) => {
-            res.send(connection.getRepository(Endereco).find())
+            connection.getRepository(Endereco).find().then(result => { res.json(result) })
         })
     }
 
     getId(connection) {
         this.router.get('/endereco/:id', (req, res) => {
-            res.send(connection.getRepository(Endereco).findOne(req.params.id))
-
+            connection.getRepository(Endereco).findOne(req.params.id).then(result => { res.json(result) })
         })
     }
 
@@ -33,7 +32,7 @@ class rotasCrianca {
 
             const endereco = new Endereco(null, rua, numero, idBairro)
 
-            res.send(connection.getRepository(Endereco).save(endereco))
+            connection.getRepository(Endereco).save(endereco).then(result => { res.json(result) })
 
         })
     }
@@ -46,7 +45,7 @@ class rotasCrianca {
 
             const endereco = new Endereco(req.params.id, rua, numero, idBairro)
 
-            res.send(connection.getRepository(Endereco).save(endereco))
+            connection.getRepository(Endereco).save(endereco).then(result => { res.json(result) })
         })
     }
 
@@ -54,7 +53,7 @@ class rotasCrianca {
         this.router.delete('/endereco/:id', (req, res) => {
             const endereco = new Endereco(req.params.id, null, null, null)
 
-            res.send(connection.getRespository(Endereco).remove(endereco))
+            connection.getRespository(Endereco).remove(endereco).then(result => {res.json(result)})
         })
     }
 
