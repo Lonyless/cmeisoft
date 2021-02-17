@@ -3,12 +3,12 @@ import { Crianca } from "./crianca.model";
 import { Responsavel } from "./responsavel.model";
 
 @Entity()
-export class CriancaAuxResponsavel {
+export class AuxCriancaResponsavel {
 
     constructor() {
 
     }
-    
+
     @Column()
     tipo: String
 

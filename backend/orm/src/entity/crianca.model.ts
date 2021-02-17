@@ -1,8 +1,9 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany} from "typeorm";
 import { Cmei } from "./cmei.model";
+import { Criterio } from "./criterio.model";
 import { Endereco } from "./endereco.model";
 import { Responsavel } from "./responsavel.model";
-import { CriancaAuxResponsavel } from "./responsavel_crianca";
+import { AuxCriancaResponsavel } from "./responsavel_crianca.model";
 
 @Entity() 
 export class Crianca {
@@ -62,6 +63,10 @@ export class Crianca {
     @Column()
     nome: string;
 
-    @OneToMany(type => CriancaAuxResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.crianca)
+    @ManyToMany(() => Criterio)
+    @JoinTable({name: "aux_crianca_criterio"})
+    criterioList: Criterio[]
+
+    @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.crianca)
     responsavelList: Responsavel[]
 }
