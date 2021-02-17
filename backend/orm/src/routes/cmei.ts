@@ -1,7 +1,6 @@
-const express = require('express')  //usado na conexao com a API
+import express = require('express');  //usado na conexao com a API
 
 import { Cmei } from '../entity/cmei.model'
-
 
 class rotasCmei {
 

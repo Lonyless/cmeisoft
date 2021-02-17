@@ -1,5 +1,5 @@
 import { Crianca } from "../entity/crianca.model";
-const express = require("express")
+import express = require("express");
 
 class rotasCrianca {
   router = express.Router();

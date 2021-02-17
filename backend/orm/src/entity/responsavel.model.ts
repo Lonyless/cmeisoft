@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany} from "typeorm";
 import { Crianca } from "./crianca.model";
+import { CriancaAuxResponsavel } from "./responsavel_crianca";
 
 @Entity()
 export class Responsavel {
@@ -70,7 +71,6 @@ export class Responsavel {
   @Column()
   tipo?: string;
 
-  @ManyToMany(type => Crianca, crianca => crianca.responsavelList)
-  @JoinTable({name: 'aux_crianca_responsavel'})
+  @OneToMany(type => CriancaAuxResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.responsavel)
   criancaList: Crianca[]
 }

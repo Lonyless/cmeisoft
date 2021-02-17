@@ -2,9 +2,9 @@
    "type": "mysql",
    "host": "localhost",
    "port": 3306,
-   "username": "comercial",
+   "username": "root",
    "password": "pgcadmin",
-   "database": "cmeidb_orm",
+   "database": "cmeidb",
    "synchronize": true,
    "logging": false,
    "entities": [
