@@ -36,5 +36,5 @@ ________________________________________________________________________________
 Quem somos nós
 
 
-A equipe envolvida consiste no Engenheiro de Software Jeorge Nunes e no aluno de Engenharia de Software Victor Batista.
+A equipe envolvida consiste no aluno de Engenharia de Software Victor Batista.
 
