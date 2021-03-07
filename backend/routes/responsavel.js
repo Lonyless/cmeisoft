@@ -37,12 +37,16 @@ class rotasCmei {
     );
   }
 
+  /**
+   * retorna lista de responsaveis usando apenas o id da criança
+   */
   getResponsavelCrianca() {
     this.router.get(
       "/responsavel/aux/getWithCriancaId/:crianca_id",
       (req, res) => {
         query(
-          "select * from aux_crianca_responsavel where crianca_id=" +
+          "select * from responsavel join aux_crianca_responsavel where responsavel.id = aux_crianca_responsavel.responsavel_id and crianca_id ="+
+          //"select * from aux_crianca_responsavel where crianca_id=" +
             parseInt(req.params.crianca_id),
           res
         );

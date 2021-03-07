@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Endereco } from 'src/app/core/model/endereco.model';
 import { CriancaService } from 'src/app/core/services/crianca.service';
@@ -20,7 +21,8 @@ export class ListaComponent implements OnInit {
 
   constructor(
     public criancaService: CriancaService,
-    public enderecoService: EnderecoService
+    public enderecoService: EnderecoService,
+    public router: Router
   ) {
     this.criancaService = criancaService;
     this.selectedCrianca = new Crianca();
@@ -43,7 +45,7 @@ export class ListaComponent implements OnInit {
   //selectedCriancaEndereco: Endereco = new Endereco(null, null, null, null);
 
   getCrianca(crianca) {
-  
+
     this.selectedCrianca = crianca;
     this.selectedCrianca.nascimento = this.selectedCrianca.nascimento.slice(
       0,
@@ -67,5 +69,16 @@ export class ListaComponent implements OnInit {
 
   get filter() {
     return this._filterBy;
+  }
+
+  /**
+   * navega ate a rota passando parametros
+   * @param crianca crianca a ser editada
+   */
+  editarRoute(crianca) {
+    this.router.navigate(['/crianca/editar'],
+     { queryParams: 
+      { criancaId: crianca.id, enderecoId: crianca.endereco_id } 
+    });
   }
 }

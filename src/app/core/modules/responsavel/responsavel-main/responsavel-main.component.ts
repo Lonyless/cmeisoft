@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -26,67 +26,42 @@ export class ResponsavelMainComponent implements OnInit {
     public fb: FormBuilder,
     public criancaService: CriancaService,
     public responsavelService: ResponsavelService,
-    private responsavelEmmiterService: ResponsavelEmmiterService,
     private route: ActivatedRoute
   ) {
     this.criancaService = criancaService;
     this.responsavelService = responsavelService;
   }
 
-  @Input() idCrianca: number;
+
+
+  //altera o tipo e envia a lista
+  changeTipo(i) {
+    let responsavel: Responsavel = this.responsaveisCurrent[i]
+    responsavel.tipo = this.form.controls['tipo'].value[i]
+    this.responsaveisCurrent.splice(i, 1, responsavel) //substitui o item na posicao i pelo novo item
+    console.log(responsavel)
+    this.adicionarResponsavel.emit(this.responsaveisCurrent);
+  }
 
   adicionarOnPressed(responsavel: Responsavel) {
-    //atribui a uma variavel para poder dar unsubscribe de forma asincrona
 
-    const subscription = this.responsavelService
-      .listar()
-      .subscribe((responsavelList) => {
-        
-        console.log(responsavelList)
+    const exist = this.responsaveisCurrent.filter((res) => {
+      return res.id == responsavel.id;
+    });
 
-        if (responsavel.id == null) {
-          if (responsavelList.length < 1) {
-            //TOFIX: se a table não estiver truncada isso aqui vai gerar um BUG
-            responsavel.id = 1;
-          } else {
-            //erro: gerando id repetido
-            responsavel.id = responsavelList[responsavelList.length - 1].id+1;
-          }
-        }
+    responsavel.tipo == null ? responsavel.tipo = "Outro" : null
+    exist.length < 1 ? this.responsaveisCurrent.push(responsavel) : alert('Responsavel ja esta na lista');
+    this.adicionarResponsavel.emit(this.responsaveisCurrent);
 
-        console.log(responsavel);
+    this.buildForm();
 
-        //verifica se o responsavel ja esta na lista
-        if (this.responsaveisCurrent == null) {
-          this.responsaveisCurrent = [responsavel];
-        } else {
-          const exist = this.responsaveisCurrent.filter((res) => {
-            return res.nome == responsavel.nome;
-          });
-          console.log(exist);
-          if (exist.length < 1) {
-            this.responsaveisCurrent.push(responsavel);
-          } else {
-            alert('Responsavel ja esta na lista');
-          }
-        }
-
-        this.buildForm();
-
-        //unsubs depois que todas as operações forem concluidas
-        //evitando bugs
-        subscription.unsubscribe();
-
-        //acessando o ultimo item do array de forms
-        //this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo
-      });
   }
 
   remove(responsavel) {
     this.responsaveisCurrent = this.responsaveisCurrent.filter(
       (obj) => obj != responsavel
     );
-
+    this.adicionarResponsavel.emit(this.responsaveisCurrent)
     this.buildForm();
   }
 
@@ -103,44 +78,39 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   responsaveisAll: Responsavel[];
-  responsaveisCurrent: Responsavel[];
+  responsaveisCurrent: Responsavel[] = [];
+  @Output() adicionarResponsavel = new EventEmitter();
 
   ngOnInit(): void {
-    if (this.responsavelEmmiterService.firstSubsVar == undefined) {
-      this.responsavelEmmiterService.firstSubsVar = this.responsavelEmmiterService.invokeFirstComponentFunction.subscribe(
-        (crianca) => {
-          this.inserirAux(crianca);
-        }
-      );
-    }
 
     this.responsaveisCurrent = [];
 
     //aqui ta async
-    if (this.idCrianca != null) {
-      this.responsavelService
-        .listarCriancas(this.idCrianca)
-        .subscribe((listaAuxiliarResponsavel) => {
-          listaAuxiliarResponsavel.forEach((res: any) => {
-            this.responsavelService
-              .listarPorId(res.responsavel_id)
-              .subscribe((responsavel) => {
-                responsavel[0].tipo = res.tipo;
-                this.responsaveisCurrent.push(responsavel[0]);
-                this.buildForm();
-              });
-          });
-        }).unsubscribe;
-    }
+    var routeSubs = this.route.queryParams.subscribe(params => {
+
+      if (params['criancaId'] != null) {
+        const respSubs = this.responsavelService
+          .listarCriancas(params['criancaId'])
+          .subscribe((listaAuxiliarResponsavel) => {
+            respSubs.unsubscribe()
+            this.responsaveisCurrent = listaAuxiliarResponsavel
+            this.buildForm();
+            this.adicionarResponsavel.emit(this.responsaveisCurrent)
+          })
+      }
+
+    })
 
     this.buildForm();
 
     this.newVisibility = true;
     this.listarAll();
+
   }
 
   //verifica o tipo de responsavel pra dar fill no form
   checkSelected(responsavel: Responsavel, tipo: string, index: number) {
+
     //meio POG, atribui o tipo passado para o ultimo responsavel da lista (na posicao .length-1)
     //this.form.controls['tipo'].value[this.form.controls['tipo'].value.length - 1] = responsavel.tipo;
     if (responsavel.tipo != null) {
@@ -154,7 +124,6 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   buildForm() {
-    //TOFIX: Quando é adicionado um responsavel criado ele rebuilda o form e perde os valores de tipo ja adicionados
     const values = this.responsaveisCurrent.map((val) => new FormControl());
 
     this.form = this.fb.group({
@@ -189,18 +158,20 @@ export class ResponsavelMainComponent implements OnInit {
   }
 
   listarAll() {
-    this.responsavelService.listar().subscribe((res) => {
+    const subs = this.responsavelService.listar().subscribe((res) => {
       this.responsaveisAll = res;
+      subs.unsubscribe()
     });
   }
 
   listarCurrent(id) {
-    this.responsavelService.listarCriancas(id).subscribe((res) => {
+    const subs = this.responsavelService.listarCriancas(id).subscribe((res) => {
       this.responsaveisCurrent = res;
+      subs.unsubscribe()
     });
   }
 
-  log() {
-    console.log(this.form.value);
+  log(i?) {
+    console.log(this.responsaveisCurrent[i])
   }
 }

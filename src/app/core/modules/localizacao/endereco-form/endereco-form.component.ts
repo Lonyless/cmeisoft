@@ -26,6 +26,8 @@ import { BehaviorSubject } from 'rxjs';
 export class EnderecoFormComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
 
+  @Output() enderecoEmmiter = new EventEmitter();
+
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -43,14 +45,6 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
   _visibilidade: boolean;
 
   ngOnInit(): void {
-    if (this.inEventEmitterService.firstSubsVar == undefined) {
-      this.inEventEmitterService.firstSubsVar = this.inEventEmitterService.invokeFirstComponentFunction.subscribe(
-        (crianca) => {
-          //pega a crianca passada como parametro
-          this.onSubmit(crianca);
-        }
-      );
-    }
 
     this._visibilidade = true;
 
@@ -59,7 +53,7 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
     }).unsubscribe;
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
   setar() {
     this.bairroService.listar().subscribe((res) => {
@@ -78,7 +72,9 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
       this.form.value.numeroEndereco,
       this.form.value.bairroId
     );
-    
+
+    //this.enderecoEmmiter.emit(endereco);
+    /*------------------------------- pra baixo é old
     if (this.route.snapshot.params['id'] == null) {
       this.enderecoService.adicionar(endereco).subscribe(
         (sucesso) => {
@@ -102,7 +98,7 @@ export class EnderecoFormComponent implements OnInit, OnDestroy {
           console.log(erro);
         }
       );
-    }
+    }*/
   }
 
   validarCampo(campo) {

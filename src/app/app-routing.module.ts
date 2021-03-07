@@ -32,7 +32,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'crianca/:id',
+    path: 'crianca/editar',
     component: FormCriancaComponent,
     resolve: {
       //carrega a lista de criterios
