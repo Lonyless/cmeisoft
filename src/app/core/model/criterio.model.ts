@@ -1,4 +1,6 @@
+
 export class Criterio {
+
     constructor(descricao?: string, peso?: number, status?: number, id?: number) {
         this.descricao = descricao
         this.peso = peso
@@ -7,8 +9,11 @@ export class Criterio {
     }
 
     descricao: string
+    
     peso: number
+    
     status: number
+
     id?: number
 
 }

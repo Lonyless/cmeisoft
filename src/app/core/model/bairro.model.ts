@@ -1,13 +1,22 @@
+
+import { Cidade } from "./cidade.model";
+
+
 export class Bairro {
 
-    constructor(nome: string, cidadeId: number, id?: number,) {
+    constructor(nome: string, cidade: Cidade, id?: number,) {
         this.id = id
         this.nome = nome
-        this.cidadeId = cidadeId
+        this.cidade = cidade
     }
 
-    id?: number
+
+    id: number
+
+
     nome: string
-    cidadeId: number
+
+
+    cidade: Cidade
 
 }

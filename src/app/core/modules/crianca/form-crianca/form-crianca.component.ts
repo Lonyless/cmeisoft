@@ -209,8 +209,6 @@ export class FormCriancaComponent implements OnInit {
     })
   }
 
-  checkSeleceted(criterio) { }
-
   buildFormCrianca(crianca: Crianca, op, enderecoId?) {
     this.formEndereco = this.fb.group({
       id: [],
@@ -224,7 +222,7 @@ export class FormCriancaComponent implements OnInit {
     if (op == 2) {
       console.log(crianca);
       this.enderecoService
-        .listarPorId(crianca.enderecoId)
+        .listarPorId(crianca.endereco.id)
         .subscribe((endereco) => {
           this.formEndereco = this.fb.group({
             id: [endereco[0].id],
@@ -258,8 +256,8 @@ export class FormCriancaComponent implements OnInit {
       livroCrianca: [crianca.livro, [Validators.required]],
       folhaCrianca: [crianca.folha, [Validators.required]],
       cpfCrianca: [crianca.cpf, [Validators.required]],
-      cmeiOpcao1Crianca: [crianca.cmeiOpcao1, [Validators.required]],
-      cmeiOpcao2Crianca: [crianca.cmeiOpcao2, [Validators.required]],
+      cmeiOpcao1Crianca: [crianca.cmeiOpcao1.id, [Validators.required]],
+      cmeiOpcao2Crianca: [crianca.cmeiOpcao2.id, [Validators.required]],
     });
     //--------------------------------------------
   }
@@ -289,7 +287,6 @@ export class FormCriancaComponent implements OnInit {
         this.formEndereco.value.numeroEndereco,
         this.formEndereco.value.bairroId
       );
-
 
       this.criancaService.salvarTodos(crianca, endereco, this.responsavelList, this.criterioList)
 

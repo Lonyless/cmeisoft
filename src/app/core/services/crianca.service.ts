@@ -64,10 +64,17 @@ export class CriancaService {
     responsavelList: Responsavel[],
     criterioList: Criterio[]) {
 
+    crianca.endereco = endereco
+    crianca.responsavelList = responsavelList
+    crianca.criterioList = criterioList
+
     if (crianca.id == null) { //create
+
+      
+
       var insertEndereco = this.http.post(`${this.apiURL}/endereco/`, endereco).subscribe(_endereco => {
 
-        crianca.enderecoId = _endereco['insertId'];
+    //    crianca.enderecoId = _endereco['insertId'];
 
         insertEndereco.unsubscribe();
 

@@ -1,3 +1,8 @@
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany} from "typeorm";
+import { Crianca } from "./crianca.model";
+import { AuxCriancaResponsavel } from "./responsavel_crianca.model";
+
+@Entity()
 export class Responsavel {
   constructor(
     nome?: string,
@@ -27,17 +32,45 @@ export class Responsavel {
     this.tipo = tipo;
   }
 
+  @PrimaryGeneratedColumn()
   id?: number;
+
+  @Column()
   nome: string;
+
+  @Column()
   cpf: number;
+
+  @Column()
   telefone1: number;
+
+  @Column()
   telefone2: number;
+
+  @Column()
   trabalho: string;
+
+  @Column()
   renda: number;
+
+  @Column()
   pensao: number;
+
+  @Column()
   numeroTitulo: number;
+
+  @Column()
   zonaTitulo: number;
+
+  @Column()
   secaoTitulo: number;
+
+  @Column()
   status: number;
+
+  @Column()
   tipo?: string;
+
+  @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.responsavel)
+  criancaList: Crianca[]
 }

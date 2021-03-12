@@ -1,3 +1,4 @@
+
 export class Cidade {
 
     constructor(nome?: string, id?: number) {
@@ -6,6 +7,7 @@ export class Cidade {
     }
 
     id: number
+
     nome: string
     
 }
