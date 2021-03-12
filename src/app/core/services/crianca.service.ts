@@ -68,7 +68,8 @@ export class CriancaService {
     crianca.responsavelList = responsavelList
     crianca.criterioList = criterioList
 
-
+    console.log(crianca)
+    
     if (crianca.id == null) { //create
 
       var insert = this.http.post(`${this.apiURL}/crianca/`, crianca).subscribe(res => {
@@ -77,22 +78,68 @@ export class CriancaService {
 
 
 
-        /*
-  
-        var insertEndereco = this.http.post(`${this.apiURL}/endereco/`, endereco).subscribe(_endereco => {
-  
-      //    crianca.enderecoId = _endereco['insertId'];
-  
-          insertEndereco.unsubscribe();
-  
-          var insertCrianca = this.http.post(`${this.apiURL}/crianca/`, crianca).subscribe(_crianca => {
-  
-            insertCrianca.unsubscribe();
-  
+      /*
+ 
+      var insertEndereco = this.http.post(`${this.apiURL}/endereco/`, endereco).subscribe(_endereco => {
+ 
+    //    crianca.enderecoId = _endereco['insertId'];
+ 
+        insertEndereco.unsubscribe();
+ 
+        var insertCrianca = this.http.post(`${this.apiURL}/crianca/`, crianca).subscribe(_crianca => {
+ 
+          insertCrianca.unsubscribe();
+ 
+          responsavelList.forEach(responsavel => {
+ 
+            const respAuxCrianca = {
+              criancaId: _crianca['insertId'],
+              responsavelId: responsavel.id,
+              responsavelTipo: responsavel.tipo,
+            };
+            var insertResponsavelAux = this.http.post(`${this.apiURL}/responsavelAux`, respAuxCrianca).subscribe(responsavel => {
+              console.log(responsavel);
+              insertResponsavelAux.unsubscribe();
+            });
+ 
+          });
+ 
+          criterioList.forEach(criterio => {
+            const criterioAuxCrianca = {
+              criterioId: criterio.id,
+              criancaId: _crianca['insertId'],
+            };
+            var insertCriterioAux = this.http.post(`${this.apiURL}/criteriosocialAux`, criterioAuxCrianca).subscribe((resultado) => {
+              console.log(resultado);
+              insertCriterioAux.unsubscribe();
+            });
+ 
+          })
+        })     
+      })      */
+    } else { //update --------------------------------------------------------------------------------
+      var insertEndereco = this.http.put(`${this.apiURL}/endereco/` + endereco.id, endereco).subscribe(_endereco => {
+
+        //crianca.enderecoId = _endereco['insertId'];
+
+        insertEndereco.unsubscribe();
+
+        console.log(_endereco)
+
+        var insertCrianca = this.http.put(`${this.apiURL}/crianca/` + crianca.id, crianca).subscribe(_crianca => {
+
+          insertCrianca.unsubscribe();
+
+          console.log(_crianca)
+
+          var deleteRespoAux = this.http.delete(`${this.apiURL}/responsavelAux/` + crianca.id).subscribe(() => {
+
+            deleteRespoAux.unsubscribe()
+
             responsavelList.forEach(responsavel => {
-  
+
               const respAuxCrianca = {
-                criancaId: _crianca['insertId'],
+                criancaId: crianca.id,
                 responsavelId: responsavel.id,
                 responsavelTipo: responsavel.tipo,
               };
@@ -100,77 +147,31 @@ export class CriancaService {
                 console.log(responsavel);
                 insertResponsavelAux.unsubscribe();
               });
-  
+
             });
-  
+          })
+
+          var deleteCritAux = this.http.delete(`${this.apiURL}/criteriosocialAux/` + crianca.id).subscribe(() => {
+            deleteCritAux.unsubscribe()
+
+            console.log(criterioList)
+
             criterioList.forEach(criterio => {
               const criterioAuxCrianca = {
                 criterioId: criterio.id,
-                criancaId: _crianca['insertId'],
+                criancaId: crianca.id,
               };
               var insertCriterioAux = this.http.post(`${this.apiURL}/criteriosocialAux`, criterioAuxCrianca).subscribe((resultado) => {
                 console.log(resultado);
                 insertCriterioAux.unsubscribe();
               });
-  
+
             })
-          })     
-        })      */
-      } else { //update --------------------------------------------------------------------------------
-        var insertEndereco = this.http.put(`${this.apiURL}/endereco/` + endereco.id, endereco).subscribe(_endereco => {
-
-          //crianca.enderecoId = _endereco['insertId'];
-
-          insertEndereco.unsubscribe();
-
-          console.log(_endereco)
-
-          var insertCrianca = this.http.put(`${this.apiURL}/crianca/` + crianca.id, crianca).subscribe(_crianca => {
-
-            insertCrianca.unsubscribe();
-
-            console.log(_crianca)
-
-            var deleteRespoAux = this.http.delete(`${this.apiURL}/responsavelAux/` + crianca.id).subscribe(() => {
-
-              deleteRespoAux.unsubscribe()
-
-              responsavelList.forEach(responsavel => {
-
-                const respAuxCrianca = {
-                  criancaId: crianca.id,
-                  responsavelId: responsavel.id,
-                  responsavelTipo: responsavel.tipo,
-                };
-                var insertResponsavelAux = this.http.post(`${this.apiURL}/responsavelAux`, respAuxCrianca).subscribe(responsavel => {
-                  console.log(responsavel);
-                  insertResponsavelAux.unsubscribe();
-                });
-
-              });
-            })
-
-            var deleteCritAux = this.http.delete(`${this.apiURL}/criteriosocialAux/` + crianca.id).subscribe(() => {
-              deleteCritAux.unsubscribe()
-
-              console.log(criterioList)
-
-              criterioList.forEach(criterio => {
-                const criterioAuxCrianca = {
-                  criterioId: criterio.id,
-                  criancaId: crianca.id,
-                };
-                var insertCriterioAux = this.http.post(`${this.apiURL}/criteriosocialAux`, criterioAuxCrianca).subscribe((resultado) => {
-                  console.log(resultado);
-                  insertCriterioAux.unsubscribe();
-                });
-
-              })
-            })
-
           })
+
         })
-      }
+      })
+    }
 
   }
-  }
+}

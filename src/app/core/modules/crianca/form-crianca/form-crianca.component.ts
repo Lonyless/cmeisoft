@@ -73,7 +73,7 @@ export class FormCriancaComponent implements OnInit {
   adicionarResponsavelLista(responsavelList: Responsavel[]) {
 
     this.responsavelList = responsavelList
- 
+
     console.log(this.responsavelList)
   }
 
@@ -171,7 +171,7 @@ export class FormCriancaComponent implements OnInit {
 
       //chamo pra instanciar o form, é necessario pq o else chama essa função porem de forma assincrona, causando erro
       //ao renderizar a page. chamando antes ele renderiza o form vazio e DEPOIS atribui valores se houver params['id']
-      
+
 
       if (params['criancaId'] == null) {
         //parametro passado para o component de responsavel
@@ -262,8 +262,8 @@ export class FormCriancaComponent implements OnInit {
       livroCrianca: [crianca.livro, [Validators.required]],
       folhaCrianca: [crianca.folha, [Validators.required]],
       cpfCrianca: [crianca.cpf, [Validators.required]],
-      cmeiOpcao1Crianca: [crianca.cmeiOpcao1 != null ? crianca.cmeiOpcao1.id : null, [Validators.required]],
-      cmeiOpcao2Crianca: [crianca.cmeiOpcao2 != null ? crianca.cmeiOpcao2.id : null, [Validators.required]],
+      cmeiOpcao1Crianca: [crianca.cmeiOpcao1 != null ? crianca.cmeiOpcao1 : null, [Validators.required]],
+      cmeiOpcao2Crianca: [crianca.cmeiOpcao2 != null ? crianca.cmeiOpcao2 : null, [Validators.required]],
     });
     //--------------------------------------------
   }
@@ -287,8 +287,11 @@ export class FormCriancaComponent implements OnInit {
         params['criancaId']
       );
 
+      console.log(this.form.value.cmeiOpcao1Crianca.nome)
+      console.log(this.form.value.cmeiOpcao2Crianca.nome)
+
       const endereco = new Endereco(
-        params['enderecoId'], 
+        params['enderecoId'],
         this.formEndereco.value.ruaEndereco,
         this.formEndereco.value.numeroEndereco,
         this.formEndereco.value.bairroId
@@ -305,7 +308,7 @@ export class FormCriancaComponent implements OnInit {
   }
 
   cssErro(campo) {
-    
+
     return {
       'has-error': campo != null ? this.validarCampo(campo) : null
     };

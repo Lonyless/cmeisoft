@@ -79,7 +79,6 @@ class rotasCmei {
 
       connection.getRepository(Responsavel).save(responsavel).then(result => {
         res.json(result)
-        console.log(result)
       })
 
     });
