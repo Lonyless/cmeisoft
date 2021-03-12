@@ -48,13 +48,13 @@ export class Crianca {
     @Column()
     cpf: number;
     
-    @OneToOne(type => Endereco)
+    @OneToOne(type => Endereco, {cascade: true})
     endereco: Endereco;
 
-    @OneToOne(type => Cmei)
+    @OneToOne(type => Cmei, {cascade: true})
     cmeiOpcao1: Cmei;
     
-    @OneToOne(type => Cmei)
+    @OneToOne(type => Cmei, {cascade: true})
     cmeiOpcao2: Cmei;
     
     @Column()
@@ -63,10 +63,10 @@ export class Crianca {
     @Column()
     nome: string;
 
-    @ManyToMany(() => Criterio)
+    @ManyToMany(() => Criterio, {cascade: true})
     @JoinTable({name: "aux_crianca_criterio"})
     criterioList: Criterio[]
 
-    @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.crianca)
+    @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.crianca, {cascade: true})
     responsavelList: Responsavel[]
 }

@@ -20,7 +20,7 @@ export class Endereco {
     @Column()
     numero: number
 
-    @ManyToOne(type => Bairro)
+    @ManyToOne(type => Bairro, {cascade: true})
     bairro: Bairro
 
 }

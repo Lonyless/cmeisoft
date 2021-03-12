@@ -12,7 +12,7 @@ export class AuxCriancaResponsavel {
     @Column()
     tipo: String
 
-    @ManyToOne(type => Crianca, crianca => crianca.responsavelList, { primary: true })
+    @ManyToOne(type => Crianca, crianca => crianca.responsavelList, { primary: true})
     crianca: Crianca;
     @ManyToOne(type => Responsavel, responsavel => responsavel.criancaList, { primary: true })
     responsavel: Responsavel;

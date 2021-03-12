@@ -22,6 +22,7 @@ class rotasCrianca {
 
   post(connection) {
     this.router.post("/crianca", (req, res) => {
+      const crianca = req.body.crianca
       const nome = req.body.nome;
       const sexo = req.body.sexo;
       const nascimento = req.body.nascimento;
@@ -33,7 +34,9 @@ class rotasCrianca {
       const cmeiOpcao1 = req.body.cmeiOpcao1;
       const cmeiOpcao2 = req.body.cmeiOpcao2;
 
-      const crianca = new Crianca(sexo, nascimento, registro, livro, folha, cpf, enderecoId, cmeiOpcao1, cmeiOpcao2, 1, nome)
+      console.log(crianca)
+
+     // const crianca = new Crianca(sexo, nascimento, registro, livro, folha, cpf, enderecoId, cmeiOpcao1, cmeiOpcao2, 1, nome)
 
       connection.getRepository(Crianca).save(crianca).then(result => { res.json(result) })
 

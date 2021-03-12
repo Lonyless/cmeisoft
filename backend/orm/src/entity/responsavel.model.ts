@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import { Crianca } from "./crianca.model";
 import { AuxCriancaResponsavel } from "./responsavel_crianca.model";
 
@@ -15,8 +15,9 @@ export class Responsavel {
     numeroTitulo?: number,
     zonaTitulo?: number,
     secaoTitulo?: number,
-    tipo?: string,
-    id?: number
+    status?: number,
+    criancaList?: Crianca[],
+    id?: number,
   ) {
     this.id = id;
     this.nome = nome;
@@ -29,7 +30,8 @@ export class Responsavel {
     this.numeroTitulo = numeroTitulo;
     this.zonaTitulo = zonaTitulo;
     this.secaoTitulo = secaoTitulo;
-    this.tipo = tipo;
+    this.status = status;
+    this.criancaList = criancaList
   }
 
   @PrimaryGeneratedColumn()
@@ -68,9 +70,6 @@ export class Responsavel {
   @Column()
   status: number;
 
-  @Column()
-  tipo?: string;
-
-  @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.responsavel)
+  @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.responsavel, { cascade: true })
   criancaList: Crianca[]
 }

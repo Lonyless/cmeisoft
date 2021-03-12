@@ -77,8 +77,11 @@ export class FormCriancaComponent implements OnInit {
     console.log(this.responsavelList)
   }
 
+  checkSeleceted(criterio) {
+
+  }
+
   buildFormArray() {
-    console.log(this.criterioList);
     let values;
     let flag;
 
@@ -100,7 +103,6 @@ export class FormCriancaComponent implements OnInit {
       return this.fb.array(values);
     } else {
       values = this.criterioList.map((criterio) => new FormControl(false));
-      console.log(values);
       return this.fb.array(values);
     }
   }
@@ -127,6 +129,7 @@ export class FormCriancaComponent implements OnInit {
   crianca: Crianca;
 
   ngOnInit(): void {
+    this.buildFormCrianca(new Crianca(), 1);
     this.route.queryParams.subscribe(params => {
 
       //buildando form de criterios
@@ -153,6 +156,7 @@ export class FormCriancaComponent implements OnInit {
 
       //alimenta o objeto Cmei
       this.cmeiService.listar().subscribe((res) => {
+        console.log(res)
         this.cmeiList = res;
       }).unsubscribe;
       //----------------------
@@ -167,7 +171,7 @@ export class FormCriancaComponent implements OnInit {
 
       //chamo pra instanciar o form, é necessario pq o else chama essa função porem de forma assincrona, causando erro
       //ao renderizar a page. chamando antes ele renderiza o form vazio e DEPOIS atribui valores se houver params['id']
-      this.buildFormCrianca(new Crianca(), 1);
+      
 
       if (params['criancaId'] == null) {
         //parametro passado para o component de responsavel
@@ -180,6 +184,7 @@ export class FormCriancaComponent implements OnInit {
           .listarPorId(params['criancaId'])
           .subscribe((res) => {
             this.enderecoService.listar().subscribe((enderecoList) => {
+              console.log(enderecoList)
               enderecoList.filter((endereco) => {
                 //alterando data pra remover o fuso horario
                 let nascimento = res[0].nascimento.slice(0, 10);
@@ -211,7 +216,7 @@ export class FormCriancaComponent implements OnInit {
 
   buildFormCrianca(crianca: Crianca, op, enderecoId?) {
     this.formEndereco = this.fb.group({
-      id: [],
+      id: [''],
       ruaEndereco: ['', [Validators.required]],
       numeroEndereco: ['', [Validators.required]],
       bairroId: ['', [Validators.required]],
@@ -246,6 +251,7 @@ export class FormCriancaComponent implements OnInit {
         }).unsubscribe;
     }
 
+    crianca.nome = null
     //cria o formulario de criar ou editar criança
     this.form = this.fb.group({
       id: [crianca.id],
@@ -256,8 +262,8 @@ export class FormCriancaComponent implements OnInit {
       livroCrianca: [crianca.livro, [Validators.required]],
       folhaCrianca: [crianca.folha, [Validators.required]],
       cpfCrianca: [crianca.cpf, [Validators.required]],
-      cmeiOpcao1Crianca: [crianca.cmeiOpcao1.id, [Validators.required]],
-      cmeiOpcao2Crianca: [crianca.cmeiOpcao2.id, [Validators.required]],
+      cmeiOpcao1Crianca: [crianca.cmeiOpcao1 != null ? crianca.cmeiOpcao1.id : null, [Validators.required]],
+      cmeiOpcao2Crianca: [crianca.cmeiOpcao2 != null ? crianca.cmeiOpcao2.id : null, [Validators.required]],
     });
     //--------------------------------------------
   }
@@ -299,8 +305,9 @@ export class FormCriancaComponent implements OnInit {
   }
 
   cssErro(campo) {
+    
     return {
-      'has-error': this.validarCampo(campo),
+      'has-error': campo != null ? this.validarCampo(campo) : null
     };
   }
 

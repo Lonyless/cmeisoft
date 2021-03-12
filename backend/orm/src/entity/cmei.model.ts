@@ -27,7 +27,7 @@ export class Cmei {
   @Column()
   telefone: number;
  
-  @OneToOne(type => Endereco)
+  @OneToOne(type => Endereco, {cascade: true})
   @JoinColumn()
   endereco: Endereco;
 

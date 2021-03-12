@@ -16,7 +16,7 @@ export class Bairro {
     @Column()
     nome: string
 
-    @ManyToOne(type => Cidade)
+    @ManyToOne(type => Cidade, {cascade: true})
     cidade: Cidade
 
 }

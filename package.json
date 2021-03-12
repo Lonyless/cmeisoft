@@ -27,7 +27,6 @@
     "mysql": "^2.18.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "typeorm": "^0.2.30",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
