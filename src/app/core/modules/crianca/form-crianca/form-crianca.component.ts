@@ -280,15 +280,12 @@ export class FormCriancaComponent implements OnInit {
         this.form.value.folhaCrianca,
         this.form.value.cpfCrianca,
         params['enderecoId'],
-        this.form.value.cmeiOpcao1Crianca,
-        this.form.value.cmeiOpcao2Crianca,
+        this.cmeiList[this.form.value.cmeiOpcao1Crianca],
+        this.cmeiList[this.form.value.cmeiOpcao1Crianca],
         1,
         this.form.value.nomeCrianca,
         params['criancaId']
       );
-
-      console.log(this.form.value.cmeiOpcao1Crianca.nome)
-      console.log(this.form.value.cmeiOpcao2Crianca.nome)
 
       const endereco = new Endereco(
         params['enderecoId'],
@@ -321,6 +318,8 @@ export class FormCriancaComponent implements OnInit {
   }
 
   log() {
-    console.log(this.formEndereco);
+    
+   console.log(this.cmeiList[this.form.value.cmeiOpcao1Crianca])
+   // console.log(this.formEndereco);
   }
 }

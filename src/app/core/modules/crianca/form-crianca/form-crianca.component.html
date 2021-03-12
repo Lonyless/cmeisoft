@@ -141,7 +141,7 @@
                         <label>CMEI Opção 1</label>
                         <select required [ngClass]="cssErro('cmeiOpcao1Crianca')" formControlName="cmeiOpcao1Crianca"
                             name="cmeiOpcao1Crianca" id="cmeiOpcao1Crianca" class="form-control form-control-lg">
-                            <option *ngFor="let cmei of cmeiList" value={{cmei}}>{{cmei.nome}}</option>
+                            <option *ngFor="let cmei of cmeiList; let i = index" value={{i}}>{{cmei.nome}}</option>
                         </select>
                         <div *ngIf="validarCampo('cmeiOpcao1Crianca')" class="alert alert-danger">
                             Por favor escolha um CMEI
@@ -171,5 +171,5 @@
         </div>
 
     </div>
-    <!--<button (click)="log()">LOG FOMR</button>-->
+    <button (click)="log()">LOG FOMR</button>
 </form>
