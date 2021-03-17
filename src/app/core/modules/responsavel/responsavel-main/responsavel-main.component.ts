@@ -91,9 +91,15 @@ export class ResponsavelMainComponent implements OnInit {
       if (params['criancaId'] != null) {
         const respSubs = this.responsavelService
           .listarCriancas(params['criancaId'])
-          .subscribe((listaAuxiliarResponsavel) => {
+          .subscribe((listaResponsavel) => {
+
             respSubs.unsubscribe()
-            this.responsaveisCurrent = listaAuxiliarResponsavel
+
+            listaResponsavel['responsavelList'].forEach(item => {
+              this.responsaveisCurrent.push(item['responsavel'])
+            })
+
+            console.log(this.responsaveisCurrent) //ate aqui ta working 17/03/2021
             this.buildForm();
             this.adicionarResponsavel.emit(this.responsaveisCurrent)
           })
@@ -131,6 +137,7 @@ export class ResponsavelMainComponent implements OnInit {
     });
   }
 
+  /* totalmente deprecated
   inserirAux(crianca: Crianca) {
     //se for editar ele pega a crianca passada pelo event emmiter
     if (this.route.snapshot.params['id'] != null) {
@@ -155,7 +162,7 @@ export class ResponsavelMainComponent implements OnInit {
         });
       });
     }
-  }
+  } */
 
   listarAll() {
     const subs = this.responsavelService.listar().subscribe((res) => {

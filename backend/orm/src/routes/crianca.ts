@@ -21,7 +21,11 @@ class rotasCrianca {
 
   getId(connection) {
     this.router.get("/crianca/:id", (req, res) => {
-      connection.getRepository(Crianca).findOne(req.params.id).then(result => { res.json(result) })
+      connection.getRepository(Crianca).findOne(req.params.id, { relations: ["responsavelList", "responsavelList.responsavel"] }).then(result => { 
+        console.log("find result")
+        console.log(req.params.id)
+        res.json(result) 
+      })
     });
   }
 
@@ -40,7 +44,7 @@ class rotasCrianca {
       const criterioList: Criterio[] = req.body.criterioList
       const responsavelList: Object[] = req.body.responsavelList
 
-      const newList = Array<Criterio>();
+      let newList = Array<Criterio>();
       let newListResp = new Array<{}>();
 
       criterioList.forEach(item => {
@@ -62,14 +66,12 @@ class rotasCrianca {
         livro,
         folha,
         cpf,
-        new Endereco(req.body.endereco.rua, req.body.endereco.numero, new Bairro().id = req.body.endereco.bairro),
+        new Endereco(req.body.endereco.rua, req.body.endereco.numero,
+           new Bairro().id = req.body.endereco.bairro),
         cmeiOpcao1,
         cmeiOpcao2,
         null,
         1)
-
-        console.log(cmeiOpcao1)
-        console.log(cmeiOpcao2)
 
       crianca.responsavelList = newListResp
       crianca.criterioList = newList
