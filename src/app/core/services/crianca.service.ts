@@ -76,47 +76,6 @@ export class CriancaService {
         insert.unsubscribe()
       })
 
-
-
-      /*
- 
-      var insertEndereco = this.http.post(`${this.apiURL}/endereco/`, endereco).subscribe(_endereco => {
- 
-    //    crianca.enderecoId = _endereco['insertId'];
- 
-        insertEndereco.unsubscribe();
- 
-        var insertCrianca = this.http.post(`${this.apiURL}/crianca/`, crianca).subscribe(_crianca => {
- 
-          insertCrianca.unsubscribe();
- 
-          responsavelList.forEach(responsavel => {
- 
-            const respAuxCrianca = {
-              criancaId: _crianca['insertId'],
-              responsavelId: responsavel.id,
-              responsavelTipo: responsavel.tipo,
-            };
-            var insertResponsavelAux = this.http.post(`${this.apiURL}/responsavelAux`, respAuxCrianca).subscribe(responsavel => {
-              console.log(responsavel);
-              insertResponsavelAux.unsubscribe();
-            });
- 
-          });
- 
-          criterioList.forEach(criterio => {
-            const criterioAuxCrianca = {
-              criterioId: criterio.id,
-              criancaId: _crianca['insertId'],
-            };
-            var insertCriterioAux = this.http.post(`${this.apiURL}/criteriosocialAux`, criterioAuxCrianca).subscribe((resultado) => {
-              console.log(resultado);
-              insertCriterioAux.unsubscribe();
-            });
- 
-          })
-        })     
-      })      */
     } else { //update --------------------------------------------------------------------------------
       var insertEndereco = this.http.put(`${this.apiURL}/endereco/` + endereco.id, endereco).subscribe(_endereco => {
 

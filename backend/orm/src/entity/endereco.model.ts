@@ -1,10 +1,11 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn} from "typeorm";
 import { Bairro } from "./bairro.model";
+import { Crianca } from "./crianca.model";
 
 @Entity()
 export class Endereco {
 
-    constructor(id?: number, rua?: string, numero?: number, bairro?: Bairro) {
+    constructor(rua?: string, numero?: number, bairro?: Bairro, id?: number) {
         this.id = id
         this.rua = rua
         this.numero = numero
@@ -23,4 +24,6 @@ export class Endereco {
     @ManyToOne(type => Bairro, {cascade: true})
     bairro: Bairro
 
+    @OneToOne(type => Crianca)
+    crianca: Crianca
 }

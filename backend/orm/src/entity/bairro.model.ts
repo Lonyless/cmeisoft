@@ -4,7 +4,7 @@ import { Cidade } from "./cidade.model";
 @Entity()
 export class Bairro {
 
-    constructor(nome: string, cidade: Cidade, id?: number,) {
+    constructor(nome?: string, cidade?: Cidade, id?: number,) {
         this.id = id
         this.nome = nome
         this.cidade = cidade

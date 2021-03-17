@@ -1,4 +1,5 @@
 import { Bairro } from "../entity/bairro.model";
+import { Cidade } from "../entity/cidade.model";
 
 const express = require('express')  //usado na conexao com a API
 
@@ -12,7 +13,7 @@ class rotasCrianca {
 
     getAll(connection) {
         this.router.get('/bairro', (req, res) => {
-            connection.getRepository(Bairro).find().then(result => {res.json(result)})
+            connection.getRepository(Bairro).find({relations: ["cidade"]}).then(result => {res.json(result)})
         })
     }
 
@@ -25,11 +26,13 @@ class rotasCrianca {
     post(connection) {
         this.router.post('/bairro', (req, res) => {
             const nome = req.body.nome
-            const cidadeId = req.body.cidadeId
 
-            const bairro = new Bairro(nome, cidadeId)
+            const bairro = new Bairro(nome, new Cidade().id = req.body.cidade)
 
-            connection.getRepository(Bairro).save(bairro).then(result => {res.json(result)})
+            connection.getRepository(Bairro).save(bairro).then(result => {
+                console.log("saving bairro... "+result)
+                res.json(result)
+            })
 
         })
     }

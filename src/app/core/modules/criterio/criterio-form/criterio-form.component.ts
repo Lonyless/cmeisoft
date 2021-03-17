@@ -36,17 +36,7 @@ export class CriterioFormComponent implements OnInit {
       descricaoCriterio: ['', Validators.required],
       pesoCriterio: ['', Validators.required],
     });
-
-    /*
-    if (this.criterioEmmiterService.subsVar == undefined) {
-      this.criterioEmmiterService.subsVar = this.criterioEmmiterService.invokeFirstComponentFunction.subscribe(
-        (event) => {
-          this.onSubmitAux(event);
-          console.log('evento: ' + event);
-        }
-      );
-    }
-    */
+    
   }
 
   onSubmit() {

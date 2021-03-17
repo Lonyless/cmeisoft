@@ -27,7 +27,11 @@ class rotasCmei {
 
       const cidade = new Cidade(nome)
 
-      connection.getRepository(Cidade).save(cidade).then(result => {res.json(result)})
+      connection.getRepository(Cidade).save(cidade).then(result => {
+        console.log("saving cidade... ")
+        console.log(result)
+        res.json(result)
+      })
 
     });
   }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ListaComponent } from '../app/core/modules/crianca/lista-crianca/lista-crianca.component';
-import { AuxCriterioGuard } from './core/guard/auxcriterio-guard.service';
 import { CriterioGuard } from './core/guard/criterio-guard.service';
 import { CmeiFormComponent } from './core/modules/cmei/cmei-form/cmei-form.component';
 import { CmeiListComponent } from './core/modules/cmei/cmei-list/cmei-list.component';
@@ -37,8 +36,6 @@ const routes: Routes = [
     resolve: {
       //carrega a lista de criterios
       criterios: CriterioGuard,
-      //carrega a lista de auxiliares
-      aux: AuxCriterioGuard
     },
   },
   {

@@ -15,7 +15,7 @@ export class Cmei {
     this.nome = nome;
     this.telefone = telefone;
     this.endereco = endereco;
-    this.status = status;
+  
   }
 
   @PrimaryGeneratedColumn()
@@ -27,9 +27,9 @@ export class Cmei {
   @Column()
   telefone: number;
  
-  @OneToOne(type => Endereco, {cascade: true})
+  @OneToOne(type => Endereco, {cascade: true} )
   @JoinColumn()
   endereco: Endereco;
 
-  status: number;
+
 }

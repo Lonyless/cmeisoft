@@ -85,32 +85,18 @@ createConnection().then(async connection => {
     rotasEndereco.put(connection)
     rotasEndereco.delete(connection)
 
-    //tabela contemplado
-    rotasContemplado.getAll(connection)
-    rotasContemplado.getId(connection)
-    rotasContemplado.post(connection)
-    rotasContemplado.put(connection)
-    rotasContemplado.delete(connection)
-
     //tabela criterio
     rotasCriterioSocial.getAll(connection)
     rotasCriterioSocial.getId(connection)
-    rotasCriterioSocial.getAux(connection)
     rotasCriterioSocial.post(connection)
-    rotasCriterioSocial.postAux(connection)
     rotasCriterioSocial.put(connection)
     rotasCriterioSocial.delete(connection)
-    rotasCriterioSocial.deleteAux(connection)
-
+    
     //tabela responsavel
     rotasResponsavel.getAll(connection)
     rotasResponsavel.getId(connection)
     rotasResponsavel.post(connection)
-    rotasResponsavel.postAux(connection)
     rotasResponsavel.put(connection)
     rotasResponsavel.delete(connection)
-    rotasResponsavel.deleteAux(connection)
-    rotasResponsavel.getResponsavelCrianca(connection)
-    rotasResponsavel.getCriancaResponsavel(connection)
 
 }).catch(error => console.log(error));

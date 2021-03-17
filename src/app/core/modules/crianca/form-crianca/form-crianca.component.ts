@@ -63,7 +63,6 @@ export class FormCriancaComponent implements OnInit {
   formTipoResponsavel: FormGroup;
 
   criterioList: Criterio[];
-  criterioAuxList: any;
 
   refresh(): void {
     window.location.reload();
@@ -81,14 +80,15 @@ export class FormCriancaComponent implements OnInit {
 
   }
 
-  buildFormArray() {
+  buildFormArray(lista) {
     let values;
     let flag;
 
-    if (this.criterioAuxList != null) {
+    if (lista != null) { //update
       values = this.criterioList.map((criterio) => {
         flag = false;
-        this.criterioAuxList.forEach((crit) => {
+        lista.forEach((crit) => {
+          console.log(crit)
           if (
             crit.crianca_id == this.idCrianca &&
             criterio.id == crit.criteriosocial_id
@@ -101,7 +101,7 @@ export class FormCriancaComponent implements OnInit {
       });
 
       return this.fb.array(values);
-    } else {
+    } else { //create
       values = this.criterioList.map((criterio) => new FormControl(false));
       return this.fb.array(values);
     }
@@ -120,7 +120,22 @@ export class FormCriancaComponent implements OnInit {
 
     console.log('SUBMIT: ' + valueSumbit);
 
-    this.criterioEmmiterService.onEvent();
+    //  this.criterioEmmiterService.onEvent();
+  }
+
+  criteriosSelecionados() {
+    let lista = new Array<Criterio>();
+
+    this.formCriterio.value.criterios.forEach((item: boolean, index) => {
+
+      if (item) {
+        lista.push(this.criterioList[index])
+      }
+
+    })
+
+    return lista
+
   }
 
   responsavelList: Responsavel[] = [];
@@ -134,24 +149,20 @@ export class FormCriancaComponent implements OnInit {
 
       //buildando form de criterios
 
-      //pega os dados que são passados pelo guard da rota, o criterio-guard.service
-      //this.criterioList = this.route.snapshot.data.criterios.auxList;
       this.criterioList = this.route.snapshot.data.criterios;
-      this.criterioAuxList = this.route.snapshot.data.aux;
 
       if (params['criancaId'] != null) {
-        this.formCriterio = this.fb.group({
-          criterios: this.buildFormArray(),
-        });
+        this.criancaService.listarPorId[params['criancaId']].then((lista) => {
+          console.log(lista)
+          this.formCriterio = this.fb.group({
+            criterios: this.buildFormArray(lista),
+          });
+        })
       } else {
         this.formCriterio = this.fb.group({
-          criterios: this.buildFormArray(),
+          criterios: this.buildFormArray(null),
         });
       }
-
-      this.formCriterio = this.fb.group({
-        criterios: this.buildFormArray(),
-      });
       //---------------------------------------------------------------------------
 
       //alimenta o objeto Cmei
@@ -294,7 +305,8 @@ export class FormCriancaComponent implements OnInit {
         this.formEndereco.value.bairroId
       );
 
-      this.criancaService.salvarTodos(crianca, endereco, this.responsavelList, this.criterioList)
+
+      this.criancaService.salvarTodos(crianca, endereco, this.responsavelList, this.criteriosSelecionados())
 
     })
   }
@@ -318,8 +330,8 @@ export class FormCriancaComponent implements OnInit {
   }
 
   log() {
-    
-   console.log(this.cmeiList[this.form.value.cmeiOpcao1Crianca])
-   // console.log(this.formEndereco);
+
+    this.criteriosSelecionados()
+
   }
 }

@@ -1,6 +1,8 @@
 import express = require('express');  //usado na conexao com a API
+import { Bairro } from '../entity/bairro.model';
 
 import { Cmei } from '../entity/cmei.model'
+import { Endereco } from '../entity/endereco.model';
 
 class rotasCmei {
 
@@ -24,13 +26,19 @@ class rotasCmei {
 
     post(connection) {
         this.router.post('/cmei', (req, res) => {
-            const nome = req.body.nome
-            const telefone = req.body.telefone
-            const idEndereco = req.body.idEndereco
 
-            const cmei = new Cmei(nome, telefone, idEndereco, 1)
-
-            connection.getRepository(Cmei).save(cmei).then(result => { res.json(result) })
+            const cmei = new Cmei(
+                req.body.nome,
+                req.body.telefone,
+                new Endereco(req.body.endereco.rua, req.body.endereco.numero,
+                    new Bairro().id = req.body.endereco.bairro),
+                1)
+         
+            connection.getRepository(Cmei).save(cmei).then(result => { 
+                console.log("saving cmei... ")
+                console.log(result)
+                res.json(result)
+            })
 
         })
     }
@@ -54,7 +62,7 @@ class rotasCmei {
 
             const cmei = new Cmei(null, null, null, null, req.params.id)
 
-            connection.getRepository(Cmei).remove(cmei).then(result => {res.json(result)})
+            connection.getRepository(Cmei).remove(cmei).then(result => { res.json(result) })
 
         })
     }
