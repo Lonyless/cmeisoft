@@ -71,6 +71,6 @@ export class Crianca {
     @JoinTable({ name: "aux_crianca_criterio" })
     criterioList: Criterio[]
 
-    @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.crianca)
+    @OneToMany(type => AuxCriancaResponsavel, criancaAuxResponsavel => criancaAuxResponsavel.crianca, {cascade: true})
     responsavelList: {}
 }
